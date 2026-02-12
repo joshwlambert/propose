@@ -7,7 +7,8 @@ ui <- fluidPage(
 
   sidebarLayout(
     sidebarPanel(
-      sliderInput("replicates", "Number of simulation replicates", min = 1, max = 100, value = 10)
+      sliderInput("replicates", "Number of simulation replicates:", min = 1, max = 100, value = 10),
+      sliderInput("initial_cases", "Number of initial cases:", min = 1, max = 50, value = 5)
     ),
     mainPanel(
       fluidRow(
@@ -59,7 +60,7 @@ server <- function(input, output, session) {
   scenario <- reactive({
     scenario_sim(
       n = input$replicates,
-      initial_cases = 5,
+      initial_cases = input$initial_cases,
       offspring = offspring_opts(
         community = \(n) rnbinom(n = n, mu = input$community_r0, size = input$community_disp),
         isolated = \(n) rnbinom(n = n, mu = input$isolated_r0, size = input$isolated_disp)
