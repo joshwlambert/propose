@@ -3,31 +3,66 @@ library(ringbp)
 
 ui <- fluidPage(
   titlePanel("{propose}: a Shiny app for {ringbp}"),
+
+  "Offspring distribution parameters: ",
+  numericInput("community_r0", "Community R0:", value = 2),
+  numericInput("community_disp", "Community Dispersion:", value = 1),
+  numericInput("isolated_r0", "Isolated R0:", value = 0),
+  numericInput("isolated_disp", "Isolated Dispersion:", value = 1),
+
+  "Delay distribution parameters: ",
+  numericInput("incubation_meanlog", "Incubation period meanlog:", value = 1.5),
+  numericInput("incubation_sdlog", "Incubation period sdlog:", value = 0.4),
+  numericInput("onset_to_isolation_meanlog", "Onset-to-isolation meanlog:", value = 2),
+  numericInput("onset_to_isolation_sdlog", "Onset-to-isolation sdlog:", value = 0.5),
+
+  "Event probabilities: ",
+  numericInput("asymptomatic", "Probability asymptomatic:", value = 0.1),
+  numericInput("presymptomatic_transmission", "Probability of presymptomatic transmission:", value = 0.1),
+  numericInput("symptomatic_ascertained", "Probability of contact traced:", value = 0.8),
+
+  "Interventions: ",
+  textInput("quarantine", "Quarantine:", value = "FALSE"),
+
+  "Simulation controls: ",
+  numericInput("cap_max_days", "Maximum number of days:", value = 100),
+  numericInput("cap_cases", "Maximum number of cases:", value = 5000),
+
   "Probability of outbreak extinction: ",
   verbatimTextOutput("extinct")
 )
 
 server <- function(input, output, session) {
-  scenario <- scenario_sim(
-    n = 5,
-    initial_cases = 5,
-    offspring = offspring_opts(
-      community = \(n) rnbinom(n = n, mu = 2, size = 1),
-      isolated = \(n) rnbinom(n = n, mu = 0, size = 1)
-    ),
-    delays = delay_opts(
-      incubation_period = \(n) rlnorm(n = n, meanlog = 1.5, sdlog = 0.4),
-      onset_to_isolation = \(n) rlnorm(n = n, meanlog = 2, sdlog = 0.5)
-    ),
-    event_probs = event_prob_opts(
-      asymptomatic = 0.1,
-      presymptomatic_transmission = 0.1,
-      symptomatic_ascertained = 0.8
-    ),
-    interventions = intervention_opts(quarantine = FALSE),
-    sim = sim_opts(cap_max_days = 100, cap_cases = 5000)
-  )
-  output$extinct <- renderPrint(extinct_prob(scenario))
+  scenario <- reactive({
+    scenario_sim(
+      n = 1,
+      initial_cases = 5,
+      offspring = offspring_opts(
+        community = \(n) rnbinom(n = n, mu = input$community_r0, size = input$community_disp),
+        isolated = \(n) rnbinom(n = n, mu = input$isolated_r0, size = input$isolated_disp)
+      ),
+      delays = delay_opts(
+        incubation_period = \(n) rlnorm(
+          n = n,
+          meanlog = input$incubation_meanlog,
+          sdlog = input$incubation_sdlog
+        ),
+        onset_to_isolation = \(n) rlnorm(
+          n = n,
+          meanlog = input$onset_to_isolation_meanlog,
+          sdlog = input$onset_to_isolation_sdlog
+        )
+      ),
+      event_probs = event_prob_opts(
+        asymptomatic = input$asymptomatic,
+        presymptomatic_transmission = input$presymptomatic_transmission,
+        symptomatic_ascertained = input$symptomatic_ascertained
+      ),
+      interventions = intervention_opts(quarantine = as.logical(input$quarantine)),
+      sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
+    )
+  })
+  output$extinct <- renderPrint(extinct_prob(scenario()))
 }
 
 shinyApp(ui = ui, server = server)
