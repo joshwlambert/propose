@@ -3,7 +3,29 @@ library(ringbp)
 library(tinyplot)
 
 ui <- fluidPage(
-  titlePanel("{propose}: a Shiny app for {ringbp}"),
+
+  tags$div(
+    style = "
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    ",
+
+    # Title (styled like titlePanel)
+    tags$h2(
+      class = "title",
+      "{propose}: a Shiny app for {ringbp}",
+      style = "margin: 0;"
+    ),
+
+    # Logo
+    tags$img(
+      src = "logo.svg",
+      style = "width: 110px;"
+    )
+  ),
+
 
   sidebarLayout(
     sidebarPanel(
