@@ -1,5 +1,6 @@
 library(shiny)
 library(ringbp)
+library(tinyplot)
 
 ui <- fluidPage(
   titlePanel("{propose}: a Shiny app for {ringbp}"),
@@ -43,7 +44,8 @@ ui <- fluidPage(
     )
   ),
   "Probability of outbreak extinction: ",
-  verbatimTextOutput("extinct")
+  verbatimTextOutput("extinct"),
+  plotOutput("cumulative_cases")
 )
 
 server <- function(input, output, session) {
@@ -77,6 +79,18 @@ server <- function(input, output, session) {
     )
   })
   output$extinct <- renderPrint(extinct_prob(scenario()))
+  output$cumulative_cases <- renderPlot(
+    tinyplot(
+      cumulative ~ week | as.factor(sim),
+      data = scenario(),
+      type = "l",
+      lwd = 3,
+      ylab = "Cumulative number of cases",
+      xlab = "Week",
+      legend = FALSE,
+      theme = "clean"
+    )
+  )
 }
 
 shinyApp(ui = ui, server = server)
