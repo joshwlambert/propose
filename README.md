@@ -1,4 +1,4 @@
-# *propose*: a Shiny app for proposing and evaluating targeted intervention scenarios in an emerging epidemic or pandemic using the {ringbp} R package
+# *propose*: a Shiny app for proposing and evaluating targeted intervention scenarios in an emerging epidemic or pandemic using the {ringbp} R package <img src="www/logo.svg" align="right" width="120" />
 
 > [!WARNING]
 > Under active development
