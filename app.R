@@ -33,7 +33,8 @@ ui <- navbarPage(
     sidebarLayout(
       sidebarPanel(
         sliderInput("replicates", "Number of simulation replicates:", min = 1, max = 100, value = 10),
-        sliderInput("initial_cases", "Number of initial cases:", min = 1, max = 50, value = 5)
+        sliderInput("initial_cases", "Number of initial cases:", min = 1, max = 50, value = 5),
+        actionButton("simulate", "Simulate outbreak")
       ),
       mainPanel(
         fluidRow(
@@ -172,7 +173,7 @@ ui <- navbarPage(
 )
 
 server <- function(input, output, session) {
-  scenario <- reactive({
+  scenario <- eventReactive(input$simulate, {
     scenario_sim(
       n = input$replicates,
       initial_cases = input$initial_cases,
