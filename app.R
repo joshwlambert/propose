@@ -1,5 +1,6 @@
 library(shiny)
 library(bslib)
+library(bsicons)
 library(ringbp)
 library(tinyplot)
 library(bibtex)
@@ -80,6 +81,7 @@ ui <- page_navbar(
         value_box(
           title = "Probability of outbreak control",
           value = uiOutput("extinct"),
+          showcase = bs_icon("virus"),
           theme = "bg-gradient-blue-purple"
         ),
         plotOutput("cumulative_cases")
