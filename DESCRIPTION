@@ -1,0 +1,18 @@
+Package: propose
+Title: A Shiny app for proposing and evaluating targeted intervention
+    scenarios in an emerging epidemic or pandemic using the {ringbp} R
+    package
+Version: 0.1.0
+Authors@R: c(
+    person("Joshua W.", "Lambert", , "joshua.lambert@lshtm.ac.uk", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0001-5218-3046")),
+    person("London School of Hygiene and Tropical Medicine, LSHTM", role = "cph",
+           comment = c(ROR = "00a0jsq62"))
+  )
+Description: A decision support tool for early epidemic or pandemic
+    individiual targeted intervention scenarios. Allows explorign the
+    {ringbp} model or analysing optimal response strategies.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
