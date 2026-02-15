@@ -1,11 +1,12 @@
 library(shiny)
+library(bslib)
 library(ringbp)
 library(tinyplot)
 library(bibtex)
 
-ui <- navbarPage(
+ui <- page_navbar(
   title = "{propose}",
-  tabPanel(
+  nav_panel(
     "Home",
 
     tags$div(
@@ -82,7 +83,7 @@ ui <- navbarPage(
       )
     )
   ),
-  tabPanel(
+  nav_panel(
     title = "Citation",
     titlePanel("Citation"),
     tags$div(
@@ -104,7 +105,7 @@ ui <- navbarPage(
     ),
     verbatimTextOutput("paper_citations"),
   ),
-  tabPanel(
+  nav_panel(
     title = "Funding",
     titlePanel("Funding"),
     tags$div(
