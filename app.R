@@ -1,6 +1,7 @@
 library(shiny)
 library(ringbp)
 library(tinyplot)
+library(bibtex)
 
 ui <- navbarPage(
   title = "{propose}",
@@ -80,6 +81,28 @@ ui <- navbarPage(
         plotOutput("cumulative_cases")
       )
     )
+  ),
+  tabPanel(
+    title = "Citation",
+    titlePanel("Citation"),
+    tags$div(
+      markdown(
+        "When using the `{propose}` Shiny app please cite the work using:"
+      )
+    ),
+    verbatimTextOutput("propose_citation"),
+    tags$div(
+      markdown(
+        "If you are additionally using the `{ringbp}` R package or would also
+        like to cite the package with the epidemiological model powering
+        `{propose}`, please use:"
+      )
+    ),
+    verbatimTextOutput("ringbp_citation"),
+    tags$div(
+      tags$h3("Papers using {ringbp}")
+    ),
+    verbatimTextOutput("paper_citations"),
   ),
   tabPanel(
     title = "Funding",
@@ -215,6 +238,9 @@ server <- function(input, output, session) {
       theme = "clean"
     )
   )
+  output$propose_citation <- renderPrint(citation(package = "propose"))
+  output$ringbp_citation <- renderPrint(citation(package = "ringbp"))
+  output$paper_citations <- renderPrint(bibtex::read.bib(file.path("www", "references.bib")))
 }
 
 shinyApp(ui = ui, server = server)
