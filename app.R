@@ -77,8 +77,11 @@ ui <- page_navbar(
             numericInput("cap_cases", "Maximum number of cases:", value = 5000)
           )
         ),
-        "Probability of outbreak extinction: ",
-        verbatimTextOutput("extinct"),
+        value_box(
+          title = "Probability of outbreak control",
+          value = uiOutput("extinct"),
+          theme = "bg-gradient-blue-purple"
+        ),
         plotOutput("cumulative_cases")
       )
     )
@@ -226,7 +229,7 @@ server <- function(input, output, session) {
       sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
     )
   })
-  output$extinct <- renderPrint(extinct_prob(scenario()))
+  output$extinct <- renderText(extinct_prob(scenario()))
   output$cumulative_cases <- renderPlot(
     tinyplot(
       cumulative ~ week | as.factor(sim),
