@@ -9,6 +9,7 @@ ui <- page_navbar(
   title = "{propose}",
   nav_panel(
     "Home",
+    icon = bs_icon("house"),
 
     tags$div(
       style = "
@@ -90,6 +91,7 @@ ui <- page_navbar(
   ),
   nav_panel(
     title = "Citation",
+    icon = bs_icon("feather"),
     titlePanel("Citation"),
     tags$div(
       markdown(
@@ -112,6 +114,7 @@ ui <- page_navbar(
   ),
   nav_panel(
     title = "Funding",
+    icon = bs_icon("globe2"),
     titlePanel("Funding"),
     tags$div(
       style = "padding-top: 30px; padding-bottom: 30px;",
@@ -128,13 +131,13 @@ ui <- page_navbar(
       style = "display: flex; justify-content: center; align-items: center; gap: 20px; padding-top: 30px; padding-bottom: 30px;",
       tags$img(
         src = "ESCAPE_logo.avif",
-          style = "width: 250px;"
-        ),
-        tags$img(
-          src = "EU_logo.avif",
-          style = "width: 250px;"
-        )
+        style = "width: 250px;"
       ),
+      tags$img(
+        src = "EU_logo.avif",
+        style = "width: 250px;"
+      )
+    ),
 
     tags$div(
       style = "padding-top: 30px; padding-bottom: 30px;",
