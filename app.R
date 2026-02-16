@@ -45,10 +45,52 @@ ui <- page_navbar(
           column(
             4,
             "Offspring distribution parameters: ",
-            numericInput("community_r0", "Community R0:", value = 2),
-            numericInput("community_disp", "Community Dispersion:", value = 1),
-            numericInput("isolated_r0", "Isolated R0:", value = 0),
-            numericInput("isolated_disp", "Isolated Dispersion:", value = 1)
+            selectInput(
+              inputId = "community_offspring_distribution",
+              label = "Community Offspring Distribution",
+              choices = list(
+                "Negative Binomial" = "nbinom",
+                "Poisson" = "pois",
+                "Geometric" = "geom",
+                "Custom" = "custom"
+              )
+            ),
+            conditionalPanel(
+              condition = "input.community_offspring_distribution == 'nbinom'",
+              numericInput("community_r0", "Community R0:", value = 2),
+              numericInput("community_disp", "Community Dispersion:", value = 1),
+            ),
+            conditionalPanel(
+              condition = "input.community_offspring_distribution == 'pois'",
+              numericInput("community_r0", "Community R0:", value = 2)
+            ),
+            selectInput(
+              inputId = "isolated_offspring_distribution",
+              label = "Isolated Offspring Distribution",
+              choices = list(
+                "Negative Binomial" = "nbinom",
+                "Poisson" = "pois",
+                "Geometric" = "geom",
+                "Custom" = "custom"
+              )
+            ),
+            conditionalPanel(
+              condition = "input.isolated_offspring_distribution == 'nbinom'",
+              numericInput("isolated_r0", "Isolated R0:", value = 0),
+              numericInput("isolated_disp", "Isolated Dispersion:", value = 1),
+            ),
+            conditionalPanel(
+              condition = "input.isolated_offspring_distribution == 'pois'",
+              numericInput("isolated_r0", "Isolated R0:", value = 0)
+            ),
+            conditionalPanel(
+              condition = "input.isolated_offspring_distribution == 'geom'",
+              numericInput("isolated_r0", "Isolated R0:", value = 0)
+            ),
+            conditionalPanel(
+              condition = "input.isolated_offspring_distribution == 'custom'",
+              textInput("isolated_offspring", "Isolated Offspring Distribution:")
+            )
           ),
           column(
             4,
@@ -281,14 +323,37 @@ ui <- page_navbar(
 )
 
 server <- function(input, output, session) {
+
+  community <- reactive({
+    if (input$community_offspring_distribution == "nbinom") {
+      \(n) rnbinom(n = n, mu = input$community_r0, size = input$community_disp)
+    } else if (input$community_offspring_distribution == "pois") {
+      \(n) rpois(n = n, lambda = input$community_r0)
+    } else if (input$community_offspring_distribution == "geom") {
+      \(n) rgeom(n = n, prob = 1 / input$community_r0)
+    }
+  })
+
+  isolated <- reactive({
+    if (input$isolated_offspring_distribution == "nbinom") {
+      \(n) rnbinom(n = n, mu = input$isolated_r0, size = input$isolated_disp)
+    } else if (input$isolated_offspring_distribution == "pois") {
+      \(n) rpois(n = n, lambda = input$isolated_r0)
+    } else if (input$isolated_offspring_distribution == "geom") {
+      \(n) rgeom(n = n, prob = 1 / input$isolated_r0)
+    }
+  })
+
+
+  offspring <- reactive({
+    offspring_opts(community = community(), isolated = isolated())
+  })
+
   scenario <- eventReactive(input$simulate, {
     scenario_sim(
       n = input$replicates,
       initial_cases = input$initial_cases,
-      offspring = offspring_opts(
-        community = \(n) rnbinom(n = n, mu = input$community_r0, size = input$community_disp),
-        isolated = \(n) rnbinom(n = n, mu = input$isolated_r0, size = input$isolated_disp)
-      ),
+      offspring = offspring(),
       delays = delay_opts(
         incubation_period = \(n) rlnorm(
           n = n,
