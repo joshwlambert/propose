@@ -6,7 +6,7 @@ library(tinyplot)
 library(bibtex)
 
 ui <- page_navbar(
-  title = "{propose}",
+  title = actionLink("go_home", "{propose}", style = "color: inherit; text-decoration: none;"),
   id = "navbarid",
   nav_panel(
     title = "Home",
@@ -425,7 +425,12 @@ ui <- page_navbar(
 
 server <- function(input, output, session) {
 
-  # Logic to switch tabs when the Hero button is clicked
+  # make Shiny name a link to homepage
+  observeEvent(input$go_home, {
+    updateTabsetPanel(session, "navbarid", selected = "Home")
+  })
+
+  # logic to switch tabs when the Hero button is clicked
   observeEvent(input$explore, {
     updateTabsetPanel(session, "navbarid", selected = "Explore")
   })
