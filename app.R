@@ -8,19 +8,31 @@ library(bibtex)
 ui <- page_navbar(
   title = actionLink("go_home", "{propose}", style = "color: inherit; text-decoration: none;"),
   id = "navbarid",
+  fillable = FALSE,
   nav_panel(
     title = "Home",
     icon = bs_icon("house"),
 
-    # Hero Section
-    div(class = "bg-light p-5 rounded-lg m-3 text-center",
-        h1("Control Pandemics Early", class = "display-4"),
-        p(
-          "{propose} is a web interface for modelling targeted individual-level interventions for outbreak control.",
-          class = "lead"
-        ),
-        hr(class = "my-4"),
-        actionButton("explore", "Start Exploring", class = "btn-primary btn-lg")
+    # hero Section
+    div(
+      class = "bg-light p-5 rounded-lg m-3 text-center",
+      img(
+        src = "logo.png",
+        style = "height: 180px; margin-bottom: 2rem; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));"
+      ),
+      h1("Control Pandemics Early", class = "display-4"),
+      p(
+        "{propose} is a web interface for modelling targeted individual-level interventions for outbreak control.",
+        class = "lead"
+      ),
+      hr(class = "my-4"),
+      br(),
+      actionButton(
+        "explore",
+        "Start Exploring",
+        class = "btn-lg",
+        style = "background-color: #000080; color: white; border: none; padding: 10px 30px;"
+      )
     ),
     # Feature Cards
     layout_column_wrap(
