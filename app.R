@@ -8,8 +8,19 @@ library(bibtex)
 ui <- page_navbar(
   title = "{propose}",
   nav_panel(
-    "Home",
+    title = "Home",
     icon = bs_icon("house"),
+
+    # CSS to add margin around accordions
+    tags$head(
+      tags$style(HTML("
+      .accordion-item {
+        margin-top: 15px !important;
+        margin-bottom: 15px !important;
+        border-top-width: 5px !important;
+      }
+    "))
+    ),
 
     tags$div(
       style = "
