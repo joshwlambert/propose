@@ -7,9 +7,39 @@ library(bibtex)
 
 ui <- page_navbar(
   title = "{propose}",
+  id = "navbarid",
   nav_panel(
     title = "Home",
     icon = bs_icon("house"),
+
+    # Hero Section
+    div(class = "bg-light p-5 rounded-lg m-3 text-center",
+        h1("Control Pandemics Early", class = "display-4"),
+        p(
+          "{propose} is a web interface for modelling targeted individual-level interventions for outbreak control.",
+          class = "lead"
+        ),
+        hr(class = "my-4"),
+        actionButton("explore", "Start Exploring", class = "btn-primary btn-lg")
+    ),
+    # Feature Cards
+    layout_column_wrap(
+      width = 1/2,
+      card(
+        card_header(bs_icon("shield-check"), "Built by epidemiologists"),
+        tags$p("Built by epidemiologists with experience working on: COVID-19, Ebola, Mpox and more."),
+        tags$p("The simulation model has been peer-reviewed and was used to inform the COVID-19 response.")
+      ),
+      card(
+        card_header(bs_icon("graph-up"), "Gain Insights"),
+        "Out of the box structured analyses and visualisations provided in {propose} enable
+        quick scientific and policy-relevant insights"
+      )
+    )
+  ),
+  nav_panel(
+    title = "Explore",
+    icon = bs_icon("sliders"),
 
     # CSS to add margin around accordions
     tags$head(
@@ -394,6 +424,11 @@ ui <- page_navbar(
 )
 
 server <- function(input, output, session) {
+
+  # Logic to switch tabs when the Hero button is clicked
+  observeEvent(input$explore, {
+    updateTabsetPanel(session, "navbarid", selected = "Explore")
+  })
 
   community <- reactive({
     if (input$community_offspring_distribution == "nbinom") {
