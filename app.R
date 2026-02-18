@@ -195,7 +195,10 @@ ui <- page_navbar(
           showcase = bs_icon("virus"),
           theme = "bg-gradient-blue-purple"
         ),
-        plotOutput("cumulative_cases")
+        navset_card_underline(
+          nav_panel("Cumulative cases", plotOutput("cumulative_cases")),
+          nav_panel("Weekly cases", plotOutput("weekly_cases"))
+        )
       )
     )
   ),
@@ -491,6 +494,18 @@ server <- function(input, output, session) {
       type = "l",
       lwd = 3,
       ylab = "Cumulative number of cases",
+      xlab = "Week",
+      legend = FALSE,
+      theme = "clean"
+    )
+  )
+  output$weekly_cases <- renderPlot(
+    tinyplot(
+      weekly_cases ~ week | as.factor(sim),
+      data = scenario(),
+      type = "l",
+      lwd = 3,
+      ylab = "Number of cases per week",
       xlab = "Week",
       legend = FALSE,
       theme = "clean"
