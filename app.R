@@ -22,7 +22,7 @@ ui <- page_navbar(
       ),
       h1("Control Pandemics Early", class = "display-4"),
       p(
-        "{propose} is a web interface for modelling targeted individual-level interventions for outbreak control.",
+        "{propose} is a web interface for modelling targeted individual-level interventions for infectious disease outbreak control.",
         class = "lead"
       ),
       hr(class = "my-4"),
