@@ -174,7 +174,7 @@ ui <- page_navbar(
           accordion_panel(
             title = "Interventions:",
             icon = bs_icon("shield-shaded"),
-            textInput("quarantine", "Quarantine:", value = "FALSE")
+            checkboxInput("quarantine", "Quarantine", value = FALSE)
           ),
           open = FALSE
         ),
@@ -482,7 +482,7 @@ server <- function(input, output, session) {
         presymptomatic_transmission = input$presymptomatic_transmission,
         symptomatic_ascertained = input$symptomatic_ascertained
       ),
-      interventions = intervention_opts(quarantine = as.logical(input$quarantine)),
+      interventions = intervention_opts(quarantine = input$quarantine),
       sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
     )
   })
