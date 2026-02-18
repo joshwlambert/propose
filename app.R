@@ -95,10 +95,56 @@ ui <- page_navbar(
           column(
             4,
             "Delay distribution parameters: ",
-            numericInput("incubation_meanlog", "Incubation period meanlog:", value = 1.5),
-            numericInput("incubation_sdlog", "Incubation period sdlog:", value = 0.4),
-            numericInput("onset_to_isolation_meanlog", "Onset-to-isolation meanlog:", value = 2),
-            numericInput("onset_to_isolation_sdlog", "Onset-to-isolation sdlog:", value = 0.5)
+            selectInput(
+              inputId = "incubation_distribution",
+              label = "Incubation Period Distribution",
+              choices = list(
+                "Lognormal" = "lnorm",
+                "Gamma" = "gamma",
+                "Weibull" = "weibull",
+                "Custom" = "custom"
+              )
+            ),
+            conditionalPanel(
+              condition = "input.incubation_distribution == 'lnorm'",
+              numericInput("incubation_meanlog", "Incubation period meanlog:", value = 1.5),
+              numericInput("incubation_sdlog", "Incubation period sdlog:", value = 0.4),
+            ),
+            conditionalPanel(
+              condition = "input.incubation_distribution == 'gamma'",
+              numericInput("incubation_shape", "Incubation period shape:", value = 2),
+              numericInput("incubation_scale", "Incubation period scale:", value = 1),
+            ),
+            conditionalPanel(
+              condition = "input.incubation_distribution == 'weibull'",
+              numericInput("incubation_shape", "Incubation period shape:", value = 2),
+              numericInput("incubation_scale", "Incubation period scale:", value = 1),
+            ),
+            selectInput(
+              inputId = "onset_to_isolation_distribution",
+              label = "Onset-to-isolation Distribution",
+              choices = list(
+                "Lognormal" = "lnorm",
+                "Gamma" = "gamma",
+                "Weibull" = "weibull",
+                "Custom" = "custom"
+              )
+            ),
+            conditionalPanel(
+              condition = "input.onset_to_isolation_distribution == 'lnorm'",
+              numericInput("onset_to_isolation_meanlog", "Onset-to-isolation meanlog:", value = 2),
+              numericInput("onset_to_isolation_sdlog", "Onset-to-isolation sdlog:", value = 0.5)
+            ),
+            conditionalPanel(
+              condition = "input.onset_to_isolation_distribution == 'gamma'",
+              numericInput("onset_to_isolation_shape", "Onset-to-isolation shape:", value = 2),
+              numericInput("onset_to_isolation_scale", "Onset-to-isolation scale:", value = 1),
+            ),
+            conditionalPanel(
+              condition = "input.onset_to_isolation_distribution == 'weibull'",
+              numericInput("onset_to_isolation_shape", "Onset-to-isolation shape:", value = 2),
+              numericInput("onset_to_isolation_scale", "Onset-to-isolation scale:", value = 1),
+            )
           ),
           column(
             4,
@@ -344,9 +390,60 @@ server <- function(input, output, session) {
     }
   })
 
+  incubation_period <- reactive({
+    if (input$incubation_distribution == "lnorm") {
+      \(n) rlnorm(
+        n = n,
+        meanlog = input$incubation_meanlog,
+        sdlog = input$incubation_sdlog
+      )
+    } else if (input$incubation_distribution == "gamma") {
+      \(n) rgamma(
+        n = n,
+        shape = input$incubation_shape,
+        scale = input$incubation_scale
+      )
+    } else if (input$incubation_distribution == "weibull") {
+      \(n) rweibull(
+        n = n,
+        shape = input$incubation_shape,
+        scale = input$incubation_scale
+      )
+    }
+  })
+
+  onset_to_isolation <- reactive({
+    if (input$onset_to_isolation_distribution == "lnorm") {
+      \(n) rlnorm(
+        n = n,
+        meanlog = input$onset_to_isolation_meanlog,
+        sdlog = input$onset_to_isolation_sdlog
+      )
+    } else if (input$onset_to_isolation_distribution == "gamma") {
+      \(n) rgamma(
+        n = n,
+        shape = input$onset_to_isolation_shape,
+        scale = input$onset_to_isolation_scale
+      )
+    } else if (input$onset_to_isolation_distribution == "weibull") {
+      \(n) rweibull(
+        n = n,
+        shape = input$onset_to_isolation_shape,
+        scale = input$onset_to_isolation_scale
+      )
+    }
+  })
+
 
   offspring <- reactive({
     offspring_opts(community = community(), isolated = isolated())
+  })
+
+  delays <- reactive({
+    delay_opts(
+      incubation_period = incubation_period(),
+      onset_to_isolation = onset_to_isolation()
+    )
   })
 
   scenario <- eventReactive(input$simulate, {
@@ -354,18 +451,7 @@ server <- function(input, output, session) {
       n = input$replicates,
       initial_cases = input$initial_cases,
       offspring = offspring(),
-      delays = delay_opts(
-        incubation_period = \(n) rlnorm(
-          n = n,
-          meanlog = input$incubation_meanlog,
-          sdlog = input$incubation_sdlog
-        ),
-        onset_to_isolation = \(n) rlnorm(
-          n = n,
-          meanlog = input$onset_to_isolation_meanlog,
-          sdlog = input$onset_to_isolation_sdlog
-        )
-      ),
+      delays = delays(),
       event_probs = event_prob_opts(
         asymptomatic = input$asymptomatic,
         presymptomatic_transmission = input$presymptomatic_transmission,
