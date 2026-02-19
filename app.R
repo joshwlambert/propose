@@ -247,7 +247,29 @@ ui <- page_navbar(
   nav_panel(
     title = "Citation",
     icon = bs_icon("feather"),
-    titlePanel("Citation"),
+
+    tags$div(
+      style = "
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    ",
+
+      # Title (styled like titlePanel)
+      tags$h2(
+        class = "title",
+        "Citation",
+        style = "margin: 0;"
+      ),
+
+      # Logo
+      tags$img(
+        src = "logo.svg",
+        style = "width: 110px;"
+      )
+    ),
+
     tags$div(
       markdown(
         "When using the `{propose}` Shiny app please cite the work using:"
@@ -270,7 +292,29 @@ ui <- page_navbar(
   nav_panel(
     title = "Funding",
     icon = bs_icon("globe2"),
-    titlePanel("Funding"),
+
+    tags$div(
+      style = "
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    ",
+
+      # Title (styled like titlePanel)
+      tags$h2(
+        class = "title",
+        "Funding",
+        style = "margin: 0;"
+      ),
+
+      # Logo
+      tags$img(
+        src = "logo.svg",
+        style = "width: 110px;"
+      )
+    ),
+
     tags$div(
       style = "padding-top: 30px; padding-bottom: 30px;",
       markdown(
@@ -360,7 +404,28 @@ ui <- page_navbar(
   nav_panel(
     title = "Contact Us",
     icon = bs_icon("envelope"),
-    titlePanel("Contact Us"),
+
+    tags$div(
+      style = "
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    ",
+
+      # Title (styled like titlePanel)
+      tags$h2(
+        class = "title",
+        "Contact Us",
+        style = "margin: 0;"
+      ),
+
+      # Logo
+      tags$img(
+        src = "logo.svg",
+        style = "width: 110px;"
+      )
+    ),
 
     card(
       card_header(
