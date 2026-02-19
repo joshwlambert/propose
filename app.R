@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyFeedback)
 library(bslib)
 library(bsicons)
 library(ringbp)
@@ -52,6 +53,7 @@ ui <- page_navbar(
   nav_panel(
     title = "Explore",
     icon = bs_icon("sliders"),
+    useShinyFeedback(),
 
     # CSS to add margin around accordions
     tags$head(
@@ -512,7 +514,76 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbarid", selected = "Explore")
   })
 
+
+# User-input checking with feedback ---------------------------------------
+  observeEvent(input$community_r0, {
+    # prevent crashing when the numericInput is empty (value is NA)
+    req(!is.na(input$community_r0))
+    if (input$community_r0 < 0) {
+      showFeedbackDanger(
+        "community_r0",
+        text = "Error: Community R0 cannot be negative."
+      )
+    } else {
+      hideFeedback("community_r0")
+    }
+  })
+
+  observeEvent(input$isolated_r0, {
+    # prevent crashing when the numericInput is empty (value is NA)
+    req(!is.na(input$isolated_r0))
+    if (input$isolated_r0 < 0) {
+      showFeedbackDanger(
+        "isolated_r0",
+        text = "Error: Isolated R0 cannot be negative."
+      )
+    } else {
+      hideFeedback("isolated_r0")
+    }
+  })
+
+  observeEvent(input$asymptomatic, {
+    # prevent crashing when the numericInput is empty (value is NA)
+    req(!is.na(input$asymptomatic))
+    if (input$asymptomatic < 0 || input$asymptomatic > 1) {
+      showFeedbackDanger(
+        "asymptomatic",
+        text = "Error: Probability of asymptomatic cases must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("asymptomatic")
+    }
+  })
+
+  observeEvent(input$presymptomatic_transmission, {
+    # prevent crashing when the numericInput is empty (value is NA)
+    req(!is.na(input$presymptomatic_transmission))
+    if (input$presymptomatic_transmission < 0 || input$presymptomatic_transmission > 1) {
+      showFeedbackDanger(
+        "presymptomatic_transmission",
+        text = "Error: Probability of presymptomatic transmission cases must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("presymptomatic_transmission")
+    }
+  })
+
+  observeEvent(input$symptomatic_ascertained, {
+    # prevent crashing when the numericInput is empty (value is NA)
+    req(!is.na(input$symptomatic_ascertained))
+    if (input$symptomatic_ascertained < 0 || input$symptomatic_ascertained > 1) {
+      showFeedbackDanger(
+        "symptomatic_ascertained",
+        text = "Error: Probability of a symptomatic contact being ascertained (traced) must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("symptomatic_ascertained")
+    }
+  })
+
   community <- reactive({
+    req(input$community_r0 >= 0)
+    req(input$isolated_r0 >= 0)
     if (input$community_offspring_distribution == "nbinom") {
       \(n) rnbinom(n = n, mu = input$community_r0, size = input$community_disp)
     } else if (input$community_offspring_distribution == "pois") {
@@ -589,6 +660,9 @@ server <- function(input, output, session) {
   })
 
   scenario <- eventReactive(input$simulate, {
+    req(input$asymptomatic >= 0 && input$asymptomatic <= 1)
+    req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 1)
+    req(input$symptomatic_ascertained >= 0 && input$symptomatic_ascertained <= 1)
     scenario_sim(
       n = input$replicates,
       initial_cases = input$initial_cases,
