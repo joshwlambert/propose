@@ -581,6 +581,32 @@ server <- function(input, output, session) {
     }
   })
 
+  observeEvent(input$cap_max_days, {
+    # prevent crashing when the numericInput is empty (value is NA)
+    req(!is.na(input$cap_max_days))
+    if (input$cap_max_days < 1) {
+      showFeedbackDanger(
+        "cap_max_days",
+        text = "Error: The maximum number of days in the simulation must be at least 1."
+      )
+    } else {
+      hideFeedback("cap_max_days")
+    }
+  })
+
+  observeEvent(input$cap_cases, {
+    # prevent crashing when the numericInput is empty (value is NA)
+    req(!is.na(input$cap_cases))
+    if (input$cap_cases < 1) {
+      showFeedbackDanger(
+        "cap_cases",
+        text = "Error: The maximum number of cases in the simulation must be at least 1."
+      )
+    } else {
+      hideFeedback("cap_cases")
+    }
+  })
+
   community <- reactive({
     req(input$community_r0 >= 0)
     req(input$isolated_r0 >= 0)
@@ -663,6 +689,8 @@ server <- function(input, output, session) {
     req(input$asymptomatic >= 0 && input$asymptomatic <= 1)
     req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 1)
     req(input$symptomatic_ascertained >= 0 && input$symptomatic_ascertained <= 1)
+    req(input$cap_max_days >= 1)
+    req(input$cap_cases >= 1)
     scenario_sim(
       n = input$replicates,
       initial_cases = input$initial_cases,
