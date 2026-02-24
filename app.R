@@ -886,6 +886,9 @@ server <- function(input, output, session) {
     )
   )
 
+  # track scenarios being compared
+  scenarios <- reactiveValues(s1 = NULL, s2 = NULL, count = 0)
+
   # We use eventReactive so the UI only generates when the button is clicked
   output$compare_ui <- renderUI({
 
@@ -1031,10 +1034,15 @@ server <- function(input, output, session) {
           numericInput("cap_cases", "Maximum number of cases:", value = 5000)
         ),
         open = FALSE
+      ),
+      actionButton(
+        "submit_scenario",
+        "Submit Scenario",
+        class = "btn-lg",
+        style = "background-color: #000080; color: white; border: none; padding: 10px 30px;"
       )
     )
   })
-
 
   output$ringbp_version <- renderText(paste0("v", packageVersion("ringbp")))
   output$propose_citation <- renderPrint(citation(package = "propose"))
