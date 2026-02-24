@@ -227,7 +227,8 @@ ui <- page_navbar(
             title = "Simulation controls: ",
             icon = bs_icon("gear-wide-connected"),
             numericInput("cap_max_days", "Maximum number of days:", value = 100),
-            numericInput("cap_cases", "Maximum number of cases:", value = 5000)
+            numericInput("cap_cases", "Maximum number of cases:", value = 5000),
+            numericInput("seed", "Seed for simulation model", value = NA_integer_)
           ),
           open = FALSE
         )
@@ -837,6 +838,14 @@ server <- function(input, output, session) {
     req(input$symptomatic_ascertained >= 0 && input$symptomatic_ascertained <= 1)
     req(input$cap_max_days >= 1)
     req(input$cap_cases >= 1)
+
+    # default to random seed if not specified by user
+    if (is.na(input$seed)) {
+      set.seed(runif(n = 1, min = 1, max = 1e5))
+    } else {
+      set.seed(input$seed)
+    }
+
     scenario_sim(
       n = input$replicates,
       initial_cases = input$initial_cases,
