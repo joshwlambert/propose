@@ -8,27 +8,7 @@ about_ui <- function(id) {
   ns <- NS(id)
 
   tagList(
-    tags$div(
-      style = "
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    ",
-
-      # Title (styled like titlePanel)
-      tags$h2(
-        class = "title",
-        "About",
-        style = "margin: 0;"
-      ),
-
-      # Logo
-      tags$img(
-        src = "logo.svg",
-        style = "width: 110px;"
-      )
-    ),
+    page_title("About"),
 
     tags$div(
       markdown(
