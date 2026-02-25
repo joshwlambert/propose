@@ -47,16 +47,7 @@ compare_server <- function(id) {
       tagList(
         offspring_input(ns = ns),
         delays_input(ns = ns),
-        accordion(
-          accordion_panel(
-            title = "Event probabilities:",
-            icon = bs_icon("person-fill-gear"),
-            numericInput("asymptomatic", "Probability asymptomatic:", value = 0.1),
-            numericInput("presymptomatic_transmission", "Probability of presymptomatic transmission:", value = 0.1),
-            numericInput("symptomatic_ascertained", "Probability of contact traced:", value = 0.8)
-          ),
-          open = FALSE
-        ),
+        event_prob_input(ns = ns),
         accordion(
           accordion_panel(
             title = "Interventions:",
