@@ -291,47 +291,7 @@ ui <- page_navbar(
   nav_panel(
     title = "Citation",
     icon = bs_icon("feather"),
-
-    tags$div(
-      style = "
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    ",
-
-      # Title (styled like titlePanel)
-      tags$h2(
-        class = "title",
-        "Citation",
-        style = "margin: 0;"
-      ),
-
-      # Logo
-      tags$img(
-        src = "logo.svg",
-        style = "width: 110px;"
-      )
-    ),
-
-    tags$div(
-      markdown(
-        "When using the `{propose}` Shiny app please cite the work using:"
-      )
-    ),
-    verbatimTextOutput("propose_citation"),
-    tags$div(
-      markdown(
-        "If you are additionally using the `{ringbp}` R package or would also
-        like to cite the package with the epidemiological model powering
-        `{propose}`, please use:"
-      )
-    ),
-    verbatimTextOutput("ringbp_citation"),
-    tags$div(
-      tags$h3("Papers using {ringbp}")
-    ),
-    verbatimTextOutput("paper_citations"),
+    citation_ui("citation")
   ),
   nav_panel(
     title = "Funding",
@@ -940,9 +900,7 @@ server <- function(input, output, session) {
   })
 
   about_server("about")
-  output$propose_citation <- renderPrint(citation(package = "propose"))
-  output$ringbp_citation <- renderPrint(citation(package = "ringbp"))
-  output$paper_citations <- renderPrint(bibtex::read.bib(file.path("www", "references.bib")))
+  citation_server("citation")
 }
 
 shinyApp(ui = ui, server = server)
