@@ -1,3 +1,9 @@
+#' Shiny UI for ***Contact Us*** page
+#'
+#' @inheritParams shiny::moduleServer
+#'
+#' @return Output from [shiny::tagList()].
+#' @keywords internal
 contact_ui <- function(id) {
   ns <- NS(id)
 
