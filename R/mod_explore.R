@@ -31,14 +31,7 @@ explore_ui <- function(id) {
         offspring_input(ns = ns),
         delays_input(ns = ns),
         event_prob_input(ns = ns),
-        accordion(
-          accordion_panel(
-            title = "Interventions:",
-            icon = bs_icon("shield-shaded"),
-            checkboxInput(ns("quarantine"), "Quarantine", value = FALSE)
-          ),
-          open = FALSE
-        ),
+        intervention_input(ns = ns),
         accordion(
           accordion_panel(
             title = "Simulation controls: ",
