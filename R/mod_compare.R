@@ -30,6 +30,10 @@ compare_ui <- function(id) {
 #' @keywords internal
 compare_server <- function(id) {
   moduleServer(id, function(input, output, session) {
+
+    # extract namespace from session in dynamic UI
+    ns <- session$ns
+
     # track scenarios being compared
     scenarios <- reactiveValues(s1 = NULL, s2 = NULL, count = 0)
 
@@ -41,60 +45,7 @@ compare_server <- function(id) {
 
       # Wrap multiple inputs in a tagList
       tagList(
-
-        accordion(
-          accordion_panel(
-            title = "Offspring distribution parameters:",
-            icon = bs_icon("diagram-3-fill"),
-            selectInput(
-              inputId = "community_offspring_distribution",
-              label = "Community Offspring Distribution",
-              choices = list(
-                "Negative Binomial" = "nbinom",
-                "Poisson" = "pois",
-                "Geometric" = "geom",
-                "Custom" = "custom"
-              )
-            ),
-            conditionalPanel(
-              condition = "input.community_offspring_distribution == 'nbinom'",
-              numericInput("community_r0", "Community R0:", value = 2),
-              numericInput("community_disp", "Community Dispersion:", value = 1),
-            ),
-            conditionalPanel(
-              condition = "input.community_offspring_distribution == 'pois'",
-              numericInput("community_r0", "Community R0:", value = 2)
-            ),
-            selectInput(
-              inputId = "isolated_offspring_distribution",
-              label = "Isolated Offspring Distribution",
-              choices = list(
-                "Negative Binomial" = "nbinom",
-                "Poisson" = "pois",
-                "Geometric" = "geom",
-                "Custom" = "custom"
-              )
-            ),
-            conditionalPanel(
-              condition = "input.isolated_offspring_distribution == 'nbinom'",
-              numericInput("isolated_r0", "Isolated R0:", value = 0),
-              numericInput("isolated_disp", "Isolated Dispersion:", value = 1),
-            ),
-            conditionalPanel(
-              condition = "input.isolated_offspring_distribution == 'pois'",
-              numericInput("isolated_r0", "Isolated R0:", value = 0)
-            ),
-            conditionalPanel(
-              condition = "input.isolated_offspring_distribution == 'geom'",
-              numericInput("isolated_r0", "Isolated R0:", value = 0)
-            ),
-            conditionalPanel(
-              condition = "input.isolated_offspring_distribution == 'custom'",
-              textInput("isolated_offspring", "Isolated Offspring Distribution:")
-            )
-          ),
-          open = FALSE
-        ),
+        offspring_input(ns = ns),
         accordion(
           accordion_panel(
             title = "Delay distribution parameters:",
