@@ -46,63 +46,7 @@ compare_server <- function(id) {
       # Wrap multiple inputs in a tagList
       tagList(
         offspring_input(ns = ns),
-        accordion(
-          accordion_panel(
-            title = "Delay distribution parameters:",
-            icon = bs_icon("hourglass-split"),
-            selectInput(
-              inputId = "incubation_distribution",
-              label = "Incubation Period Distribution",
-              choices = list(
-                "Lognormal" = "lnorm",
-                "Gamma" = "gamma",
-                "Weibull" = "weibull",
-                "Custom" = "custom"
-              )
-            ),
-            conditionalPanel(
-              condition = "input.incubation_distribution == 'lnorm'",
-              numericInput("incubation_meanlog", "Incubation period meanlog:", value = 1.5),
-              numericInput("incubation_sdlog", "Incubation period sdlog:", value = 0.4),
-            ),
-            conditionalPanel(
-              condition = "input.incubation_distribution == 'gamma'",
-              numericInput("incubation_shape", "Incubation period shape:", value = 2),
-              numericInput("incubation_scale", "Incubation period scale:", value = 1),
-            ),
-            conditionalPanel(
-              condition = "input.incubation_distribution == 'weibull'",
-              numericInput("incubation_shape", "Incubation period shape:", value = 2),
-              numericInput("incubation_scale", "Incubation period scale:", value = 1),
-            ),
-            selectInput(
-              inputId = "onset_to_isolation_distribution",
-              label = "Onset-to-isolation Distribution",
-              choices = list(
-                "Lognormal" = "lnorm",
-                "Gamma" = "gamma",
-                "Weibull" = "weibull",
-                "Custom" = "custom"
-              )
-            ),
-            conditionalPanel(
-              condition = "input.onset_to_isolation_distribution == 'lnorm'",
-              numericInput("onset_to_isolation_meanlog", "Onset-to-isolation meanlog:", value = 2),
-              numericInput("onset_to_isolation_sdlog", "Onset-to-isolation sdlog:", value = 0.5)
-            ),
-            conditionalPanel(
-              condition = "input.onset_to_isolation_distribution == 'gamma'",
-              numericInput("onset_to_isolation_shape", "Onset-to-isolation shape:", value = 2),
-              numericInput("onset_to_isolation_scale", "Onset-to-isolation scale:", value = 1),
-            ),
-            conditionalPanel(
-              condition = "input.onset_to_isolation_distribution == 'weibull'",
-              numericInput("onset_to_isolation_shape", "Onset-to-isolation shape:", value = 2),
-              numericInput("onset_to_isolation_scale", "Onset-to-isolation scale:", value = 1),
-            )
-          ),
-          open = FALSE
-        ),
+        delays_input(ns = ns),
         accordion(
           accordion_panel(
             title = "Event probabilities:",
