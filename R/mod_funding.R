@@ -100,7 +100,7 @@ funding_ui <- function(id) {
 
 # The funding page currently has no server logic
 # funding_server <- function(id) {
-#  moduleServer(id, function(input, output, session)) {
+#  moduleServer(id, function(input, output, session) {
 #    # Insert funding server logic here
-#  }
+#  })
 # }
