@@ -49,15 +49,7 @@ compare_server <- function(id) {
         delays_input(ns = ns),
         event_prob_input(ns = ns),
         intervention_input(ns = ns),
-        accordion(
-          accordion_panel(
-            title = "Simulation controls: ",
-            icon = bs_icon("gear-wide-connected"),
-            numericInput("cap_max_days", "Maximum number of days:", value = 100),
-            numericInput("cap_cases", "Maximum number of cases:", value = 5000)
-          ),
-          open = FALSE
-        ),
+        sim_input(ns = ns),
         actionButton(
           "submit_scenario",
           "Submit Scenario",

@@ -32,16 +32,7 @@ explore_ui <- function(id) {
         delays_input(ns = ns),
         event_prob_input(ns = ns),
         intervention_input(ns = ns),
-        accordion(
-          accordion_panel(
-            title = "Simulation controls: ",
-            icon = bs_icon("gear-wide-connected"),
-            numericInput(ns("cap_max_days"), "Maximum number of days:", value = 100),
-            numericInput(ns("cap_cases"), "Maximum number of cases:", value = 5000),
-            numericInput(ns("seed"), "Seed for simulation model", value = NA_integer_)
-          ),
-          open = FALSE
-        )
+        sim_input(ns = ns)
       ),
       mainPanel(
         value_box(
