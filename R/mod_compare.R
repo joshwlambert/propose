@@ -53,6 +53,12 @@ compare_ui <- function(id) {
     ),
     card(
       card_header("Comparison Results"),
+
+      card_body(
+        "The differences between the outbreak scenarios are:",
+        textOutput(ns("parameter_diff"))
+      ),
+
       layout_columns(
         value_box(
           title = "Difference in mean probability of outbreak control (scenario 1 - scenario 2)",
@@ -288,5 +294,9 @@ compare_server <- function(id) {
     })
     output$cumulative_diff <- renderText(round(scenario_diff()$cumulative_diff, 2))
     output$extinct_diff <- renderText(scenario_diff()$extinct_diff)
+
+    output$parameter_diff <- renderText({
+      if (input$s1_quarantine == input$s2_quarantine) "Nothing" else "Quarantine"
+    })
   })
 }
