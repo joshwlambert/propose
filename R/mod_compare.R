@@ -52,13 +52,11 @@ compare_ui <- function(id) {
       )
     ),
     card(
+      card_header("Parameter Comparison"),
+      uiOutput(ns("diff_viewer"))
+    ),
+    card(
       card_header("Comparison Results"),
-
-      card_body(
-        "The differences between the outbreak scenarios are:",
-        textOutput(ns("parameter_diff"))
-      ),
-
       layout_columns(
         value_box(
           title = "Difference in mean probability of outbreak control (scenario 1 - scenario 2)",
@@ -295,8 +293,80 @@ compare_server <- function(id) {
     output$cumulative_diff <- renderText(round(scenario_diff()$cumulative_diff, 2))
     output$extinct_diff <- renderText(scenario_diff()$extinct_diff)
 
-    output$parameter_diff <- renderText({
-      if (input$s1_quarantine == input$s2_quarantine) "Nothing" else "Quarantine"
+    output$diff_viewer <- renderUI({
+      # compare parameters between scenarios
+      # (list of lists to map the "label" to the input IDs)
+      params <- list(
+        list(
+          label = "Community Offspring Dist.",
+          s1 = input$s1_community_offspring_distribution,
+          s2 = input$s2_community_offspring_distribution
+        ),
+        list(
+          label = "Isolated Offspring Dist.",
+          s1 = input$s1_isolated_offspring_distribution,
+          s2 = input$s2_isolated_offspring_distribution
+        ),
+        list(
+          label = "Incubation Period",
+          s1 = input$s1_incubation_distribution,
+          s2 = input$s2_incubation_distribution
+        ),
+        list(
+          label = "Proportion asymptomatic",
+          s1 = input$s1_asymptomatic,
+          s2 = input$s2_asymptomatic
+        ),
+        list(
+          label = "Proportion of presymptomatic transmission",
+          s1 = input$s1_presymptomatic_transmission,
+          s2 = input$s2_presymptomatic_transmission
+        ),
+        list(
+          label = "Proportion of contacts traced",
+          s1 = input$s1_symptomatic_ascertained,
+          s2 = input$s2_symptomatic_ascertained
+        ),
+        list(
+          label = "Quarantine",
+          s1 = input$s1_quarantine,
+          s2 = input$s2_quarantine
+        )
+      )
+
+      all_identical <- all(sapply(params, function(p) p$s1 == p$s2))
+
+      if (all_identical) {
+        return(
+          card(
+            class = "bg-light border-0",
+            card_body(
+              class = "text-center",
+              bsicons::bs_icon("exclamation-square"),
+              p("Parameters of scenario 1 and scenario 2 are identical", class = "lead mb-0")
+            )
+          )
+        )
+      }
+
+      # Map over the list to create the UI rows
+      rows <- lapply(params, function(p) {
+
+        if (p$s1 != p$s2) {
+          # two columns
+          tagList(
+            p$label, # Row Label
+            layout_columns(
+              card(card_header("Scenario 1"), p$s1, class = "border-primary"),
+              card(card_header("Scenario 2"), p$s2, class = "border-primary"),
+              col_widths = c(6, 6)
+            )
+          )
+        }
+      })
+
+      # Return the list of rows inside a container
+      div(rows)
     })
   })
 }
