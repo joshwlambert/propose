@@ -66,6 +66,11 @@ ui <- page_navbar(
     about_ui("about")
   ),
   nav_panel(
+    title = "FAQs",
+    icon = bs_icon("question-square"),
+    faq_ui("faq")
+  ),
+  nav_panel(
     title = "Citation",
     icon = bs_icon("feather"),
     citation_ui("citation")
