@@ -25,37 +25,8 @@ explore_ui <- function(id) {
 
     sidebarLayout(
       sidebarPanel(
-        card(
-          card_header(
-            "Number of simulation replicates:",
-            tooltip(
-              bsicons::bs_icon("info-circle"),
-              "This controls the number of independent outbreaks to simulate.",
-              id = "tooltip",
-            )
-          ),
-          sliderInput(
-            ns("replicates"),
-            label = "Number of simulation replicates",
-            value = 5, min = 1, max = 100
-          )
-        ),
-        card(
-          card_header(
-            "Number of initial cases:",
-            tooltip(
-              bsicons::bs_icon("info-circle"),
-              "This controls the number of initial infectious individuals.
-              Each individual seeds an independent outbreak.",
-              id = "tooltip",
-            )
-          ),
-          sliderInput(
-            ns("initial_cases"),
-            label = "Number of simulation replicates",
-            value = 5, min = 1, max = 100
-          )
-        ),
+        replicates_input(ns = ns),
+        initial_cases_input(ns = ns),
         actionButton(ns("simulate"), "Simulate outbreak"),
         offspring_input(ns = ns),
         delays_input(ns = ns),

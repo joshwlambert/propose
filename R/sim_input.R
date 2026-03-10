@@ -27,3 +27,55 @@ sim_input <- function(ns, ...) {
     open = FALSE
   )
 }
+
+#' Generate [bslib::card()] with input for number of simulation replicates
+#'
+#' @param ns A namespace created with [shiny::NS()].
+#' @param ... [dots] Not used, will throw a warning if arguments are supplied.
+#'
+#' @return A [bslib::card()] object.
+#' @keywords internal
+replicates_input <- function(ns, ...) {
+  card(
+    card_header(
+      "Number of simulation replicates:",
+      tooltip(
+        bsicons::bs_icon("info-circle"),
+        "This controls the number of independent outbreaks to simulate.",
+        id = "tooltip",
+      )
+    ),
+    sliderInput(
+      ns("replicates"),
+      label = "",
+      value = 5, min = 1, max = 100
+    )
+  )
+}
+
+#' Generate [bslib::card()] with input for number of initial cases in the
+#' simulation
+#'
+#' @param ns A namespace created with [shiny::NS()].
+#' @param ... [dots] Not used, will throw a warning if arguments are supplied.
+#'
+#' @return A [bslib::card()] object.
+#' @keywords internal
+initial_cases_input <- function(ns, ...) {
+  card(
+    card_header(
+      "Number of initial cases:",
+      tooltip(
+        bsicons::bs_icon("info-circle"),
+        "This controls the number of initially infectious individuals.
+              Each individual seeds an independent outbreak.",
+        id = "tooltip",
+      )
+    ),
+    sliderInput(
+      ns("initial_cases"),
+      label = "",
+      value = 5, min = 1, max = 100
+    )
+  )
+}

@@ -25,12 +25,8 @@ compare_ui <- function(id) {
     card(
       card_header("Outbreak Scenario simulation controls"),
       layout_columns(
-        card(
-          sliderInput(ns("replicates"), "Number of simulation replicates:", min = 1, max = 100, value = 10),
-        ),
-        card(
-          sliderInput(ns("initial_cases"), "Number of initial cases:", min = 1, max = 50, value = 5)
-        )
+        replicates_input(ns = ns),
+        initial_cases_input(ns = ns)
       ),
       sim_input(ns = ns)
     ),
