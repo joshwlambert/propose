@@ -158,7 +158,7 @@ explore_server <- function(id) {
       } else if (input$community_offspring_distribution == "pois") {
         \(n) rpois(n = n, lambda = input$community_r0)
       } else if (input$community_offspring_distribution == "geom") {
-        \(n) rgeom(n = n, prob = 1 / input$community_r0)
+        \(n) rgeom(n = n, prob = 1 / (1 + input$community_r0))
       }
     })
 
@@ -168,7 +168,7 @@ explore_server <- function(id) {
       } else if (input$isolated_offspring_distribution == "pois") {
         \(n) rpois(n = n, lambda = input$isolated_r0)
       } else if (input$isolated_offspring_distribution == "geom") {
-        \(n) rgeom(n = n, prob = 1 / input$isolated_r0)
+        \(n) rgeom(n = n, prob = 1 / (1 + input$isolated_r0))
       }
     })
 
