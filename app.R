@@ -84,6 +84,16 @@ ui <- page_navbar(
     title = "Contact Us",
     icon = bs_icon("envelope"),
     contact_ui("contact")
+  ),
+  footer = tags$div(
+    style = "padding: 20px; border-top: 1px solid #eee; margin-top: 50px; text-align: center; color: #888;",
+    tags$p("© 2026 {propose} project. All rights reserved."),
+    tags$p("Powered by {ringbp}"),
+    tags$a(
+      href = "https://github.com/joshwlambert/propose",
+      bs_icon("github", size = "2rem", title = "View source on GitHub"),
+      style = "color: #24292e; text-decoration: none;"
+    )
   )
 )
 
