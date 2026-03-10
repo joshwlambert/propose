@@ -33,6 +33,11 @@ offspring_input <- function(ns, ...) {
         numericInput(ns("community_r0"), "Community R0:", value = 2),
         ns = ns
       ),
+      conditionalPanel(
+        condition = "input.community_offspring_distribution == 'geom'",
+        numericInput(ns("community_r0"), "Community R0:", value = 2),
+        ns = ns
+      ),
       selectInput(
         inputId = ns("isolated_offspring_distribution"),
         label = "Isolated Offspring Distribution",
