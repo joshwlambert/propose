@@ -19,8 +19,7 @@ delays_input <- function(ns, ...) {
         choices = list(
           "Lognormal" = "lnorm",
           "Gamma" = "gamma",
-          "Weibull" = "weibull",
-          "Custom" = "custom"
+          "Weibull" = "weibull"
         )
       ),
       conditionalPanel(
@@ -47,8 +46,7 @@ delays_input <- function(ns, ...) {
         choices = list(
           "Lognormal" = "lnorm",
           "Gamma" = "gamma",
-          "Weibull" = "weibull",
-          "Custom" = "custom"
+          "Weibull" = "weibull"
         )
       ),
       conditionalPanel(

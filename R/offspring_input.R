@@ -18,8 +18,7 @@ offspring_input <- function(ns, ...) {
         choices = list(
           "Negative Binomial" = "nbinom",
           "Poisson" = "pois",
-          "Geometric" = "geom",
-          "Custom" = "custom"
+          "Geometric" = "geom"
         )
       ),
       conditionalPanel(
@@ -44,8 +43,7 @@ offspring_input <- function(ns, ...) {
         choices = list(
           "Negative Binomial" = "nbinom",
           "Poisson" = "pois",
-          "Geometric" = "geom",
-          "Custom" = "custom"
+          "Geometric" = "geom"
         )
       ),
       conditionalPanel(
@@ -62,11 +60,6 @@ offspring_input <- function(ns, ...) {
       conditionalPanel(
         condition = "input.isolated_offspring_distribution == 'geom'",
         numericInput(ns("isolated_r0"), "Isolated R0:", value = 0),
-        ns = ns
-      ),
-      conditionalPanel(
-        condition = "input.isolated_offspring_distribution == 'custom'",
-        textInput(ns("isolated_offspring"), "Isolated Offspring Distribution:"),
         ns = ns
       )
     ),
