@@ -111,16 +111,16 @@ explore_server <- function(id) {
       }
     })
 
-    observeEvent(input$symptomatic_ascertained, {
+    observeEvent(input$symptomatic_traced, {
       # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$symptomatic_ascertained))
-      if (input$symptomatic_ascertained < 0 || input$symptomatic_ascertained > 1) {
+      req(!is.na(input$symptomatic_traced))
+      if (input$symptomatic_traced < 0 || input$symptomatic_traced > 1) {
         showFeedbackDanger(
-          "symptomatic_ascertained",
-          text = "Error: Probability of a symptomatic contact being ascertained (traced) must be between 0 and 1."
+          "symptomatic_traced",
+          text = "Error: Probability of a symptomatic contact being traced must be between 0 and 1."
         )
       } else {
-        hideFeedback("symptomatic_ascertained")
+        hideFeedback("symptomatic_traced")
       }
     })
 
@@ -231,7 +231,7 @@ explore_server <- function(id) {
     scenario <- eventReactive(input$simulate, {
       req(input$asymptomatic >= 0 && input$asymptomatic <= 1)
       req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 1)
-      req(input$symptomatic_ascertained >= 0 && input$symptomatic_ascertained <= 1)
+      req(input$symptomatic_traced >= 0 && input$symptomatic_traced <= 1)
       req(input$cap_max_days >= 1)
       req(input$cap_cases >= 1)
 
@@ -250,7 +250,7 @@ explore_server <- function(id) {
         event_probs = event_prob_opts(
           asymptomatic = input$asymptomatic,
           presymptomatic_transmission = input$presymptomatic_transmission,
-          symptomatic_ascertained = input$symptomatic_ascertained
+          symptomatic_traced = input$symptomatic_traced
         ),
         interventions = intervention_opts(quarantine = input$quarantine),
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)

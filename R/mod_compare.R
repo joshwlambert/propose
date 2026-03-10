@@ -245,11 +245,11 @@ compare_server <- function(id) {
     scenario_diff <- eventReactive(input$compare, {
       req(input$s1_asymptomatic >= 0 && input$s1_asymptomatic <= 1)
       req(input$s1_presymptomatic_transmission >= 0 && input$s1_presymptomatic_transmission <= 1)
-      req(input$s1_symptomatic_ascertained >= 0 && input$s1_symptomatic_ascertained <= 1)
+      req(input$s1_symptomatic_traced >= 0 && input$s1_symptomatic_traced <= 1)
 
       req(input$s2_asymptomatic >= 0 && input$s2_asymptomatic <= 1)
       req(input$s2_presymptomatic_transmission >= 0 && input$s2_presymptomatic_transmission <= 1)
-      req(input$s2_symptomatic_ascertained >= 0 && input$s2_symptomatic_ascertained <= 1)
+      req(input$s2_symptomatic_traced >= 0 && input$s2_symptomatic_traced <= 1)
 
       req(input$cap_max_days >= 1)
       req(input$cap_cases >= 1)
@@ -262,7 +262,7 @@ compare_server <- function(id) {
         event_probs = event_prob_opts(
           asymptomatic = input$s1_asymptomatic,
           presymptomatic_transmission = input$s1_presymptomatic_transmission,
-          symptomatic_ascertained = input$s1_symptomatic_ascertained
+          symptomatic_traced = input$s1_symptomatic_traced
         ),
         interventions = intervention_opts(quarantine = input$s1_quarantine),
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
@@ -276,7 +276,7 @@ compare_server <- function(id) {
         event_probs = event_prob_opts(
           asymptomatic = input$s2_asymptomatic,
           presymptomatic_transmission = input$s2_presymptomatic_transmission,
-          symptomatic_ascertained = input$s2_symptomatic_ascertained
+          symptomatic_traced = input$s2_symptomatic_traced
         ),
         interventions = intervention_opts(quarantine = input$s2_quarantine),
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
@@ -324,8 +324,8 @@ compare_server <- function(id) {
         ),
         list(
           label = "Proportion of contacts traced",
-          s1 = input$s1_symptomatic_ascertained,
-          s2 = input$s2_symptomatic_ascertained
+          s1 = input$s1_symptomatic_traced,
+          s2 = input$s2_symptomatic_traced
         ),
         list(
           label = "Quarantine",

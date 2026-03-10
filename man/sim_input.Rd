@@ -25,7 +25,5 @@ is set to \code{NA} which is interpreted in the server as choosing a random
 seed for each time the simulation is run. A single \code{numeric} can be set
 to specify the seed.
 }
-
-\code{quarantine} argument in \code{\link[ringbp:intervention_opts]{ringbp::intervention_opts()}}
 }
 \keyword{internal}

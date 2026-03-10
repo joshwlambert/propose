@@ -3,7 +3,7 @@
 \name{event_prob_input}
 \alias{event_prob_input}
 \title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising \code{asymptomatic},
-\code{presymptomatic_transmission} and \code{symptomatic_ascertained} arguments in
+\code{presymptomatic_transmission} and \code{symptomatic_traced} arguments in
 \code{\link[ringbp:event_prob_opts]{ringbp::event_prob_opts()}}}
 \usage{
 event_prob_input(ns, ...)
@@ -18,7 +18,7 @@ A \code{\link[bslib:accordion]{bslib::accordion()}} object.
 }
 \description{
 Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising \code{asymptomatic},
-\code{presymptomatic_transmission} and \code{symptomatic_ascertained} arguments in
+\code{presymptomatic_transmission} and \code{symptomatic_traced} arguments in
 \code{\link[ringbp:event_prob_opts]{ringbp::event_prob_opts()}}
 }
 \keyword{internal}
