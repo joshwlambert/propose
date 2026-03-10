@@ -271,7 +271,7 @@ explore_server <- function(id) {
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
       )
     })
-    output$extinct <- renderText(extinct_prob(scenario()))
+    output$extinct <- renderText(signif(extinct_prob(scenario()), digits = 2))
     output$cumulative_cases <- renderPlot({
       if (input$plot_style == "indiv") {
         tinyplot(
