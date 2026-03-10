@@ -41,9 +41,24 @@ explore_ui <- function(id) {
           showcase = bs_icon("virus"),
           theme = "bg-gradient-blue-purple"
         ),
-        navset_card_underline(
-          nav_panel("Cumulative cases", plotOutput(ns("cumulative_cases"))),
-          nav_panel("Weekly cases", plotOutput(ns("weekly_cases")))
+
+        card(
+          card_header(
+            class = "d-flex justify-content-between align-items-center",
+            "Outbreak Projections",
+            div(class = "custom-pill-toggle",
+                radioButtons(
+                  inputId = ns("plot_style"),
+                  label = NULL,
+                  choices = c("Trajectories" = "indiv", "Mean & CI" = "summary"),
+                  inline = TRUE
+                )
+            )
+          ),
+          navset_card_underline(
+            nav_panel("Cumulative cases", plotOutput(ns("cumulative_cases"))),
+            nav_panel("Weekly cases", plotOutput(ns("weekly_cases")))
+          )
         )
       )
     )
@@ -257,29 +272,79 @@ explore_server <- function(id) {
       )
     })
     output$extinct <- renderText(extinct_prob(scenario()))
-    output$cumulative_cases <- renderPlot(
-      tinyplot(
-        cumulative ~ week | as.factor(sim),
-        data = scenario(),
-        type = "l",
-        lwd = 3,
-        ylab = "Cumulative number of cases",
-        xlab = "Week",
-        legend = FALSE,
-        theme = "clean"
-      )
+    output$cumulative_cases <- renderPlot({
+      if (input$plot_style == "indiv") {
+        tinyplot(
+          cumulative ~ week | as.factor(sim),
+          data = scenario(),
+          type = "l",
+          lwd = 3,
+          ylab = "Cumulative number of cases",
+          xlab = "Week",
+          legend = FALSE,
+          theme = "clean"
+        )
+      } else {
+        # aggregate data: calculate mean, lower CI (2.5%), and upper CI (97.5%)
+        summ <- aggregate(cumulative ~ week, data = scenario(), FUN = function(x) {
+          c(avg = mean(x), lwr = quantile(x, 0.025), upr = quantile(x, 0.975))
+        })
+        # convert matrix output to columns
+        summ <- do.call(data.frame, summ)
+        names(summ) <- c("week", "mean", "lwr", "upr")
+
+        tinyplot(
+          mean ~ week,
+          data = summ,
+          type = "ribbon",
+          lwd = 3,
+          ymin = summ$lwr, # Define the bottom of the CI ribbon
+          ymax = summ$upr, # Define the top of the CI ribbon
+          fill = "skyblue",
+          col = "steelblue",
+          ylab = "Cumulative number of cases (Mean & 95% CI)",
+          xlab = "Week",
+          theme = "clean"
+        )
+      }
+    }
+
     )
-    output$weekly_cases <- renderPlot(
-      tinyplot(
-        weekly_cases ~ week | as.factor(sim),
-        data = scenario(),
-        type = "l",
-        lwd = 3,
-        ylab = "Number of cases per week",
-        xlab = "Week",
-        legend = FALSE,
-        theme = "clean"
-      )
+    output$weekly_cases <- renderPlot({
+      if (input$plot_style == "indiv") {
+        tinyplot(
+          weekly_cases ~ week | as.factor(sim),
+          data = scenario(),
+          type = "l",
+          lwd = 3,
+          ylab = "Number of cases per week",
+          xlab = "Week",
+          legend = FALSE,
+          theme = "clean"
+        )
+      } else {
+        # mean & CI
+        summ_w <- aggregate(weekly_cases ~ week, data = scenario(), FUN = function(x) {
+          c(mean = mean(x), lwr = quantile(x, 0.025), upr = quantile(x, 0.975))
+        })
+        summ_w <- do.call(data.frame, summ_w)
+        names(summ_w) <- c("week", "mean", "lwr", "upr")
+
+        tinyplot(
+          mean ~ week,
+          data = summ_w,
+          type = "ribbon",
+          lwd = 3,
+          ymin = summ_w$lwr,
+          ymax = summ_w$upr,
+          fill = "skyblue",
+          col = "steelblue",
+          ylab = "Weekly cases (Mean & 95% CI)",
+          xlab = "Week",
+          theme = "clean"
+        )
+      }
+    }
     )
   })
 }
