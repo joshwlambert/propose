@@ -87,7 +87,7 @@ ui <- page_navbar(
   ),
   footer = tags$div(
     style = "padding: 20px; border-top: 1px solid #eee; margin-top: 50px; text-align: center; color: #888;",
-    tags$p("© 2026 {propose} project. All rights reserved."),
+    tags$p("© 2026 {propose} project."),
     tags$p("Powered by {ringbp}"),
     tags$a(
       href = "https://github.com/joshwlambert/propose",
