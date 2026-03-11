@@ -9,6 +9,7 @@ explore_ui <- function(id) {
 
   tagList(
     useShinyFeedback(),
+    use_waiter(),
 
     # CSS to add margin around accordions
     tags$head(
@@ -271,8 +272,18 @@ explore_server <- function(id) {
       removeModal()
     })
 
+    loading <- tagList(
+      spin_hexdots(),
+      h3("Simulating Outbreaks.", style = "color: #000080; margin-top: 40px;")
+    )
+
     scenario <- eventReactive(simulate(), {
       req(simulate() > 0)
+      waiter_show(
+        html = loading,
+        color = transparent(0.75)
+      )
+      on.exit(waiter_hide())
       req(input$asymptomatic >= 0 && input$asymptomatic <= 1)
       req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 1)
       req(input$symptomatic_traced >= 0 && input$symptomatic_traced <= 1)

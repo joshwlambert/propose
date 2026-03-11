@@ -5,6 +5,7 @@ library(bsicons)
 library(ringbp)
 library(tinyplot)
 library(bibtex)
+library(waiter)
 
 ui <- page_navbar(
   title = actionLink("go_home", "{propose}", style = "color: inherit; text-decoration: none;"),
