@@ -73,6 +73,9 @@ explore_ui <- function(id) {
 #' @keywords internal
 explore_server <- function(id) {
   moduleServer(id, function(input, output, session) {
+
+    ns <- session$ns
+
     # User-input checking with feedback ---------------------------------------
     observeEvent(input$community_r0, {
       # prevent crashing when the numericInput is empty (value is NA)
@@ -243,7 +246,33 @@ explore_server <- function(id) {
       )
     })
 
-    scenario <- eventReactive(input$simulate, {
+    simulate <- reactiveVal(0L)
+
+    observeEvent(input$simulate, {
+      if (input$replicates > 50) {
+        showModal(modalDialog(
+          title = "Warning: Running lots of replicates!",
+          "This may take a considerable amount of time to simulate.",
+          footer = tagList(
+            actionButton(ns("cancel"), "Cancel"),
+            actionButton(ns("ok"), "Run", class = "btn btn-danger")
+          )
+        ))
+      } else {
+        simulate(simulate() + 1L)
+      }
+    })
+
+    observeEvent(input$ok, {
+      simulate(simulate() + 1L)
+      removeModal()
+    })
+    observeEvent(input$cancel, {
+      removeModal()
+    })
+
+    scenario <- eventReactive(simulate(), {
+      req(simulate() > 0)
       req(input$asymptomatic >= 0 && input$asymptomatic <= 1)
       req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 1)
       req(input$symptomatic_traced >= 0 && input$symptomatic_traced <= 1)
