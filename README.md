@@ -3,6 +3,14 @@
 > [!WARNING]
 > Under active development
 
+## Install {propose}
+
+```r
+# check whether {pak} is installed
+if (!require("pak")) install.packages("pak")
+pak::pak("joshwlambert/propose")
+```
+
 ## {ringbp} R package
 
 The epidemic simulation model used in `{propose}` is from the [`{ringbp}` R package](https://github.com/epiforecasts/ringbp). `{ringbp}` is an open source R package hosted on the [epiforecasts GitHub organisation](https://github.com/epiforecasts) and can be installed from GitHub using:
