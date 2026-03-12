@@ -17,3 +17,10 @@ pak::pak("epiforecasts/ringbp")
 
 To report a bug please open an
 [issue](https://github.com/joshwlambert/propose/issues/new).
+
+## Related projects
+
+* [DAEDALUS Explore](https://daedalus.jameel-institute.org/) and the epidemiological model [DAEDALUS](https://jameel-institute.github.io/daedalus/) are similar to `{propose}` and its epidemiological model `{ringbp}`. DAEDALUS is an integrated health-economics model, to model the health, education, and economic costs of directly transmitted respiratory virus pandemics, under different scenarios of prior vaccine investment, policy interventions, and public behavioural change. The website app allows for running scenarios and comparing scenarios across countries, disease, responses, and other factors.
+
+* [exploreringbp](https://github.com/epiforecasts/exploreringbp/tree/master) is a Shiny app that was developed alongside the initial development of the `{ringbp}` package. It allowed for running scenarios under different parameterisations and plotting aspects of simulated outbreaks using `{ringbp}`. exploringringbp is not actively maintained and is not currently compatible with the recent updates in `{ringbp}`.
+
