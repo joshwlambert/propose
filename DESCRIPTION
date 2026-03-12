@@ -10,7 +10,7 @@ Authors@R: c(
            comment = c(ROR = "00a0jsq62"))
   )
 Description: A decision support tool for early epidemic or pandemic
-    individiual targeted intervention scenarios. Allows explorign the
+    individual targeted intervention scenarios. Allows exploring the
     {ringbp} model or analysing optimal response strategies.
 License: MIT + file LICENSE
 URL: https://github.com/joshwlambert/propose,
