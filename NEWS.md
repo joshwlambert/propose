@@ -1,3 +1,5 @@
+# propose (development version)
+
 # propose v0.1.0
 
 First minor release of `{propose}`, a Shiny application for exploring outbreak control with targeted, individual-level interventions using the branching process simulations from `{ringbp}`.

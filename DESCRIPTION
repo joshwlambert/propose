@@ -2,7 +2,7 @@ Package: propose
 Title: A Shiny app for proposing and evaluating targeted intervention
     scenarios in an emerging epidemic or pandemic using the {ringbp} R
     package
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person("Joshua W.", "Lambert", , "joshua.lambert@lshtm.ac.uk", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-5218-3046")),
