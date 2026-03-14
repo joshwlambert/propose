@@ -3,6 +3,12 @@
 > [!WARNING]
 > Under active development
 
+<!-- badges: start -->
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18979784.svg)](https://doi.org/10.5281/zenodo.18979784)
+
+<!-- badges: end -->
+
 ## Install {propose}
 
 ```r
