@@ -61,6 +61,24 @@ ui <- page_navbar(
     icon = bs_icon("circle-square"),
     compare_ui("compare")
   ),
+  nav_menu(
+    title = "Docs",
+    icon = bs_icon("book"),
+    nav_item(tags$h6("{ringbp} documentation", class = "dropdown-header")),
+    nav_item(tags$hr(class = "dropdown-divider")),
+    nav_panel(
+      title = "Getting Started with {ringbp}",
+      docs_ui("docs_main", "ringbp.html")
+    ),
+    nav_panel(
+      title = "{ringbp} Model Description",
+      docs_ui("docs_model", "ringbp-model.html")
+    ),
+    nav_panel(
+      title = "Parameter Sweep with {ringbp}",
+      docs_ui("docs_sweep", "parameter-sweep.html")
+    )
+  ),
   nav_panel(
     title = "About",
     icon = bs_icon("info-square"),
@@ -109,6 +127,12 @@ server <- function(input, output, session) {
   observeEvent(input$go_explore, {
     updateTabsetPanel(session, "navbarid", selected = "Explore")
   })
+
+  # file path for {ringbp} vignettes rendered in docs UI
+  addResourcePath(
+    prefix = 'ring_docs',
+    directoryPath = system.file("doc", package = "ringbp")
+  )
 
   explore_server("explore")
   compare_server("compare")
