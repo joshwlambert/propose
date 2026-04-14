@@ -7,14 +7,26 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-event_prob_input <- function(ns, ...) {
+event_prob_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
   accordion(
     accordion_panel(
       title = "Event probabilities:",
       icon = bs_icon("person-fill-gear"),
-      numericInput(ns("asymptomatic"), "Probability asymptomatic:", value = 0.1),
-      numericInput(ns("presymptomatic_transmission"), "Probability of presymptomatic transmission:", value = 0.1),
-      numericInput(ns("symptomatic_traced"), "Probability of contact traced:", value = 0.8)
+      numericInput(
+        ns("asymptomatic"),
+        "Probability asymptomatic:",
+        value = PROPOSE_DEFAULTS$asymptomatic
+      ),
+      numericInput(
+        ns("presymptomatic_transmission"),
+        "Probability of presymptomatic transmission:",
+        value = PROPOSE_DEFAULTS$presymptomatic_transmission
+      ),
+      numericInput(
+        ns("symptomatic_traced"),
+        "Probability of contact traced:",
+        value = PROPOSE_DEFAULTS$symptomatic_traced
+      )
     ),
     open = FALSE
   )
