@@ -7,6 +7,13 @@
 
 #' @rdname defaults
 PROPOSE_DEFAULTS <- list(
+  # offspring
+  community_offspring_distribution = "nbinom",
+  community_r0 = 2,
+  community_disp = 1,
+  isolated_offspring_distribution = "nbinom",
+  isolated_r0 = 0,
+  isolated_disp = 1,
   # event probs
   asymptomatic = 0.1,
   presymptomatic_transmission = 0.1,
