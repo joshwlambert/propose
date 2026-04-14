@@ -5,7 +5,7 @@
 \title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising the simulation
 controls.}
 \usage{
-sim_input(ns, ...)
+sim_input(ns, defaults = PROPOSE_DEFAULTS, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}

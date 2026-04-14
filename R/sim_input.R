@@ -15,13 +15,21 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-sim_input <- function(ns, ...) {
+sim_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
   accordion(
     accordion_panel(
       title = "Simulation controls: ",
       icon = bs_icon("gear-wide-connected"),
-      numericInput(ns("cap_max_days"), "Maximum number of days:", value = 100),
-      numericInput(ns("cap_cases"), "Maximum number of cases:", value = 5000),
+      numericInput(
+        ns("cap_max_days"),
+        "Maximum number of days:",
+        value = PROPOSE_DEFAULTS$cap_max_days
+      ),
+      numericInput(
+        ns("cap_cases"),
+        "Maximum number of cases:",
+        value = PROPOSE_DEFAULTS$cap_cases
+      ),
       numericInput(ns("seed"), "Seed for simulation model", value = NA_integer_)
     ),
     open = FALSE
@@ -35,7 +43,7 @@ sim_input <- function(ns, ...) {
 #'
 #' @return A [bslib::card()] object.
 #' @keywords internal
-replicates_input <- function(ns, ...) {
+replicates_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
   card(
     card_header(
       "Number of simulation replicates:",
@@ -48,7 +56,7 @@ replicates_input <- function(ns, ...) {
     sliderInput(
       ns("replicates"),
       label = "",
-      value = 5, min = 1, max = 100
+      value = PROPOSE_DEFAULTS$replicates, min = 1, max = 100
     )
   )
 }
@@ -61,7 +69,7 @@ replicates_input <- function(ns, ...) {
 #'
 #' @return A [bslib::card()] object.
 #' @keywords internal
-initial_cases_input <- function(ns, ...) {
+initial_cases_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
   card(
     card_header(
       "Number of initial cases:",
@@ -75,7 +83,7 @@ initial_cases_input <- function(ns, ...) {
     sliderInput(
       ns("initial_cases"),
       label = "",
-      value = 5, min = 1, max = 100
+      value = PROPOSE_DEFAULTS$initial_cases, min = 1, max = 100
     )
   )
 }
