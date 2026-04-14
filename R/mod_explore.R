@@ -56,7 +56,8 @@ explore_ui <- function(id) {
             label = "",
             choices = list(
               "Disease X" = "disease_x",
-              "COVID-19" = "covid_19"
+              "COVID-19" = "covid_19",
+              "Ebola" = "ebola"
             )
           )
         ),
