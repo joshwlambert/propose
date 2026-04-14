@@ -58,3 +58,70 @@ PROPOSE_DEFAULTS <- list(
   replicates = 5,
   initial_cases = 5
 )
+
+#' Reset the pathogen parameters in the ***Explore*** page to default values
+#'
+#' @inheritParams shiny::updateSelectInput
+#' @param defaults A list of pathogen parameters, one of the sublist from
+#' [PROPOSE_DEFAULTS].
+#'
+#' @return Nothing, called for side-effects from `shiny::update*()` functions.
+#' @keywords internal
+reset_pathogen_params <- function(session, defaults) {
+  # update pathogen parameters
+  updateSelectInput(
+    session,
+    "community_offspring_distribution",
+    selected = defaults$community_offspring_distribution
+  )
+  updateNumericInput(
+    session,
+    "community_r0",
+    value = defaults$community_r0
+  )
+  updateNumericInput(
+    session,
+    "community_disp",
+    value = defaults$community_disp
+  )
+  updateSelectInput(
+    session,
+    "isolated_offspring_distribution",
+    selected = defaults$isolated_offspring_distribution
+  )
+  updateNumericInput(
+    session,
+    "isolated_r0",
+    value = defaults$isolated_r0
+  )
+  updateNumericInput(
+    session,
+    "isolated_disp",
+    value = defaults$isolated_disp
+  )
+  updateSelectInput(
+    session,
+    "incubation_distribution",
+    selected = defaults$incubation_distribution
+  )
+  updateNumericInput(
+    session,
+    "incubation_meanlog",
+    value = defaults$incubation_meanlog
+  )
+  updateNumericInput(
+    session,
+    "incubation_sdlog",
+    value = defaults$incubation_sdlog
+  )
+  updateNumericInput(
+    session,
+    "asymptomatic",
+    value = defaults$asymptomatic
+  )
+  updateNumericInput(
+    session,
+    "presymptomatic_transmission",
+    value = defaults$presymptomatic_transmission
+  )
+}
