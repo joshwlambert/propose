@@ -28,7 +28,11 @@ explore_ui <- function(id) {
       sidebarPanel(
         replicates_input(ns = ns),
         initial_cases_input(ns = ns),
-        actionButton(ns("simulate"), "Simulate outbreak"),
+        div(
+          class = "d-flex gap-2 mb-3",
+          actionButton(ns("simulate"), "Simulate outbreak", class = "btn-primary"),
+          actionButton(ns("reset"), "Reset Defaults", class = "btn-outline-secondary", icon = icon("rotate-left"))
+        ),
         offspring_input(ns = ns),
         delays_input(ns = ns),
         event_prob_input(ns = ns),
@@ -386,5 +390,9 @@ explore_server <- function(id) {
       }
     }
     )
+
+    observeEvent(input$reset, {
+      updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
+    })
   })
 }
