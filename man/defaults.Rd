@@ -6,7 +6,7 @@
 \alias{PROPOSE_DEFAULTS}
 \title{\pkg{ringbp} simulation defaults used in \pkg{propose}}
 \format{
-An object of class \code{list} of length 1.
+An object of class \code{list} of length 4.
 }
 \usage{
 PROPOSE_DEFAULTS
