@@ -43,6 +43,22 @@ PROPOSE_DEFAULTS <- list(
     asymptomatic = 0.35,
     presymptomatic_transmission = 0.4
   ),
+  ebola = list(
+    # pathogen parameters
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 1.5,
+    community_disp = 5.1,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.1,
+    # delays
+    incubation_distribution = "gamma",
+    incubation_shape = 1.578,
+    incubation_scale = 6.528,
+    # event probs
+    asymptomatic = 0.27,
+    presymptomatic_transmission = 0
+  ),
   # intervetnion parameters
   #delays
   onset_to_isolation_distribution = "lnorm",
