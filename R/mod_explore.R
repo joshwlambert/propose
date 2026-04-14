@@ -33,10 +33,15 @@ explore_ui <- function(id) {
           actionButton(ns("simulate"), "Simulate outbreak", class = "btn-primary"),
           actionButton(ns("reset"), "Reset Defaults", class = "btn-outline-secondary", icon = icon("rotate-left"))
         ),
+        tags$b("Pathogen Parameters"),
         offspring_input(ns = ns),
-        delays_input(ns = ns),
-        event_prob_input(ns = ns),
+        incubation_input(ns = ns),
+        symptom_event_prob_input(ns = ns),
+        tags$b("Intervention Parameters"),
+        onset_to_isolation_input(ns = ns),
+        contact_tracing_input(ns = ns),
         intervention_input(ns = ns),
+        tags$b("Simulation Control Parameters"),
         sim_input(ns = ns)
       ),
       mainPanel(
