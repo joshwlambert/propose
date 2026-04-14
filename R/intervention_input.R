@@ -6,12 +6,16 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-intervention_input <- function(ns, ...) {
+intervention_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
   accordion(
     accordion_panel(
       title = "Interventions:",
       icon = bs_icon("shield-shaded"),
-      checkboxInput(ns("quarantine"), "Quarantine", value = FALSE)
+      checkboxInput(
+        ns("quarantine"),
+        "Quarantine",
+        value = PROPOSE_DEFAULTS$quarantine
+      )
     ),
     open = FALSE
   )

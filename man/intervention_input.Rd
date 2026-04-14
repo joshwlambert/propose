@@ -5,7 +5,7 @@
 \title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with input for parameterising the
 \code{quarantine} argument in \code{\link[ringbp:intervention_opts]{ringbp::intervention_opts()}}}
 \usage{
-intervention_input(ns, ...)
+intervention_input(ns, defaults = PROPOSE_DEFAULTS, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}
