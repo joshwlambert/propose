@@ -6,7 +6,7 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-intervention_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
+intervention_input <- function(ns, ...) {
   accordion(
     accordion_panel(
       title = "Interventions:",

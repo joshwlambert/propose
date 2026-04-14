@@ -6,7 +6,7 @@
 \code{presymptomatic_transmission} and \code{symptomatic_traced} arguments in
 \code{\link[ringbp:event_prob_opts]{ringbp::event_prob_opts()}}}
 \usage{
-event_prob_input(ns, defaults = PROPOSE_DEFAULTS, ...)
+event_prob_input(ns, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}

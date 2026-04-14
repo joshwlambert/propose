@@ -7,7 +7,7 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-event_prob_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
+event_prob_input <- function(ns, ...) {
   accordion(
     accordion_panel(
       title = "Event probabilities:",

@@ -5,7 +5,7 @@
 \title{Generate \code{\link[bslib:card]{bslib::card()}} with input for number of initial cases in the
 simulation}
 \usage{
-initial_cases_input(ns, defaults = PROPOSE_DEFAULTS, ...)
+initial_cases_input(ns, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}

@@ -4,7 +4,7 @@
 \alias{replicates_input}
 \title{Generate \code{\link[bslib:card]{bslib::card()}} with input for number of simulation replicates}
 \usage{
-replicates_input(ns, defaults = PROPOSE_DEFAULTS, ...)
+replicates_input(ns, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}

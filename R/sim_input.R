@@ -15,7 +15,7 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-sim_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
+sim_input <- function(ns, ...) {
   accordion(
     accordion_panel(
       title = "Simulation controls: ",
@@ -43,7 +43,7 @@ sim_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
 #'
 #' @return A [bslib::card()] object.
 #' @keywords internal
-replicates_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
+replicates_input <- function(ns, ...) {
   card(
     card_header(
       "Number of simulation replicates:",
@@ -69,7 +69,7 @@ replicates_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
 #'
 #' @return A [bslib::card()] object.
 #' @keywords internal
-initial_cases_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
+initial_cases_input <- function(ns, ...) {
   card(
     card_header(
       "Number of initial cases:",

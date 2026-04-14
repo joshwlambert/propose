@@ -7,7 +7,7 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-delays_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
+delays_input <- function(ns, ...) {
   chkDots(...)
   accordion(
     accordion_panel(

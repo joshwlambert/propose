@@ -6,7 +6,7 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-offspring_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
+offspring_input <- function(ns, ...) {
   chkDots(...)
   accordion(
     accordion_panel(
