@@ -392,6 +392,12 @@ explore_server <- function(id) {
     )
 
     observeEvent(input$reset, {
+      updateSelectInput(session, "community_offspring_distribution", selected = PROPOSE_DEFAULTS$community_offspring_distribution)
+      updateNumericInput(session, "community_r0", value = PROPOSE_DEFAULTS$community_r0)
+      updateNumericInput(session, "community_disp", value = PROPOSE_DEFAULTS$community_disp)
+      updateSelectInput(session, "isolated_offspring_distribution", selected = PROPOSE_DEFAULTS$isolated_offspring_distribution)
+      updateNumericInput(session, "isolated_r0", value = PROPOSE_DEFAULTS$isolated_r0)
+      updateNumericInput(session, "isolated_disp", value = PROPOSE_DEFAULTS$isolated_disp)
       updateNumericInput(session, "asymptomatic", value = PROPOSE_DEFAULTS$asymptomatic)
       updateNumericInput(session, "presymptomatic_transmission", value = PROPOSE_DEFAULTS$presymptomatic_transmission)
       updateNumericInput(session, "symptomatic_traced", value = PROPOSE_DEFAULTS$symptomatic_traced)
