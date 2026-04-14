@@ -14,6 +14,13 @@ PROPOSE_DEFAULTS <- list(
   isolated_offspring_distribution = "nbinom",
   isolated_r0 = 0,
   isolated_disp = 1,
+  # delays
+  incubation_distribution = "lnorm",
+  incubation_meanlog = 1.5,
+  incubation_sdlog = 0.4,
+  onset_to_isolation_distribution = "lnorm",
+  onset_to_isolation_meanlog = 2,
+  onset_to_isolation_sdlog = 0.5,
   # event probs
   asymptomatic = 0.1,
   presymptomatic_transmission = 0.1,
