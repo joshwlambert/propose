@@ -7,7 +7,7 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-delays_input <- function(ns, ...) {
+delays_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
   chkDots(...)
   accordion(
     accordion_panel(
@@ -24,8 +24,16 @@ delays_input <- function(ns, ...) {
       ),
       conditionalPanel(
         condition = "input.incubation_distribution == 'lnorm'",
-        numericInput(ns("incubation_meanlog"), "Incubation period meanlog:", value = 1.5),
-        numericInput(ns("incubation_sdlog"), "Incubation period sdlog:", value = 0.4),
+        numericInput(
+          ns("incubation_meanlog"),
+          "Incubation period meanlog:",
+          value = PROPOSE_DEFAULTS$incubation_meanlog
+        ),
+        numericInput(
+          ns("incubation_sdlog"),
+          "Incubation period sdlog:",
+          value = PROPOSE_DEFAULTS$incubation_sdlog
+        ),
         ns = ns
       ),
       conditionalPanel(
@@ -51,8 +59,16 @@ delays_input <- function(ns, ...) {
       ),
       conditionalPanel(
         condition = "input.onset_to_isolation_distribution == 'lnorm'",
-        numericInput(ns("onset_to_isolation_meanlog"), "Onset-to-isolation meanlog:", value = 2),
-        numericInput(ns("onset_to_isolation_sdlog"), "Onset-to-isolation sdlog:", value = 0.5),
+        numericInput(
+          ns("onset_to_isolation_meanlog"),
+          "Onset-to-isolation meanlog:",
+          value = PROPOSE_DEFAULTS$onset_to_isolation_meanlog
+        ),
+        numericInput(
+          ns("onset_to_isolation_sdlog"),
+          "Onset-to-isolation sdlog:",
+          value = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+        ),
         ns = ns
       ),
       conditionalPanel(

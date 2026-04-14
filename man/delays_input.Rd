@@ -6,7 +6,7 @@
 \code{incubation_period} and \code{onset_to_isolation} arguments in
 \code{\link[ringbp:delay_opts]{ringbp::delay_opts()}}}
 \usage{
-delays_input(ns, ...)
+delays_input(ns, defaults = PROPOSE_DEFAULTS, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}
