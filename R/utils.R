@@ -116,6 +116,16 @@ reset_pathogen_params <- function(session, defaults) {
   )
   updateNumericInput(
     session,
+    "incubation_shape",
+    value = defaults$incubation_shape
+  )
+  updateNumericInput(
+    session,
+    "incubation_scale",
+    value = defaults$incubation_scale
+  )
+  updateNumericInput(
+    session,
     "asymptomatic",
     value = defaults$asymptomatic
   )
