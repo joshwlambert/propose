@@ -6,12 +6,15 @@
 \alias{PROPOSE_DEFAULTS}
 \title{\pkg{ringbp} simulation defaults used in \pkg{propose}}
 \format{
-An object of class \code{list} of length 20.
+An object of class \code{list} of length 11.
 }
 \usage{
 PROPOSE_DEFAULTS
 }
 \description{
-\code{PROPOSE_DEFAULTS} is a list with the default outbreak simulation parameters.
+\code{PROPOSE_DEFAULTS} is a list of lists and values. Each inner list contains
+default pathogen parameters for the outbreak simulation for a specific
+pathogen. The non-list values in the \code{PROPOSE_DEFAULTS} are the non-pathogen
+parameters for the outbreak simulation.
 }
 \keyword{datasets}
