@@ -408,6 +408,10 @@ explore_server <- function(id) {
       updateNumericInput(session, "presymptomatic_transmission", value = PROPOSE_DEFAULTS$presymptomatic_transmission)
       updateNumericInput(session, "symptomatic_traced", value = PROPOSE_DEFAULTS$symptomatic_traced)
       updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
+      updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
+      updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
+      updateSliderInput(session, "replicates", value = PROPOSE_DEFAULTS$replicates)
+      updateSliderInput(session, "initial_cases", value = PROPOSE_DEFAULTS$initial_cases)
     })
   })
 }
