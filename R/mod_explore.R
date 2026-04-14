@@ -19,6 +19,12 @@ explore_ui <- function(id) {
         margin-bottom: 15px !important;
         border-top-width: 5px !important;
       }
+
+       /* Allow the dropdown to infront of the card */
+        .bslib-card.allow-overflow,
+        .bslib-card.allow-overflow .card-body {
+          overflow: visible !important;
+        }
     "))
     ),
 
@@ -34,6 +40,26 @@ explore_ui <- function(id) {
           actionButton(ns("reset"), "Reset Defaults", class = "btn-outline-secondary", icon = icon("rotate-left"))
         ),
         tags$b("Pathogen Parameters"),
+        card(
+          class = "allow-overflow",
+          card_header(
+            "Select Pathogen Parameters:",
+            tooltip(
+              bsicons::bs_icon("info-circle"),
+              "Pathogen parameters based on estimates published in the literature.
+              The default scenario is 'Disease X' and has generic pathogen parameters.",
+              id = "tooltip",
+            )
+          ),
+          selectInput(
+            ns("pathogen_defaults"),
+            label = "",
+            choices = list(
+              "Disease X" = "disease_x",
+              "COVID-19" = "covid_19"
+            )
+          )
+        ),
         offspring_input(ns = ns),
         incubation_input(ns = ns),
         symptom_event_prob_input(ns = ns),
@@ -85,6 +111,11 @@ explore_server <- function(id) {
   moduleServer(id, function(input, output, session) {
 
     ns <- session$ns
+
+    observeEvent(input$pathogen_defaults, {
+      defaults <- PROPOSE_DEFAULTS[[input$pathogen_defaults]]
+      reset_pathogen_params(session = session, defaults = defaults)
+    })
 
     # User-input checking with feedback ---------------------------------------
     observeEvent(input$community_r0, {
@@ -397,21 +428,33 @@ explore_server <- function(id) {
     )
 
     observeEvent(input$reset, {
-      updateSelectInput(session, "community_offspring_distribution", selected = PROPOSE_DEFAULTS$community_offspring_distribution)
-      updateNumericInput(session, "community_r0", value = PROPOSE_DEFAULTS$community_r0)
-      updateNumericInput(session, "community_disp", value = PROPOSE_DEFAULTS$community_disp)
-      updateSelectInput(session, "isolated_offspring_distribution", selected = PROPOSE_DEFAULTS$isolated_offspring_distribution)
-      updateNumericInput(session, "isolated_r0", value = PROPOSE_DEFAULTS$isolated_r0)
-      updateNumericInput(session, "isolated_disp", value = PROPOSE_DEFAULTS$isolated_disp)
-      updateSelectInput(session, "incubation_distribution", selected = PROPOSE_DEFAULTS$incubation_distribution)
-      updateNumericInput(session, "incubation_meanlog", value = PROPOSE_DEFAULTS$incubation_meanlog)
-      updateNumericInput(session, "incubation_sdlog", value = PROPOSE_DEFAULTS$incubation_sdlog)
-      updateSelectInput(session, "onset_to_isolation_distribution", selected = PROPOSE_DEFAULTS$onset_to_isolation_distribution)
-      updateNumericInput(session, "onset_to_isolation_meanlog", value = PROPOSE_DEFAULTS$onset_to_isolation_meanlog)
-      updateNumericInput(session, "onset_to_isolation_sdlog", value = PROPOSE_DEFAULTS$onset_to_isolation_sdlog)
-      updateNumericInput(session, "asymptomatic", value = PROPOSE_DEFAULTS$asymptomatic)
-      updateNumericInput(session, "presymptomatic_transmission", value = PROPOSE_DEFAULTS$presymptomatic_transmission)
-      updateNumericInput(session, "symptomatic_traced", value = PROPOSE_DEFAULTS$symptomatic_traced)
+      # set pathogen_defaults back to default
+      updateSelectInput(session, "pathogen_defaults", selected = "disease_x")
+
+      defaults <- PROPOSE_DEFAULTS[[input$pathogen_defaults]]
+      reset_pathogen_params(session = session, defaults = defaults)
+
+      # reset non-pathogen parameters
+      updateSelectInput(
+        session,
+        "onset_to_isolation_distribution",
+        selected = PROPOSE_DEFAULTS$onset_to_isolation_distribution
+      )
+      updateNumericInput(
+        session,
+        "onset_to_isolation_meanlog",
+        value = PROPOSE_DEFAULTS$onset_to_isolation_meanlog
+      )
+      updateNumericInput(
+        session,
+        "onset_to_isolation_sdlog",
+        value = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+      )
+      updateNumericInput(
+        session,
+        "symptomatic_traced",
+        value = PROPOSE_DEFAULTS$symptomatic_traced
+        )
       updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
