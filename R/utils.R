@@ -26,5 +26,10 @@ PROPOSE_DEFAULTS <- list(
   presymptomatic_transmission = 0.1,
   symptomatic_traced = 0.8,
   # intervention
-  quarantine = FALSE
+  quarantine = FALSE,
+  # sim controls
+  cap_max_days = 100,
+  cap_cases = 5000,
+  replicates = 5,
+  initial_cases = 5
 )
