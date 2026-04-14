@@ -392,6 +392,9 @@ explore_server <- function(id) {
     )
 
     observeEvent(input$reset, {
+      updateNumericInput(session, "asymptomatic", value = PROPOSE_DEFAULTS$asymptomatic)
+      updateNumericInput(session, "presymptomatic_transmission", value = PROPOSE_DEFAULTS$presymptomatic_transmission)
+      updateNumericInput(session, "symptomatic_traced", value = PROPOSE_DEFAULTS$symptomatic_traced)
       updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
     })
   })
