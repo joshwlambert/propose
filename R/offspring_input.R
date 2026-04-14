@@ -26,12 +26,12 @@ offspring_input <- function(ns, ...) {
         numericInput(
           ns("community_r0"),
           "Community R0:",
-          value = PROPOSE_DEFAULTS$community_r0
+          value = PROPOSE_DEFAULTS$disease_x$community_r0
         ),
         numericInput(
           ns("community_disp"),
           "Community Dispersion:",
-          value = PROPOSE_DEFAULTS$community_disp
+          value = PROPOSE_DEFAULTS$disease_x$community_disp
         ),
         ns = ns
       ),
@@ -40,7 +40,7 @@ offspring_input <- function(ns, ...) {
         numericInput(
           ns("community_r0"),
           "Community R0:",
-          value = PROPOSE_DEFAULTS$community_r0
+          value = PROPOSE_DEFAULTS$disease_x$community_r0
         ),
         ns = ns
       ),
@@ -49,7 +49,7 @@ offspring_input <- function(ns, ...) {
         numericInput(
           ns("community_r0"),
           "Community R0:",
-          value = PROPOSE_DEFAULTS$community_r0
+          value = PROPOSE_DEFAULTS$disease_x$community_r0
         ),
         ns = ns
       ),
@@ -67,12 +67,12 @@ offspring_input <- function(ns, ...) {
         numericInput(
           ns("isolated_r0"),
           "Isolated R0:",
-          value = PROPOSE_DEFAULTS$isolated_r0
+          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
         ),
         numericInput(
           ns("isolated_disp"),
           "Isolated Dispersion:",
-          value = PROPOSE_DEFAULTS$isolated_disp
+          value = PROPOSE_DEFAULTS$disease_x$isolated_disp
         ),
         ns = ns
       ),
@@ -81,7 +81,7 @@ offspring_input <- function(ns, ...) {
         numericInput(
           ns("isolated_r0"),
           "Isolated R0:",
-          value = PROPOSE_DEFAULTS$isolated_r0
+          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
         ),
         ns = ns
       ),
@@ -90,7 +90,7 @@ offspring_input <- function(ns, ...) {
         numericInput(
           ns("isolated_r0"),
           "Isolated R0:",
-          value = PROPOSE_DEFAULTS$isolated_r0
+          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
         ),
         ns = ns
       )

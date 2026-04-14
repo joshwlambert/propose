@@ -27,12 +27,12 @@ delays_input <- function(ns, ...) {
         numericInput(
           ns("incubation_meanlog"),
           "Incubation period meanlog:",
-          value = PROPOSE_DEFAULTS$incubation_meanlog
+          value = PROPOSE_DEFAULTS$disease_x$incubation_meanlog
         ),
         numericInput(
           ns("incubation_sdlog"),
           "Incubation period sdlog:",
-          value = PROPOSE_DEFAULTS$incubation_sdlog
+          value = PROPOSE_DEFAULTS$disease_x$incubation_sdlog
         ),
         ns = ns
       ),

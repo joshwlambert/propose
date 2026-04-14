@@ -15,12 +15,12 @@ event_prob_input <- function(ns, ...) {
       numericInput(
         ns("asymptomatic"),
         "Probability asymptomatic:",
-        value = PROPOSE_DEFAULTS$asymptomatic
+        value = PROPOSE_DEFAULTS$disease_x$asymptomatic
       ),
       numericInput(
         ns("presymptomatic_transmission"),
         "Probability of presymptomatic transmission:",
-        value = PROPOSE_DEFAULTS$presymptomatic_transmission
+        value = PROPOSE_DEFAULTS$disease_x$presymptomatic_transmission
       ),
       numericInput(
         ns("symptomatic_traced"),
