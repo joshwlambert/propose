@@ -5,7 +5,7 @@
 \title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising \code{community} and
 \code{isolated} arguments in \code{\link[ringbp:offspring_opts]{ringbp::offspring_opts()}}}
 \usage{
-offspring_input(ns, ...)
+offspring_input(ns, defaults = PROPOSE_DEFAULTS, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}

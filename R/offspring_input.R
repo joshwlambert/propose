@@ -6,7 +6,7 @@
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-offspring_input <- function(ns, ...) {
+offspring_input <- function(ns, defaults = PROPOSE_DEFAULTS, ...) {
   chkDots(...)
   accordion(
     accordion_panel(
@@ -23,18 +23,34 @@ offspring_input <- function(ns, ...) {
       ),
       conditionalPanel(
         condition = "input.community_offspring_distribution == 'nbinom'",
-        numericInput(ns("community_r0"), "Community R0:", value = 2),
-        numericInput(ns("community_disp"), "Community Dispersion:", value = 1),
+        numericInput(
+          ns("community_r0"),
+          "Community R0:",
+          value = PROPOSE_DEFAULTS$community_r0
+        ),
+        numericInput(
+          ns("community_disp"),
+          "Community Dispersion:",
+          value = PROPOSE_DEFAULTS$community_disp
+        ),
         ns = ns
       ),
       conditionalPanel(
         condition = "input.community_offspring_distribution == 'pois'",
-        numericInput(ns("community_r0"), "Community R0:", value = 2),
+        numericInput(
+          ns("community_r0"),
+          "Community R0:",
+          value = PROPOSE_DEFAULTS$community_r0
+        ),
         ns = ns
       ),
       conditionalPanel(
         condition = "input.community_offspring_distribution == 'geom'",
-        numericInput(ns("community_r0"), "Community R0:", value = 2),
+        numericInput(
+          ns("community_r0"),
+          "Community R0:",
+          value = PROPOSE_DEFAULTS$community_r0
+        ),
         ns = ns
       ),
       selectInput(
@@ -48,18 +64,34 @@ offspring_input <- function(ns, ...) {
       ),
       conditionalPanel(
         condition = "input.isolated_offspring_distribution == 'nbinom'",
-        numericInput(ns("isolated_r0"), "Isolated R0:", value = 0),
-        numericInput(ns("isolated_disp"), "Isolated Dispersion:", value = 1),
+        numericInput(
+          ns("isolated_r0"),
+          "Isolated R0:",
+          value = PROPOSE_DEFAULTS$isolated_r0
+        ),
+        numericInput(
+          ns("isolated_disp"),
+          "Isolated Dispersion:",
+          value = PROPOSE_DEFAULTS$isolated_disp
+        ),
         ns = ns
       ),
       conditionalPanel(
         condition = "input.isolated_offspring_distribution == 'pois'",
-        numericInput(ns("isolated_r0"), "Isolated R0:", value = 0),
+        numericInput(
+          ns("isolated_r0"),
+          "Isolated R0:",
+          value = PROPOSE_DEFAULTS$isolated_r0
+        ),
         ns = ns
       ),
       conditionalPanel(
         condition = "input.isolated_offspring_distribution == 'geom'",
-        numericInput(ns("isolated_r0"), "Isolated R0:", value = 0),
+        numericInput(
+          ns("isolated_r0"),
+          "Isolated R0:",
+          value = PROPOSE_DEFAULTS$isolated_r0
+        ),
         ns = ns
       )
     ),
