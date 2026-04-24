@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="marker12249"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path12247" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="arrow2L" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2-1"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="arrow2L-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker12249-2"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       markerWidth="7.6999998"
+       markerHeight="5.5999999"
+       viewBox="0 0 7.7 5.6"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path12247-9" />
+    </marker>
+  </defs>
+  <g
+     id="layer1">
+    <rect
+       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.244052"
+       id="rect1514"
+       width="49.755947"
+       height="29.755947"
+       x="100.12202"
+       y="20.122026"
+       ry="7.2751074" />
+    <rect
+       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.25"
+       id="rect1514-4"
+       width="51.152203"
+       height="30.371618"
+       x="40.125"
+       y="70.125"
+       ry="7.4256339" />
+    <rect
+       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.244052"
+       id="rect1514-0"
+       width="49.755947"
+       height="29.755947"
+       x="100.12202"
+       y="120.12202"
+       ry="7.2751074" />
+    <rect
+       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.25"
+       id="rect1514-9"
+       width="51.152203"
+       height="30.371618"
+       x="160.125"
+       y="70.125"
+       ry="7.4256339" />
+    <text
+       xml:space="preserve"
+       style="font-size:12.7px;font-family:Arial;-inkscape-font-specification:Arial;fill:#faa51e;stroke:#000000;stroke-width:0.25"
+       x="105.49521"
+       y="88.083382"
+       id="text1678"><tspan
+         id="tspan1676"
+         style="stroke-width:0.25"
+         x="105.49521"
+         y="88.083382" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       x="125.46759"
+       y="37.736889"
+       id="text1682"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="125.46759"
+         y="37.736889"
+         id="tspan2514">Select pathogen</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       x="65.301712"
+       y="83.236893"
+       id="text1682-3"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="65.301712"
+         y="83.236893"
+         id="tspan2514-04">Explore results</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="65.301712"
+         y="91.271461"
+         id="tspan7922">(plots &amp; metrics)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       x="124.52016"
+       y="133.73689"
+       id="text1682-5"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="124.52016"
+         y="133.73689"
+         id="tspan2514-5">Simulate</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="124.52016"
+         y="141.77145"
+         id="tspan7145">outbreak</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       x="186.82094"
+       y="79.236893"
+       id="text1682-8"><tspan
+         id="tspan1680-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="186.82094"
+         y="79.236893">Toggle pathogen </tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="186.82094"
+         y="87.271461"
+         id="tspan5628">&amp; intervention</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         x="186.82094"
+         y="95.30603"
+         id="tspan2514-0">parameters</tspan></text>
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2)"
+       d="m 150.06742,34.12646 c 7.00511,-1.969989 14.69678,-1.395045 21.33118,1.594484 6.63439,2.989529 12.16037,8.370596 15.3251,14.923225 2.1814,4.516626 3.2547,9.563528 3.10001,14.576959"
+       id="path11953" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2-1)"
+       d="m 191.87508,100.87996 c 1.73236,4.81763 2.1924,10.08641 1.32118,15.13137 -0.87123,5.04495 -3.07167,9.85429 -6.31945,13.81189 -3.75879,4.58031 -8.91716,7.99605 -14.60135,9.66866 -5.6842,1.6726 -11.87048,1.59509 -17.51098,-0.21942"
+       id="path11953-7" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker12249)"
+       d="M 99.950075,135.63139 C 92.747146,139.161 84.1183,139.66294 76.554704,136.99229 70.15899,134.734 64.571026,130.25596 60.973499,124.50594 57.375971,118.75591 55.792855,111.77222 56.559216,105.03296"
+       id="path12231" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker12249-2)"
+       d="m 55.038937,69.552206 c -1.078253,-7.897308 0.808804,-16.164287 5.207054,-22.811504 3.702628,-5.595901 9.143592,-10.023794 15.375034,-12.512306 6.231443,-2.488512 13.22578,-3.026628 19.764545,-1.520603"
+       id="path12231-8" />
+  </g>
+</svg>
