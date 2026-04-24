@@ -110,7 +110,9 @@ manual_ui <- function(id) {
                           are ", tags$em("isolated"), ". For each, choose a
                           distribution (Negative Binomial, Poisson, or Geometric)
                           and set R0. Negative Binomial also exposes a dispersion
-                          parameter — smaller values mean more superspreading."),
+                          parameter (often written as ", tags$em("k"),
+                          " in the literature) — smaller values mean more
+                          superspreading."),
                   tags$li(tags$b("Incubation period distribution parameters."),
                           " The delay between infection and symptom onset.
                           Choose a distribution (Lognormal, Gamma, or Weibull)
