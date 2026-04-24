@@ -102,6 +102,50 @@ faq_ui <- function(id) {
            traced and isolated."
               )
             )
+        ),
+        tags$div(
+          class = "faq-item",
+            tags$details(
+              tags$summary(
+                "What does the dispersion parameter (k) for the Negative
+                Binomial offspring distribution mean?"
+              ),
+              tags$div(
+                class = "faq-content",
+                tags$p(
+                  "When the offspring distribution is set to Poisson or
+                  geometric it only requires the R0 (the mean number of
+                  secondary cases per infected individual). Whereas, when the
+                  offspring distribution is set to Negative Binomial,
+                  it is parameterised by two values: R0  and the dispersion
+                  parameter, commonly written as ", tags$em("k"), "."
+                ),
+                tags$p(
+                  tags$em("k"), " controls how much transmission varies between
+                  individuals. A small ", tags$em("k"), " (close to 0) means a
+                  small number of cases are responsible for most onward
+                  transmission — this is often referred to as superspreading.
+                  As ", tags$em("k"), " grows large the Negative Binomial
+                  approaches a Poisson distribution, in which every case
+                  produces a similar number of secondary cases."
+                ),
+                tags$p(
+                  "For orientation, published estimates include ", tags$em("k"),
+                  " ≈ 0.16 for SARS and ", tags$em("k"), " ≈ 0.1 for
+                  COVID-19 — both indicative of considerable superspreading.
+                  Conversely, Ebola has a ", tags$em("k"), " estimate ≈ 5,
+                  indicating much less individual-heterogeneity in transmission.
+                  See ",
+                  tags$a(
+                    href = "https://doi.org/10.1038/nature04153",
+                    "LLoyd-Smith et al. (2005)",
+                    target = "_blank"
+                  ),
+                  " for a detailed explanation of the Negative Binomial offspring
+                  distribution."
+                )
+              )
+            )
         )
     )
   )
