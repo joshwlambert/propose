@@ -30,7 +30,7 @@ offspring_input <- function(ns, ...) {
         ),
         numericInput(
           ns("community_disp"),
-          "Community Dispersion:",
+          label = HTML("Community Dispersion (<em>k</em>):"),
           value = PROPOSE_DEFAULTS$disease_x$community_disp
         ),
         ns = ns
@@ -71,7 +71,7 @@ offspring_input <- function(ns, ...) {
         ),
         numericInput(
           ns("isolated_disp"),
-          "Isolated Dispersion:",
+          label = HTML("Isolated Dispersion (<em>k</em>):"),
           value = PROPOSE_DEFAULTS$disease_x$isolated_disp
         ),
         ns = ns
