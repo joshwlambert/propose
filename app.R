@@ -49,6 +49,33 @@ ui <- page_navbar(
         "Out of the box structured analyses and visualisations provided in {propose} enable
         quick scientific and policy-relevant insights"
       )
+    ),
+    # Docs banner
+    tags$div(
+      style = "background: linear-gradient(90deg, #000080 0%, #3949ab 50%, #5c6bc0 100%);
+               color: white;
+               padding: 3rem 2rem;
+               margin-top: 3rem;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               gap: 1.5rem;
+               flex-wrap: wrap;
+               text-align: center;",
+      bs_icon("book", size = "3rem"),
+      tags$div(
+        style = "text-align: left;",
+        tags$p(
+          "New to {propose}?",
+          class = "mb-1",
+          style = "font-size: 1.25rem; font-weight: 300;"
+        ),
+        actionLink(
+          "go_manual",
+          tagList("Read the manual ", bs_icon("arrow-right")),
+          style = "color: white; font-weight: 600; font-size: 1.1rem; text-decoration: underline;"
+        )
+      )
     )
   ),
   nav_panel(
@@ -64,7 +91,14 @@ ui <- page_navbar(
   nav_menu(
     title = "Docs",
     icon = bs_icon("book"),
-    nav_item(tags$h6("{ringbp} documentation", class = "dropdown-header")),
+    nav_item(tags$h6(tags$b("{propose} documentation"), class = "dropdown-header")),
+    nav_item(tags$hr(class = "dropdown-divider")),
+    nav_panel(
+      title = "{propose} manual",
+      manual_ui("manual")
+    ),
+    nav_item(tags$hr(class = "dropdown-divider")),
+    nav_item(tags$h6(tags$b("{ringbp} documentation"), class = "dropdown-header")),
     nav_item(tags$hr(class = "dropdown-divider")),
     nav_panel(
       title = "Getting Started with {ringbp}",
@@ -128,9 +162,14 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbarid", selected = "Explore")
   })
 
+  # logic to jump to the manual from the Home page docs banner
+  observeEvent(input$go_manual, {
+    updateTabsetPanel(session, "navbarid", selected = "{propose} manual")
+  })
+
   # file path for {ringbp} vignettes rendered in docs UI
   addResourcePath(
-    prefix = 'ring_docs',
+    prefix = 'ringbp_docs',
     directoryPath = system.file("doc", package = "ringbp")
   )
 
@@ -138,6 +177,7 @@ server <- function(input, output, session) {
   compare_server("compare")
   about_server("about")
   citation_server("citation")
+  manual_server("manual", session)
 }
 
 shinyApp(ui = ui, server = server)
