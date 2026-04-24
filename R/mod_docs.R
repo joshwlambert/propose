@@ -9,7 +9,7 @@
 docs_ui <- function(id, vignette_file_name) {
   ns <- NS(id)
 
-  ringbp_vig_src <- paste0("ring_docs/", vignette_file_name)
+  ringbp_vig_src <- paste0("ringbp_docs/", vignette_file_name)
 
   tagList(
     page_title("Documentation"),
