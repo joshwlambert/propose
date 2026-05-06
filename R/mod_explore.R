@@ -36,8 +36,19 @@ explore_ui <- function(id) {
         initial_cases_input(ns = ns),
         div(
           class = "d-flex gap-2 mb-3",
-          actionButton(ns("simulate"), "Simulate outbreak", class = "btn-primary"),
-          actionButton(ns("reset"), "Reset Defaults", class = "btn-outline-secondary", icon = icon("rotate-left"))
+          actionButton(
+            ns("simulate"),
+            "Simulate outbreak",
+            class = "btn-primary flex-fill text-wrap px-2",
+            style = "min-width: 0;"
+          ),
+          actionButton(
+            ns("reset"),
+            "Reset Defaults",
+            class = "btn-outline-secondary flex-fill text-wrap px-2",
+            icon = icon("rotate-left"),
+            style = "min-width: 0;"
+          )
         ),
         tags$b("Pathogen Parameters"),
         card(
