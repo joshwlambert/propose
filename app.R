@@ -9,6 +9,7 @@ library(waiter)
 
 ui <- page_navbar(
   title = actionLink("go_home", "{propose}", style = "color: inherit; text-decoration: none;"),
+  theme = bs_theme(brand = TRUE),
   id = "navbarid",
   fillable = FALSE,
   nav_panel(
