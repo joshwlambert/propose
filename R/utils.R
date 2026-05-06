@@ -151,3 +151,29 @@ reset_pathogen_params <- function(session, defaults) {
     value = defaults$presymptomatic_transmission
   )
 }
+
+#' Generate [bslib::tooltip()] message for delay distribution parameters
+#'
+#' @param distribution a `character` string for the distribution type, e.g.,
+#' `"Gamma"` or `"Weibull"`.
+#' @param epiparameter a `character` string for the name of the epidemiological
+#' parameter, e.g. `"incubation period"` or `"onset-to-isolation delay"`.
+#'
+#' @return a `character` string
+#' @keywords internal
+#' @name tooltip
+shape_tip <- function(distribution, epiparameter) {
+  paste0(
+    "Shape parameter of the ", distribution, " distribution for the ",
+    epiparameter, "."
+  )
+}
+
+#' @rdname tooltip
+scale_tip <- function(distribution, epiparameter) {
+  paste0(
+    "Scale parameter of the ", distribution, " distribution for the ",
+    epiparameter, ". Stretches the distribution along the time axis; ",
+    "larger values produce longer ", epiparameter, "s."
+  )
+}
