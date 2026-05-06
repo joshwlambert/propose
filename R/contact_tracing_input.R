@@ -13,7 +13,17 @@ contact_tracing_input <- function(ns, ...) {
       icon = bs_icon("people-fill"),
       numericInput(
         ns("symptomatic_traced"),
-        "Probability of contact traced:",
+        label = tagList(
+          "Probability of contact traced",
+          tooltip(
+            bs_icon("info-circle"),
+            "Probability that a contact of a symptomatic infectious
+            individual is successfully traced. Traced individuals are isolated
+            at the earliest of the time their infector is isolated or until
+            they get a positive test result and isolate themselves, whichever
+            comes first."
+          )
+        ),
         value = PROPOSE_DEFAULTS$symptomatic_traced
       )
     ),
