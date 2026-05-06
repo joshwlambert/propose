@@ -8,22 +8,6 @@
 #' @keywords internal
 incubation_input <- function(ns, ...) {
   chkDots(...)
-
-  # tooltip messages for incubation period distribution parameters
-  shape_tip <- function(distribution) {
-    paste0(
-      "Shape parameter of the ", distribution, " distribution for the
-              incubation period."
-    )
-  }
-  scale_tip <- function(distribution) {
-    paste0(
-      "Scale parameter of the ", distribution, " distribution for the
-              incubation period. Stretches the distribution along the time
-              axis; larger values produce longer incubation periods."
-    )
-  }
-
   accordion(
     accordion_panel(
       title = "Incubation period distribution parameters:",
@@ -84,7 +68,10 @@ incubation_input <- function(ns, ...) {
           ns("incubation_shape"),
           label = tagList(
             "Incubation period shape",
-            tooltip(bs_icon("info-circle"), shape_tip("Gamma"))
+            tooltip(
+              bs_icon("info-circle"),
+              shape_tip("Gamma", "incubation period")
+            )
           ),
           value = 2
         ),
@@ -92,7 +79,10 @@ incubation_input <- function(ns, ...) {
           ns("incubation_scale"),
           label = tagList(
             "Incubation period scale",
-            tooltip(bs_icon("info-circle"), scale_tip("Gamma"))
+            tooltip(
+              bs_icon("info-circle"),
+              scale_tip("Gamma", "incubation period")
+            )
           ),
           value = 1
         ),
@@ -104,7 +94,10 @@ incubation_input <- function(ns, ...) {
           ns("incubation_shape"),
           label = tagList(
             "Incubation period shape",
-            tooltip(bs_icon("info-circle"), shape_tip("Weibull"))
+            tooltip(
+              bs_icon("info-circle"),
+              shape_tip("Weibull", "incubation period")
+            )
           ),
           value = 2
         ),
@@ -112,7 +105,10 @@ incubation_input <- function(ns, ...) {
           ns("incubation_scale"),
           label = tagList(
             "Incubation period scale",
-            tooltip(bs_icon("info-circle"), scale_tip("Weibull"))
+            tooltip(
+              bs_icon("info-circle"),
+              scale_tip("Weibull", "incubation period")
+            )
           ),
           value = 1
         ),
