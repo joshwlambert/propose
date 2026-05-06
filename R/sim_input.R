@@ -22,16 +22,45 @@ sim_input <- function(ns, ...) {
       icon = bs_icon("gear-wide-connected"),
       numericInput(
         ns("cap_max_days"),
-        "Maximum number of days:",
+        label = tagList(
+          "Maximum number of days",
+          tooltip(
+            bs_icon("info-circle"),
+            "The maximum number of days to run the outbreak simulation. This
+            cap prevents uncontrolled outbreaks from running for an excessively
+            long time."
+          )
+        ),
         value = PROPOSE_DEFAULTS$cap_max_days
       ),
       numericInput(
         ns("cap_cases"),
-        "Maximum number of cases:",
+        label = tagList(
+          "Maximum number of cases",
+          tooltip(
+            bs_icon("info-circle"),
+            "The maximum number of cumulative cases before stopping the
+            outbreak simulation. This cap prevents uncontrolled outbreaks from
+            running for an excessively long time."
+          )
+        ),
         value = PROPOSE_DEFAULTS$cap_cases
       ),
-      numericInput(ns("seed"), "Seed for simulation model", value = NA_integer_)
-    ),
+      numericInput(
+        ns("seed"),
+        label = tagList(
+          "Seed for simulation model",
+          tooltip(
+            bs_icon("info-circle"),
+            "A seed to control the random number generating sequence in the
+            stochastic simulation. By default the simulation uses a random
+            seed so each simulation produces a different output, even with the
+            same model parameters. Setting the seed to an integer will produce
+            the same output when the same model parameters are used."
+          )
+        ),
+        value = NA_integer_)
+      ),
     open = FALSE
   )
 }
@@ -50,7 +79,7 @@ replicates_input <- function(ns, ...) {
       tooltip(
         bsicons::bs_icon("info-circle"),
         "This controls the number of independent outbreaks to simulate.",
-        id = "tooltip",
+        id = "tooltip"
       )
     ),
     sliderInput(
@@ -75,9 +104,10 @@ initial_cases_input <- function(ns, ...) {
       "Number of initial cases:",
       tooltip(
         bsicons::bs_icon("info-circle"),
-        "This controls the number of initially infectious individuals.
-              Each individual seeds an independent outbreak.",
-        id = "tooltip",
+        "Number of initially infectious individuals at the start of each
+        simulated outbreak. They all seed independent transmission chains
+        within the same simulation run.",
+        id = "tooltip"
       )
     ),
     sliderInput(
