@@ -48,7 +48,7 @@ explore_ui <- function(id) {
               bsicons::bs_icon("info-circle"),
               "Pathogen parameters based on estimates published in the literature.
               The default scenario is 'Disease X' and has generic pathogen parameters.",
-              id = "tooltip",
+              id = "tooltip"
             )
           ),
           selectInput(
