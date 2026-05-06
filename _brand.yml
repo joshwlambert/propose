@@ -1,0 +1,25 @@
+meta:
+  name: propose
+  link:
+    home: https://t3zjq0-joshua0lambert.shinyapps.io/propose/
+    github: https://github.com/joshwlambert/propose
+
+logo: logo.png
+
+color:
+  palette:
+    blue: "#333B76"
+    green: "#50C878"
+  primary: blue
+  danger: green
+
+typography:
+  fonts:
+    - family: Host Grotesk
+      source: google
+    - family: Google Sans Code
+      source: google
+  base: Host Grotesk
+  monospace: Google Sans Code
+  link:
+    color: teal
