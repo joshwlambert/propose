@@ -366,15 +366,25 @@ explore_server <- function(id) {
     output$extinct <- renderText(signif(extinct_prob(scenario()), digits = 2))
     output$cumulative_cases <- renderPlot({
       if (input$plot_style == "indiv") {
+        outbreak <- scenario()
+        outbreak <- outbreak[, head(.SD, which.max(cumulative)), by = sim]
+        outbreak_end <- outbreak[, .SD[.N], by = sim]
         tinyplot(
           cumulative ~ week | as.factor(sim),
-          data = scenario(),
+          data = outbreak,
           type = "l",
           lwd = 3,
           ylab = "Cumulative number of cases",
           xlab = "Week",
           legend = FALSE,
           theme = "clean"
+        )
+        tinyplot_add(
+          cumulative ~ week | as.factor(sim),
+          data = outbreak_end,
+          type = "p",
+          pch = 19,
+          cex = 1.2
         )
       } else {
         # aggregate data: calculate mean, lower CI (2.5%), and upper CI (97.5%)
@@ -399,14 +409,19 @@ explore_server <- function(id) {
           theme = "clean"
         )
       }
+      abline(v = input$cap_max_days / 7, lty = 2, col = "grey50")
+      abline(h = input$cap_cases, lty = 2, col = "grey50")
     }
 
     )
     output$weekly_cases <- renderPlot({
       if (input$plot_style == "indiv") {
+        outbreak <- scenario()
+        outbreak <- outbreak[, head(.SD, which.max(cumulative)), by = sim]
+        outbreak_end <- outbreak[, .SD[.N], by = sim]
         tinyplot(
           weekly_cases ~ week | as.factor(sim),
-          data = scenario(),
+          data = outbreak,
           type = "l",
           lwd = 3,
           ylab = "Number of cases per week",
@@ -414,6 +429,14 @@ explore_server <- function(id) {
           legend = FALSE,
           theme = "clean"
         )
+        tinyplot_add(
+          weekly_cases ~ week | as.factor(sim),
+          data = outbreak_end,
+          type = "p",
+          pch = 19,
+          cex = 1.2
+        )
+
       } else {
         # mean & CI
         summ_w <- aggregate(weekly_cases ~ week, data = scenario(), FUN = function(x) {
@@ -436,6 +459,7 @@ explore_server <- function(id) {
           theme = "clean"
         )
       }
+      abline(v = input$cap_max_days / 7, lty = 2, col = "grey50")
     }
     )
 
