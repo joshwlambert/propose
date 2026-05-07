@@ -7,19 +7,54 @@
    viewBox="0 0 297 210"
    version="1.1"
    id="svg5"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   sodipodi:docname="explore_workflow.svg"
+   inkscape:export-filename="explore_workflow.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.55960515"
+     inkscape:cx="326.1228"
+     inkscape:cy="428.87382"
+     inkscape:window-width="1512"
+     inkscape:window-height="844"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
   <defs
      id="defs2">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect12313"
+       is_visible="true"
+       lpeversion="1" />
     <marker
        style="overflow:visible"
        id="marker12249"
        refX="0"
        refY="0"
        orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
        markerWidth="7.6999998"
        markerHeight="5.5999999"
        viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
        preserveAspectRatio="xMidYMid">
       <path
          transform="scale(0.7)"
@@ -27,15 +62,28 @@
          style="fill:context-stroke;fill-rule:evenodd;stroke:none"
          id="path12247" />
     </marker>
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect12233"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect12071"
+       is_visible="true"
+       lpeversion="1" />
     <marker
        style="overflow:visible"
        id="Arrow2"
        refX="0"
        refY="0"
        orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
        markerWidth="7.6999998"
        markerHeight="5.5999999"
        viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
        preserveAspectRatio="xMidYMid">
       <path
          transform="scale(0.7)"
@@ -43,15 +91,28 @@
          style="fill:context-stroke;fill-rule:evenodd;stroke:none"
          id="arrow2L" />
     </marker>
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect11955"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect11943"
+       is_visible="true"
+       lpeversion="1" />
     <marker
        style="overflow:visible"
        id="Arrow2-1"
        refX="0"
        refY="0"
        orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
        markerWidth="7.6999998"
        markerHeight="5.5999999"
        viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
        preserveAspectRatio="xMidYMid">
       <path
          transform="scale(0.7)"
@@ -59,15 +120,28 @@
          style="fill:context-stroke;fill-rule:evenodd;stroke:none"
          id="arrow2L-4" />
     </marker>
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect11955-7"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect11955-5"
+       is_visible="true"
+       lpeversion="1" />
     <marker
        style="overflow:visible"
        id="marker12249-2"
        refX="0"
        refY="0"
        orient="auto-start-reverse"
+       inkscape:stockid="Arrow2"
        markerWidth="7.6999998"
        markerHeight="5.5999999"
        viewBox="0 0 7.7 5.6"
+       inkscape:isstock="true"
+       inkscape:collect="always"
        preserveAspectRatio="xMidYMid">
       <path
          transform="scale(0.7)"
@@ -75,8 +149,15 @@
          style="fill:context-stroke;fill-rule:evenodd;stroke:none"
          id="path12247-9" />
     </marker>
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect12233-9"
+       is_visible="true"
+       lpeversion="1" />
   </defs>
   <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
      id="layer1">
     <rect
        style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.244052"
@@ -116,6 +197,7 @@
        x="105.49521"
        y="88.083382"
        id="text1678"><tspan
+         sodipodi:role="line"
          id="tspan1676"
          style="stroke-width:0.25"
          x="105.49521"
@@ -126,6 +208,7 @@
        x="125.46759"
        y="37.736889"
        id="text1682"><tspan
+         sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="125.46759"
          y="37.736889"
@@ -136,10 +219,12 @@
        x="65.301712"
        y="83.236893"
        id="text1682-3"><tspan
+         sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="65.301712"
          y="83.236893"
          id="tspan2514-04">Explore results</tspan><tspan
+         sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="65.301712"
          y="91.271461"
@@ -150,10 +235,12 @@
        x="124.52016"
        y="133.73689"
        id="text1682-5"><tspan
+         sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="124.52016"
          y="133.73689"
          id="tspan2514-5">Simulate</tspan><tspan
+         sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="124.52016"
          y="141.77145"
@@ -164,14 +251,17 @@
        x="186.82094"
        y="79.236893"
        id="text1682-8"><tspan
+         sodipodi:role="line"
          id="tspan1680-2"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="186.82094"
          y="79.236893">Toggle pathogen </tspan><tspan
+         sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="186.82094"
          y="87.271461"
          id="tspan5628">&amp; intervention</tspan><tspan
+         sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
          x="186.82094"
          y="95.30603"
@@ -179,18 +269,30 @@
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2)"
        d="m 150.06742,34.12646 c 7.00511,-1.969989 14.69678,-1.395045 21.33118,1.594484 6.63439,2.989529 12.16037,8.370596 15.3251,14.923225 2.1814,4.516626 3.2547,9.563528 3.10001,14.576959"
-       id="path11953" />
+       id="path11953"
+       inkscape:path-effect="#path-effect11955"
+       inkscape:original-d="m 150.06742,34.12646 c 8.01596,-0.353931 28.64064,16.872069 36.65628,16.517709 8.01565,-0.35436 -1.91786,3.421594 3.10001,14.576959"
+       sodipodi:nodetypes="csc" />
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2-1)"
        d="m 191.87508,100.87996 c 1.73236,4.81763 2.1924,10.08641 1.32118,15.13137 -0.87123,5.04495 -3.07167,9.85429 -6.31945,13.81189 -3.75879,4.58031 -8.91716,7.99605 -14.60135,9.66866 -5.6842,1.6726 -11.87048,1.59509 -17.51098,-0.21942"
-       id="path11953-7" />
+       id="path11953-7"
+       inkscape:path-effect="#path-effect11955-7"
+       inkscape:original-d="m 191.87508,100.87996 c -1.05448,7.95417 -0.21983,23.19065 -4.99827,28.94326 -6.16798,7.42546 -20.25092,6.46123 -32.11233,9.44924"
+       sodipodi:nodetypes="csc" />
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker12249)"
        d="M 99.950075,135.63139 C 92.747146,139.161 84.1183,139.66294 76.554704,136.99229 70.15899,134.734 64.571026,130.25596 60.973499,124.50594 57.375971,118.75591 55.792855,111.77222 56.559216,105.03296"
-       id="path12231" />
+       id="path12231"
+       inkscape:path-effect="#path-effect12233"
+       inkscape:original-d="M 99.950075,135.63139 C 87.568604,131.70875 90.355909,146.252 76.554704,136.99229 65.657341,129.68086 58.531793,111.21173 56.559216,105.03296"
+       sodipodi:nodetypes="csc" />
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker12249-2)"
        d="m 55.038937,69.552206 c -1.078253,-7.897308 0.808804,-16.164287 5.207054,-22.811504 3.702628,-5.595901 9.143592,-10.023794 15.375034,-12.512306 6.231443,-2.488512 13.22578,-3.026628 19.764545,-1.520603"
-       id="path12231-8" />
+       id="path12231-8"
+       inkscape:path-effect="#path-effect12233-9"
+       inkscape:original-d="M 55.038937,69.552206 C 61.958764,58.842195 48.149374,57.244605 60.245991,46.740702 69.797428,38.446875 89.301986,32.784294 95.38557,32.707793"
+       sodipodi:nodetypes="csc" />
   </g>
 </svg>
