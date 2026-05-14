@@ -106,6 +106,32 @@ tracing_effectiveness_ui <- function(id) {
         sim_input(ns = ns)
       ),
       mainPanel(
+        accordion(
+          open = FALSE,
+          accordion_panel(
+            title = "Show simulation parameter distributions",
+            icon = bs_icon("bar-chart-line"),
+            navset_card_underline(
+              nav_panel(
+                "Offspring distribution",
+                plotOutput(ns("offspring_dist_plot"))
+              ),
+              nav_panel(
+                "Incubation period",
+                plotOutput(ns("incubation_dist_plot"))
+              ),
+              nav_panel(
+                "Onset-to-isolation",
+                plotOutput(ns("onset_to_isolation_dist_plot"))
+              ),
+              nav_panel(
+                "Presymptomatic transmission",
+                plotOutput(ns("presymptomatic_dist_plot"))
+              )
+            )
+          )
+        ),
+
         tags$h4("Outbreak control"),
         plotOutput(ns("outbreak_control_vs_tracing")),
         tags$p(
@@ -369,5 +395,11 @@ tracing_effectiveness_server <- function(id) {
         col = "black"
       )
     })
+
+    # Parameter distribution plots ------------------------------------------
+    output$offspring_dist_plot <- offspring_dist_plot(input)
+    output$incubation_dist_plot <- incubation_dist_plot(input)
+    output$onset_to_isolation_dist_plot <- onset_to_isolation_dist_plot(input)
+    output$presymptomatic_dist_plot <- presymptomatic_dist_plot(input)
   })
 }
