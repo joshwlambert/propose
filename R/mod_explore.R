@@ -83,6 +83,32 @@ explore_ui <- function(id) {
         sim_input(ns = ns)
       ),
       mainPanel(
+        accordion(
+          open = FALSE,
+          accordion_panel(
+            title = "Show simulation parameter distributions",
+            icon = bs_icon("bar-chart-line"),
+            navset_card_underline(
+              nav_panel(
+                "Offspring distribution",
+                plotOutput(ns("offspring_dist_plot"))
+              ),
+              nav_panel(
+                "Incubation period",
+                plotOutput(ns("incubation_dist_plot"))
+              ),
+              nav_panel(
+                "Onset-to-isolation",
+                plotOutput(ns("onset_to_isolation_dist_plot"))
+              ),
+              nav_panel(
+                "Presymptomatic transmission",
+                plotOutput(ns("presymptomatic_dist_plot"))
+              )
+            )
+          )
+        ),
+
         value_box(
           title = "Probability of outbreak control",
           value = uiOutput(ns("extinct")),
@@ -462,6 +488,241 @@ explore_server <- function(id) {
       abline(v = input$cap_max_days / 7, lty = 2, col = "grey50")
     }
     )
+
+    # Parameter distribution plots ------------------------------------------
+
+    offspring_pmf <- function(distribution, r0, disp, x) {
+      if (distribution == "nbinom") {
+        dnbinom(x, mu = r0, size = disp)
+      } else if (distribution == "pois") {
+        dpois(x, lambda = r0)
+      } else if (distribution == "geom") {
+        dgeom(x, prob = 1 / (1 + r0))
+      }
+    }
+
+    offspring_x_max <- function(distribution, r0, disp) {
+      if (distribution == "nbinom") {
+        qnbinom(0.99, mu = r0, size = disp)
+      } else if (distribution == "pois") {
+        qpois(0.99, lambda = r0)
+      } else if (distribution == "geom") {
+        qgeom(0.99, prob = 1 / (1 + r0))
+      }
+    }
+
+    output$offspring_dist_plot <- renderPlot({
+      req(input$community_offspring_distribution)
+      req(input$isolated_offspring_distribution)
+      req(!is.na(input$community_r0), input$community_r0 >= 0)
+      req(!is.na(input$isolated_r0), input$isolated_r0 >= 0)
+      if (input$community_offspring_distribution == "nbinom") {
+        req(!is.na(input$community_disp), input$community_disp > 0)
+      }
+      if (input$isolated_offspring_distribution == "nbinom") {
+        req(!is.na(input$isolated_disp), input$isolated_disp > 0)
+      }
+
+      x_max <- max(
+        offspring_x_max(
+          input$community_offspring_distribution,
+          input$community_r0,
+          input$community_disp
+        ),
+        offspring_x_max(
+          input$isolated_offspring_distribution,
+          input$isolated_r0,
+          input$isolated_disp
+        ),
+        5
+      )
+      x <- 0:x_max
+      df <- rbind(
+        data.frame(
+          x = x,
+          density = offspring_pmf(
+            input$community_offspring_distribution,
+            input$community_r0,
+            input$community_disp,
+            x
+          ),
+          setting = "Community"
+        ),
+        data.frame(
+          x = x,
+          density = offspring_pmf(
+            input$isolated_offspring_distribution,
+            input$isolated_r0,
+            input$isolated_disp,
+            x
+          ),
+          setting = "Isolated"
+        )
+      )
+      tinyplot(
+        density ~ x | setting,
+        data = df,
+        type = type_barplot(beside = TRUE),
+        ylab = "Probability",
+        xlab = "Number of secondary cases",
+        theme = "clean",
+        legend = legend("top")
+      )
+    })
+
+    output$incubation_dist_plot <- renderPlot({
+      req(input$incubation_distribution)
+      if (input$incubation_distribution == "lnorm") {
+        req(!is.na(input$incubation_meanlog), !is.na(input$incubation_sdlog))
+        req(input$incubation_sdlog > 0)
+        q_max <- qlnorm(
+          0.99,
+          meanlog = input$incubation_meanlog,
+          sdlog = input$incubation_sdlog
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dlnorm(
+          x,
+          meanlog = input$incubation_meanlog,
+          sdlog = input$incubation_sdlog
+        )
+      } else if (input$incubation_distribution == "gamma") {
+        req(!is.na(input$incubation_shape), !is.na(input$incubation_scale))
+        req(input$incubation_shape > 0, input$incubation_scale > 0)
+        q_max <- qgamma(
+          0.99,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dgamma(
+          x,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+      } else if (input$incubation_distribution == "weibull") {
+        req(!is.na(input$incubation_shape), !is.na(input$incubation_scale))
+        req(input$incubation_shape > 0, input$incubation_scale > 0)
+        q_max <- qweibull(
+          0.99,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dweibull(
+          x,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+      }
+      tinyplot(
+        y ~ x,
+        data = data.frame(x = x, y = y),
+        type = "l",
+        lwd = 3,
+        col = "steelblue",
+        ylab = "Density",
+        xlab = "Incubation period (days)",
+        theme = "clean"
+      )
+    })
+
+    output$onset_to_isolation_dist_plot <- renderPlot({
+      req(input$onset_to_isolation_distribution)
+      if (input$onset_to_isolation_distribution == "lnorm") {
+        req(
+          !is.na(input$onset_to_isolation_meanlog),
+          !is.na(input$onset_to_isolation_sdlog)
+        )
+        req(input$onset_to_isolation_sdlog > 0)
+        q_max <- qlnorm(
+          0.99,
+          meanlog = input$onset_to_isolation_meanlog,
+          sdlog = input$onset_to_isolation_sdlog
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dlnorm(
+          x,
+          meanlog = input$onset_to_isolation_meanlog,
+          sdlog = input$onset_to_isolation_sdlog
+        )
+      } else if (input$onset_to_isolation_distribution == "gamma") {
+        req(
+          !is.na(input$onset_to_isolation_shape),
+          !is.na(input$onset_to_isolation_scale)
+        )
+        req(input$onset_to_isolation_shape > 0, input$onset_to_isolation_scale > 0)
+        q_max <- qgamma(
+          0.99,
+          shape = input$onset_to_isolation_shape,
+          scale = input$onset_to_isolation_scale
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dgamma(
+          x,
+          shape = input$onset_to_isolation_shape,
+          scale = input$onset_to_isolation_scale
+        )
+      } else if (input$onset_to_isolation_distribution == "weibull") {
+        req(
+          !is.na(input$onset_to_isolation_shape),
+          !is.na(input$onset_to_isolation_scale)
+        )
+        req(input$onset_to_isolation_shape > 0, input$onset_to_isolation_scale > 0)
+        q_max <- qweibull(
+          0.99,
+          shape = input$onset_to_isolation_shape,
+          scale = input$onset_to_isolation_scale
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dweibull(
+          x,
+          shape = input$onset_to_isolation_shape,
+          scale = input$onset_to_isolation_scale
+        )
+      }
+      tinyplot(
+        y ~ x,
+        data = data.frame(x = x, y = y),
+        type = "l",
+        lwd = 3,
+        col = "steelblue",
+        ylab = "Density",
+        xlab = "Onset-to-isolation delay (days)",
+        theme = "clean"
+      )
+    })
+
+    output$presymptomatic_dist_plot <- renderPlot({
+      req(!is.na(input$presymptomatic_transmission))
+      req(
+        input$presymptomatic_transmission >= 0,
+        input$presymptomatic_transmission <= 1
+      )
+      # Match ringbp's parameterisation: xi = 0, omega = 2, alpha derived from
+      # the proportion of transmission that occurs before symptom onset.
+      opts <- ringbp::event_prob_opts(
+        asymptomatic = if (!is.na(input$asymptomatic)) input$asymptomatic else 0,
+        presymptomatic_transmission = input$presymptomatic_transmission,
+        symptomatic_traced = if (!is.na(input$symptomatic_traced)) input$symptomatic_traced else 0
+      )
+      alpha <- opts$alpha
+      x_min <- sn::qsn(0.001, xi = 0, omega = 2, alpha = alpha)
+      x_max <- sn::qsn(0.999, xi = 0, omega = 2, alpha = alpha)
+      x <- seq(x_min, x_max, length.out = 200)
+      y <- sn::dsn(x, xi = 0, omega = 2, alpha = alpha)
+      tinyplot(
+        y ~ x,
+        data = data.frame(x = x, y = y),
+        type = "l",
+        lwd = 3,
+        col = "steelblue",
+        ylab = "Density",
+        xlab = "Time since symptom onset (days)",
+        theme = "clean"
+      )
+      abline(v = 0, lty = 2, col = "grey50")
+    })
 
     observeEvent(input$reset, {
       # set pathogen_defaults back to default
