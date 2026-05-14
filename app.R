@@ -77,6 +77,29 @@ ui <- page_navbar(
           style = "color: white; font-weight: 600; font-size: 1.1rem; text-decoration: underline;"
         )
       )
+    ),
+    tags$div(
+      class = "text-center",
+      style = "margin-top: 3rem;",
+      tags$h2("Pre-packaged outbreak analyses"),
+      tags$p(
+        "Analyses configured to tackle specific outbreak response questions.",
+        class = "lead text-muted"
+      )
+    ),
+    tags$div(
+      style = "max-width: 720px; margin: 1.5rem auto;",
+      card(
+        style = "background-color: #047857; color: white; border: none;",
+        card_body(
+          class = "text-center py-4",
+          actionLink(
+            "go_tracing_effectiveness",
+            tagList("Effectiveness of contact tracing ", bs_icon("arrow-right")),
+            style = "color: white; font-weight: 600; font-size: 1.25rem; text-decoration: underline;"
+          )
+        )
+      )
     )
   ),
   nav_panel(
@@ -174,6 +197,11 @@ server <- function(input, output, session) {
   # logic to jump to the manual from the Home page docs banner
   observeEvent(input$go_manual, {
     updateTabsetPanel(session, "navbarid", selected = "{propose} manual")
+  })
+
+  # logic to jump to the contact tracing effectiveness page from the Home page
+  observeEvent(input$go_tracing_effectiveness, {
+    updateTabsetPanel(session, "navbarid", selected = "Tracing Effectiveness")
   })
 
   # file path for {ringbp} vignettes rendered in docs UI
