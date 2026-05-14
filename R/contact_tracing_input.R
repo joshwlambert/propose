@@ -85,3 +85,76 @@ contact_tracing_seq_input <- function(ns, from, to, by, ...) {
     open = TRUE
   )
 }
+
+#' Register input-validation feedback for [contact_tracing_input()]
+#'
+#' @param input The Shiny `input` reactive of the calling module.
+#'
+#' @return Invisible `NULL`; called for side-effects.
+#' @keywords internal
+contact_tracing_feedback_server <- function(input) {
+  observeEvent(input$symptomatic_traced, {
+    req(!is.na(input$symptomatic_traced))
+    if (input$symptomatic_traced < 0 || input$symptomatic_traced > 1) {
+      showFeedbackDanger(
+        "symptomatic_traced",
+        text = "Error: Probability of a symptomatic contact being traced must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("symptomatic_traced")
+    }
+  })
+  invisible(NULL)
+}
+
+#' Register input-validation feedback for [contact_tracing_seq_input()]
+#'
+#' Validates that `From`/`To`/`By` lie in `[0, 1]` (with `By > 0`) and that
+#' `From <= To`.
+#'
+#' @param input The Shiny `input` reactive of the calling module.
+#'
+#' @return Invisible `NULL`; called for side-effects.
+#' @keywords internal
+contact_tracing_seq_feedback_server <- function(input) {
+  observeEvent(input$symptomatic_traced_from, {
+    req(!is.na(input$symptomatic_traced_from))
+    if (input$symptomatic_traced_from < 0 || input$symptomatic_traced_from > 1) {
+      showFeedbackDanger(
+        "symptomatic_traced_from",
+        text = "Error: 'From' must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("symptomatic_traced_from")
+    }
+  })
+  observeEvent(input$symptomatic_traced_to, {
+    req(!is.na(input$symptomatic_traced_to))
+    if (input$symptomatic_traced_to < 0 || input$symptomatic_traced_to > 1) {
+      showFeedbackDanger(
+        "symptomatic_traced_to",
+        text = "Error: 'To' must be between 0 and 1."
+      )
+    } else if (!is.na(input$symptomatic_traced_from) &&
+               input$symptomatic_traced_to < input$symptomatic_traced_from) {
+      showFeedbackDanger(
+        "symptomatic_traced_to",
+        text = "Error: 'To' must be greater than or equal to 'From'."
+      )
+    } else {
+      hideFeedback("symptomatic_traced_to")
+    }
+  })
+  observeEvent(input$symptomatic_traced_by, {
+    req(!is.na(input$symptomatic_traced_by))
+    if (input$symptomatic_traced_by <= 0 || input$symptomatic_traced_by > 1) {
+      showFeedbackDanger(
+        "symptomatic_traced_by",
+        text = "Error: 'By' must be greater than 0 and at most 1."
+      )
+    } else {
+      hideFeedback("symptomatic_traced_by")
+    }
+  })
+  invisible(NULL)
+}

@@ -106,3 +106,39 @@ offspring_input <- function(ns, ...) {
     open = FALSE
   )
 }
+
+#' Register input-validation feedback for [offspring_input()]
+#'
+#' Companion server function intended to be called once inside a module
+#' [shiny::moduleServer()] block. Wires up [shinyFeedback::showFeedbackDanger()]
+#' for `community_r0` and `isolated_r0`.
+#'
+#' @param input The Shiny `input` reactive of the calling module.
+#'
+#' @return Invisible `NULL`; called for side-effects.
+#' @keywords internal
+offspring_feedback_server <- function(input) {
+  observeEvent(input$community_r0, {
+    req(!is.na(input$community_r0))
+    if (input$community_r0 < 0) {
+      showFeedbackDanger(
+        "community_r0",
+        text = "Error: Community R0 cannot be negative."
+      )
+    } else {
+      hideFeedback("community_r0")
+    }
+  })
+  observeEvent(input$isolated_r0, {
+    req(!is.na(input$isolated_r0))
+    if (input$isolated_r0 < 0) {
+      showFeedbackDanger(
+        "isolated_r0",
+        text = "Error: Isolated R0 cannot be negative."
+      )
+    } else {
+      hideFeedback("isolated_r0")
+    }
+  })
+  invisible(NULL)
+}

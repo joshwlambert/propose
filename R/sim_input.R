@@ -65,6 +65,38 @@ sim_input <- function(ns, ...) {
   )
 }
 
+#' Register input-validation feedback for [sim_input()]
+#'
+#' @param input The Shiny `input` reactive of the calling module.
+#'
+#' @return Invisible `NULL`; called for side-effects.
+#' @keywords internal
+sim_feedback_server <- function(input) {
+  observeEvent(input$cap_max_days, {
+    req(!is.na(input$cap_max_days))
+    if (input$cap_max_days < 1) {
+      showFeedbackDanger(
+        "cap_max_days",
+        text = "Error: The maximum number of days in the simulation must be at least 1."
+      )
+    } else {
+      hideFeedback("cap_max_days")
+    }
+  })
+  observeEvent(input$cap_cases, {
+    req(!is.na(input$cap_cases))
+    if (input$cap_cases < 1) {
+      showFeedbackDanger(
+        "cap_cases",
+        text = "Error: The maximum number of cases in the simulation must be at least 1."
+      )
+    } else {
+      hideFeedback("cap_cases")
+    }
+  })
+  invisible(NULL)
+}
+
 #' Generate [bslib::card()] with input for number of simulation replicates
 #'
 #' @param ns A namespace created with [shiny::NS()].
