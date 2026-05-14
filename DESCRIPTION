@@ -24,6 +24,7 @@ Imports:
     shiny,
     shinyFeedback,
     ringbp,
+    sn,
     tinyplot,
     waiter
 Remotes:
