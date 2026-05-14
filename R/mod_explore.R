@@ -156,96 +156,10 @@ explore_server <- function(id) {
     })
 
     # User-input checking with feedback ---------------------------------------
-    observeEvent(input$community_r0, {
-      # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$community_r0))
-      if (input$community_r0 < 0) {
-        showFeedbackDanger(
-          "community_r0",
-          text = "Error: Community R0 cannot be negative."
-        )
-      } else {
-        hideFeedback("community_r0")
-      }
-    })
-
-    observeEvent(input$isolated_r0, {
-      # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$isolated_r0))
-      if (input$isolated_r0 < 0) {
-        showFeedbackDanger(
-          "isolated_r0",
-          text = "Error: Isolated R0 cannot be negative."
-        )
-      } else {
-        hideFeedback("isolated_r0")
-      }
-    })
-
-    observeEvent(input$asymptomatic, {
-      # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$asymptomatic))
-      if (input$asymptomatic < 0 || input$asymptomatic > 1) {
-        showFeedbackDanger(
-          "asymptomatic",
-          text = "Error: Probability of asymptomatic cases must be between 0 and 1."
-        )
-      } else {
-        hideFeedback("asymptomatic")
-      }
-    })
-
-    observeEvent(input$presymptomatic_transmission, {
-      # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$presymptomatic_transmission))
-      if (input$presymptomatic_transmission < 0 || input$presymptomatic_transmission > 1) {
-        showFeedbackDanger(
-          "presymptomatic_transmission",
-          text = "Error: Probability of presymptomatic transmission cases must be between 0 and 1."
-        )
-      } else {
-        hideFeedback("presymptomatic_transmission")
-      }
-    })
-
-    observeEvent(input$symptomatic_traced, {
-      # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$symptomatic_traced))
-      if (input$symptomatic_traced < 0 || input$symptomatic_traced > 1) {
-        showFeedbackDanger(
-          "symptomatic_traced",
-          text = "Error: Probability of a symptomatic contact being traced must be between 0 and 1."
-        )
-      } else {
-        hideFeedback("symptomatic_traced")
-      }
-    })
-
-    observeEvent(input$cap_max_days, {
-      # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$cap_max_days))
-      if (input$cap_max_days < 1) {
-        showFeedbackDanger(
-          "cap_max_days",
-          text = "Error: The maximum number of days in the simulation must be at least 1."
-        )
-      } else {
-        hideFeedback("cap_max_days")
-      }
-    })
-
-    observeEvent(input$cap_cases, {
-      # prevent crashing when the numericInput is empty (value is NA)
-      req(!is.na(input$cap_cases))
-      if (input$cap_cases < 1) {
-        showFeedbackDanger(
-          "cap_cases",
-          text = "Error: The maximum number of cases in the simulation must be at least 1."
-        )
-      } else {
-        hideFeedback("cap_cases")
-      }
-    })
+    offspring_feedback_server(input)
+    symptom_event_prob_feedback_server(input)
+    contact_tracing_feedback_server(input)
+    sim_feedback_server(input)
 
     community <- reactive({
       req(input$community_r0 >= 0)

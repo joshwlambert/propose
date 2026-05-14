@@ -149,6 +149,12 @@ tracing_effectiveness_ui <- function(id) {
 tracing_effectiveness_server <- function(id) {
   moduleServer(id, function(input, output, session) {
 
+    # User-input checking with feedback ---------------------------------------
+    offspring_feedback_server(input)
+    symptom_event_prob_feedback_server(input)
+    contact_tracing_seq_feedback_server(input)
+    sim_feedback_server(input)
+
     community <- reactive({
       req(input$community_r0 >= 0)
       if (input$community_offspring_distribution == "nbinom") {
