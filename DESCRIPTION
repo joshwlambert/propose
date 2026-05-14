@@ -26,6 +26,7 @@ Imports:
     shiny,
     shinyFeedback,
     ringbp (>= 1.0.0),
+    sn,
     tinyplot,
     waiter
 Encoding: UTF-8
