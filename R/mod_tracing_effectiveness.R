@@ -108,12 +108,33 @@ tracing_effectiveness_ui <- function(id) {
       mainPanel(
         tags$h4("Outbreak control"),
         plotOutput(ns("outbreak_control_vs_tracing")),
+        tags$p(
+          class = "small text-muted mt-2",
+          "Percentage of simulated outbreaks that were brought under control
+          (i.e., became extinct before reaching the case or time caps) at each
+          level of contact tracing."
+        ),
         tags$hr(),
         tags$h4("Effective reproduction number"),
         plotOutput(ns("reff_vs_tracing")),
+        tags$p(
+          class = "small text-muted mt-2",
+          "Median effective reproduction number across simulated outbreaks at
+          each level of contact tracing. Shaded bands show the interquartile
+          range (darker) and 95% interval (lighter) across replicates. The
+          dashed horizontal line at R = 1 marks the threshold below which an
+          outbreak is expected to decline."
+        ),
         tags$hr(),
         tags$h4("Maximum weekly cases in controlled outbreaks"),
-        plotOutput(ns("max_weekly_vs_tracing"))
+        plotOutput(ns("max_weekly_vs_tracing")),
+        tags$p(
+          class = "small text-muted mt-2",
+          "Distribution of the maximum number of cases observed in any single
+          week, across only those simulated outbreaks that were brought under
+          control. Box shading is proportional to the percentage of outbreaks
+          controlled, also labelled above each box."
+        )
       )
     )
   )
