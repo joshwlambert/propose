@@ -50,16 +50,16 @@ offspring_input <- function(ns, ...) {
           "Geometric" = "geom"
         )
       ),
+      numericInput(
+        ns("community_r0"),
+        label = tagList(
+          "Community R0",
+          tooltip(bs_icon("info-circle"), r0_tip("community"))
+        ),
+        value = PROPOSE_DEFAULTS$disease_x$community_r0
+      ),
       conditionalPanel(
         condition = "input.community_offspring_distribution == 'nbinom'",
-        numericInput(
-          ns("community_r0"),
-          label = tagList(
-            "Community R0",
-            tooltip(bs_icon("info-circle"), r0_tip("community"))
-          ),
-          value = PROPOSE_DEFAULTS$disease_x$community_r0
-        ),
         numericInput(
           ns("community_disp"),
           label = tagList(
@@ -67,30 +67,6 @@ offspring_input <- function(ns, ...) {
             tooltip(bs_icon("info-circle"), disp_tip)
           ),
           value = PROPOSE_DEFAULTS$disease_x$community_disp
-        ),
-        ns = ns
-      ),
-      conditionalPanel(
-        condition = "input.community_offspring_distribution == 'pois'",
-        numericInput(
-          ns("community_r0"),
-          label = tagList(
-            "Community R0",
-            tooltip(bs_icon("info-circle"), r0_tip("community"))
-          ),
-          value = PROPOSE_DEFAULTS$disease_x$community_r0
-        ),
-        ns = ns
-      ),
-      conditionalPanel(
-        condition = "input.community_offspring_distribution == 'geom'",
-        numericInput(
-          ns("community_r0"),
-          label = tagList(
-            "Community R0",
-            tooltip(bs_icon("info-circle"), r0_tip("community"))
-          ),
-          value = PROPOSE_DEFAULTS$disease_x$community_r0
         ),
         ns = ns
       ),
@@ -106,16 +82,16 @@ offspring_input <- function(ns, ...) {
           "Geometric" = "geom"
         )
       ),
+      numericInput(
+        ns("isolated_r0"),
+        label = tagList(
+          "Isolated R0",
+          tooltip(bs_icon("info-circle"), r0_tip("isolated"))
+        ),
+        value = PROPOSE_DEFAULTS$disease_x$isolated_r0
+      ),
       conditionalPanel(
         condition = "input.isolated_offspring_distribution == 'nbinom'",
-        numericInput(
-          ns("isolated_r0"),
-          label = tagList(
-            "Isolated R0",
-            tooltip(bs_icon("info-circle"), r0_tip("isolated"))
-          ),
-          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
-        ),
         numericInput(
           ns("isolated_disp"),
           label = tagList(
@@ -123,30 +99,6 @@ offspring_input <- function(ns, ...) {
             tooltip(bs_icon("info-circle"), disp_tip)
           ),
           value = PROPOSE_DEFAULTS$disease_x$isolated_disp
-        ),
-        ns = ns
-      ),
-      conditionalPanel(
-        condition = "input.isolated_offspring_distribution == 'pois'",
-        numericInput(
-          ns("isolated_r0"),
-          label = tagList(
-            "Isolated R0",
-            tooltip(bs_icon("info-circle"), r0_tip("isolated"))
-          ),
-          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
-        ),
-        ns = ns
-      ),
-      conditionalPanel(
-        condition = "input.isolated_offspring_distribution == 'geom'",
-        numericInput(
-          ns("isolated_r0"),
-          label = tagList(
-            "Isolated R0",
-            tooltip(bs_icon("info-circle"), r0_tip("isolated"))
-          ),
-          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
         ),
         ns = ns
       )
