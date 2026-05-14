@@ -90,6 +90,14 @@ ui <- page_navbar(
     compare_ui("compare")
   ),
   nav_menu(
+    title = "Analyses",
+    icon = bs_icon("graph-up-arrow"),
+    nav_panel(
+      title = "Tracing Effectiveness",
+      tracing_effectiveness_ui("tracing_effectiveness")
+    )
+  ),
+  nav_menu(
     title = "Docs",
     icon = bs_icon("book"),
     nav_item(tags$h6(tags$b("{propose} documentation"), class = "dropdown-header")),
@@ -176,6 +184,7 @@ server <- function(input, output, session) {
 
   explore_server("explore")
   compare_server("compare")
+  tracing_effectiveness_server("tracing_effectiveness")
   about_server("about")
   citation_server("citation")
   manual_server("manual", session)
