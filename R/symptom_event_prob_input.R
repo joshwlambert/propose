@@ -45,3 +45,35 @@ symptom_event_prob_input <- function(ns, ...) {
     open = FALSE
   )
 }
+
+#' Register input-validation feedback for [symptom_event_prob_input()]
+#'
+#' @param input The Shiny `input` reactive of the calling module.
+#'
+#' @return Invisible `NULL`; called for side-effects.
+#' @keywords internal
+symptom_event_prob_feedback_server <- function(input) {
+  observeEvent(input$asymptomatic, {
+    req(!is.na(input$asymptomatic))
+    if (input$asymptomatic < 0 || input$asymptomatic > 1) {
+      showFeedbackDanger(
+        "asymptomatic",
+        text = "Error: Probability of asymptomatic cases must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("asymptomatic")
+    }
+  })
+  observeEvent(input$presymptomatic_transmission, {
+    req(!is.na(input$presymptomatic_transmission))
+    if (input$presymptomatic_transmission < 0 || input$presymptomatic_transmission > 1) {
+      showFeedbackDanger(
+        "presymptomatic_transmission",
+        text = "Error: Probability of presymptomatic transmission cases must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("presymptomatic_transmission")
+    }
+  })
+  invisible(NULL)
+}
