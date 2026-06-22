@@ -19,13 +19,21 @@ pak::pak("joshwlambert/propose")
 
 ## {ringbp} R package
 
-The epidemic simulation model used in `{propose}` is from the [`{ringbp}` R package](https://github.com/epiforecasts/ringbp). `{ringbp}` is an open source R package hosted on the [epiforecasts GitHub organisation](https://github.com/epiforecasts) and can be installed from GitHub using:
+The epidemic simulation model used in `{propose}` is from the [`{ringbp}` R package](https://github.com/epiforecasts/ringbp). `{ringbp}` is an open source R package hosted on the [epiforecasts GitHub organisation](https://github.com/epiforecasts) and can be installed from CRAN using:
+
+```r
+install.packages("ringbp")
+```
+
+The development version of `{ringbp}` can be installed from GitHub with
 
 ```r
 # check whether {pak} is installed
 if (!require("pak")) install.packages("pak")
 pak::pak("epiforecasts/ringbp")
 ```
+
+***Warning***: the development version of `{ringbp}` may be incompatible with the release version of `{propose}` if launching the app locally.
 
 ## Help
 
