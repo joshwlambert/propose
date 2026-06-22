@@ -21,6 +21,7 @@ Imports:
     bibtex,
     bsicons,
     bslib,
+    data.table,
     shiny,
     shinyFeedback,
     ringbp (>= 1.0.0),
