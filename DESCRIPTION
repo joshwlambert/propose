@@ -13,7 +13,7 @@ Description: A decision support tool for early epidemic or pandemic
     individual targeted intervention scenarios. Allows exploring the
     {ringbp} model or analysing optimal response strategies.
 License: MIT + file LICENSE
-URL: https://github.com/joshwlambert/propose,
+URL: https://github.com/joshwlambert/propose
 BugReports: https://github.com/joshwlambert/propose/issues
 Depends:
     R (>= 4.2.0)
