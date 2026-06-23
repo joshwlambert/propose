@@ -28,7 +28,7 @@ explore_ui <- function(id) {
     "))
     ),
 
-    page_title("{propose}: a Shiny app for {ringbp}"),
+    page_title("Explore Outbreak Scenarios"),
 
     sidebarLayout(
       sidebarPanel(
