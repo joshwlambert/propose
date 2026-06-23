@@ -17,6 +17,7 @@ ui <- page_navbar(
     ),
     style = "color: inherit; text-decoration: none;"
   ),
+  window_title = "Propose",
   theme = bs_theme(brand = TRUE),
   id = "navbarid",
   fillable = FALSE,
