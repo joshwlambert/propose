@@ -5,10 +5,15 @@
 \title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising
 \code{onset_to_isolation} argument in \code{\link[ringbp:delay_opts]{ringbp::delay_opts()}}}
 \usage{
-onset_to_isolation_input(ns, ...)
+onset_to_isolation_input(ns, id_prefix = "", ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}
+
+\item{id_prefix}{A \code{character} string prepended to every input ID generated
+by this function (e.g. \code{"dct_"}). Allows the inputs to be reused several
+times within the same module (e.g. one set per contact tracing strategy)
+without clashing. Defaults to \code{""} (no prefix).}
 
 \item{...}{\link{dots} Not used, will throw a warning if arguments are supplied.}
 }

@@ -2,18 +2,28 @@
 #' `onset_to_isolation` argument in [ringbp::delay_opts()]
 #'
 #' @param ns A namespace created with [shiny::NS()].
+#' @param id_prefix A `character` string prepended to every input ID generated
+#' by this function (e.g. `"dct_"`). Allows the inputs to be reused several
+#' times within the same module (e.g. one set per contact tracing strategy)
+#' without clashing. Defaults to `""` (no prefix).
 #' @param ... [dots] Not used, will throw a warning if arguments are supplied.
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
-onset_to_isolation_input <- function(ns, ...) {
+onset_to_isolation_input <- function(ns, id_prefix = "", ...) {
   chkDots(...)
+  # Helper to build prefixed, namespaced input IDs
+  iid <- function(suffix) ns(paste0(id_prefix, suffix))
+  # Condition for the conditionalPanels, referencing the prefixed distribution
+  dist_is <- function(value) {
+    sprintf("input.%sonset_to_isolation_distribution == '%s'", id_prefix, value)
+  }
   accordion(
     accordion_panel(
       title = "Onset-to-isolation distribution parameters:",
       icon = bs_icon("hourglass-split"),
       selectInput(
-        inputId = ns("onset_to_isolation_distribution"),
+        inputId = iid("onset_to_isolation_distribution"),
         label = tagList(
           "Onset-to-isolation Distribution",
           tooltip(
@@ -31,9 +41,9 @@ onset_to_isolation_input <- function(ns, ...) {
         )
       ),
       conditionalPanel(
-        condition = "input.onset_to_isolation_distribution == 'lnorm'",
+        condition = dist_is("lnorm"),
         numericInput(
-          ns("onset_to_isolation_meanlog"),
+          iid("onset_to_isolation_meanlog"),
           label = tagList(
             "Onset-to-isolation meanlog",
             tooltip(
@@ -47,7 +57,7 @@ onset_to_isolation_input <- function(ns, ...) {
           value = PROPOSE_DEFAULTS$onset_to_isolation_meanlog
         ),
         numericInput(
-          ns("onset_to_isolation_sdlog"),
+          iid("onset_to_isolation_sdlog"),
           label = tagList(
             "Onset-to-isolation sdlog",
             tooltip(
@@ -63,9 +73,9 @@ onset_to_isolation_input <- function(ns, ...) {
         ns = ns
       ),
       conditionalPanel(
-        condition = "input.onset_to_isolation_distribution == 'gamma'",
+        condition = dist_is("gamma"),
         numericInput(
-          ns("onset_to_isolation_shape"),
+          iid("onset_to_isolation_shape"),
           label = tagList(
             "Onset-to-isolation shape",
             tooltip(
@@ -76,7 +86,7 @@ onset_to_isolation_input <- function(ns, ...) {
           value = 2
         ),
         numericInput(
-          ns("onset_to_isolation_scale"),
+          iid("onset_to_isolation_scale"),
           label = tagList(
             "Onset-to-isolation scale",
             tooltip(
@@ -88,9 +98,9 @@ onset_to_isolation_input <- function(ns, ...) {
         ns = ns
       ),
       conditionalPanel(
-        condition = "input.onset_to_isolation_distribution == 'weibull'",
+        condition = dist_is("weibull"),
         numericInput(
-          ns("onset_to_isolation_shape"),
+          iid("onset_to_isolation_shape"),
           label = tagList(
             "Onset-to-isolation shape",
             tooltip(
@@ -101,7 +111,7 @@ onset_to_isolation_input <- function(ns, ...) {
           value = 2
         ),
         numericInput(
-          ns("onset_to_isolation_scale"),
+          iid("onset_to_isolation_scale"),
           label = tagList(
             "Onset-to-isolation scale",
             tooltip(
