@@ -195,73 +195,150 @@ incubation_dist_plot <- function(input) {
 #' assigned to a [shiny::plotOutput()] in that module.
 #'
 #' @inheritParams offspring_dist_plot
+#' @param id_prefix A `character` string prepended to the onset-to-isolation
+#' input IDs read by this plot (e.g. `"dct_"`). Must match the `id_prefix`
+#' passed to the corresponding [onset_to_isolation_input()]. Defaults to `""`
+#' (no prefix).
+#' @inheritParams tinyplot::tinyplot
 #'
 #' @return Output from [shiny::renderPlot()].
 #' @keywords internal
-onset_to_isolation_dist_plot <- function(input) {
+onset_to_isolation_dist_plot <- function(input,
+                                         id_prefix = "",
+                                         col = "steelblue") {
   renderPlot({
-    req(input$onset_to_isolation_distribution)
-    if (input$onset_to_isolation_distribution == "lnorm") {
-      req(
-        !is.na(input$onset_to_isolation_meanlog),
-        !is.na(input$onset_to_isolation_sdlog)
-      )
-      req(input$onset_to_isolation_sdlog > 0)
-      q_max <- qlnorm(
-        0.99,
-        meanlog = input$onset_to_isolation_meanlog,
-        sdlog = input$onset_to_isolation_sdlog
-      )
-      x <- seq(0, q_max, length.out = 200)
-      y <- dlnorm(
-        x,
-        meanlog = input$onset_to_isolation_meanlog,
-        sdlog = input$onset_to_isolation_sdlog
-      )
-    } else if (input$onset_to_isolation_distribution == "gamma") {
-      req(
-        !is.na(input$onset_to_isolation_shape),
-        !is.na(input$onset_to_isolation_scale)
-      )
-      req(input$onset_to_isolation_shape > 0, input$onset_to_isolation_scale > 0)
-      q_max <- qgamma(
-        0.99,
-        shape = input$onset_to_isolation_shape,
-        scale = input$onset_to_isolation_scale
-      )
-      x <- seq(0, q_max, length.out = 200)
-      y <- dgamma(
-        x,
-        shape = input$onset_to_isolation_shape,
-        scale = input$onset_to_isolation_scale
-      )
-    } else if (input$onset_to_isolation_distribution == "weibull") {
-      req(
-        !is.na(input$onset_to_isolation_shape),
-        !is.na(input$onset_to_isolation_scale)
-      )
-      req(input$onset_to_isolation_shape > 0, input$onset_to_isolation_scale > 0)
-      q_max <- qweibull(
-        0.99,
-        shape = input$onset_to_isolation_shape,
-        scale = input$onset_to_isolation_scale
-      )
-      x <- seq(0, q_max, length.out = 200)
-      y <- dweibull(
-        x,
-        shape = input$onset_to_isolation_shape,
-        scale = input$onset_to_isolation_scale
-      )
-    }
+    df <- onset_to_isolation_density(input, id_prefix = id_prefix)
     tinyplot(
       y ~ x,
-      data = data.frame(x = x, y = y),
+      data = df,
       type = "l",
       lwd = 3,
-      col = "steelblue",
+      col = col,
       ylab = "Density",
       xlab = "Onset-to-isolation delay (days)",
       theme = "clean"
+    )
+  })
+}
+
+#' Evaluate the onset-to-isolation delay probability density
+#'
+#' Compute the onset-to-isolation delay probability density under the
+#' user-selected parametric distribution (`"lnorm"`, `"gamma"` or `"weibull"`)
+#' for a single contact tracing strategy, reading the strategy's prefixed
+#' inputs. Reactive guards ([shiny::req()]) hold rendering until the relevant
+#' inputs are valid, so this is intended to be called from within a
+#' [shiny::renderPlot()] expression.
+#'
+#' @inheritParams onset_to_isolation_dist_plot
+#'
+#' @return A `data.frame` with numeric columns `x` (delay in days) and `y`
+#' (density).
+#' @keywords internal
+onset_to_isolation_density <- function(input, id_prefix = "") {
+  # Read the prefixed onset-to-isolation inputs for this strategy
+  iid <- function(suffix) input[[paste0(id_prefix, suffix)]]
+  distribution <- iid("onset_to_isolation_distribution")
+  req(distribution)
+  if (distribution == "lnorm") {
+    meanlog <- iid("onset_to_isolation_meanlog")
+    sdlog <- iid("onset_to_isolation_sdlog")
+    req(!is.na(meanlog), !is.na(sdlog))
+    req(sdlog > 0)
+    q_max <- qlnorm(0.99, meanlog = meanlog, sdlog = sdlog)
+    x <- seq(0, q_max, length.out = 200)
+    y <- dlnorm(x, meanlog = meanlog, sdlog = sdlog)
+  } else if (distribution == "gamma") {
+    shape <- iid("onset_to_isolation_shape")
+    scale <- iid("onset_to_isolation_scale")
+    req(!is.na(shape), !is.na(scale))
+    req(shape > 0, scale > 0)
+    q_max <- qgamma(0.99, shape = shape, scale = scale)
+    x <- seq(0, q_max, length.out = 200)
+    y <- dgamma(x, shape = shape, scale = scale)
+  } else if (distribution == "weibull") {
+    shape <- iid("onset_to_isolation_shape")
+    scale <- iid("onset_to_isolation_scale")
+    req(!is.na(shape), !is.na(scale))
+    req(shape > 0, scale > 0)
+    q_max <- qweibull(0.99, shape = shape, scale = scale)
+    x <- seq(0, q_max, length.out = 200)
+    y <- dweibull(x, shape = shape, scale = scale)
+  }
+  data.frame(x = x, y = y)
+}
+
+#' Render onset-to-isolation delay densities for several strategies together
+#'
+#' Overlays the onset-to-isolation delay probability density of several contact
+#' tracing strategies on a single grouped line plot, reusing
+#' [onset_to_isolation_density()] to evaluate each strategy's prefixed inputs.
+#'
+#' @inheritParams onset_to_isolation_dist_plot
+#' @param id_prefixes A named `character` vector mapping legend labels (the
+#' names) to input `id_prefix`es (the values), e.g.
+#' `c(Digital = "dct_", Manual = "mct_", Informal = "ict_")`.
+#' @param palette A `character` vector of colours, one per strategy in the same
+#' order as `id_prefixes`, used to colour and order the lines. Pass the same
+#' colours used for the individual per-strategy plots to keep them consistent.
+#' Defaults to `NULL` (every line `"steelblue"`).
+#' @param toggles An optional `character` vector, the same length and order as
+#' `id_prefixes`, of checkbox input IDs that switch each strategy on. Only
+#' strategies whose toggle is `TRUE` are drawn. Defaults to `NULL` (all drawn).
+#'
+#' @return Output from [shiny::renderPlot()].
+#' @keywords internal
+onset_to_isolation_dist_plot_combined <- function(input,
+                                                  id_prefixes,
+                                                  palette = NULL,
+                                                  toggles = NULL) {
+  renderPlot({
+    cols_all <- if (is.null(palette)) {
+      rep_len("steelblue", length(id_prefixes))
+    } else {
+      rep_len(palette, length(id_prefixes))
+    }
+    # Keep only the strategies whose checkbox is ticked (all, if no toggles)
+    keep <- if (is.null(toggles)) {
+      seq_along(id_prefixes)
+    } else {
+      which(vapply(toggles, function(tg) isTRUE(input[[tg]]), logical(1)))
+    }
+    req(length(keep) > 0)
+    id_prefixes <- id_prefixes[keep]
+    labels <- names(id_prefixes)
+    cols <- cols_all[keep]
+    # Density for each kept strategy from its prefixed inputs
+    dens <- lapply(id_prefixes, function(p) {
+      onset_to_isolation_density(input, id_prefix = p)
+    })
+    # Shared plotting region spanning every strategy's curve
+    xlim <- range(vapply(dens, function(d) range(d$x), numeric(2)))
+    ylim <- range(vapply(dens, function(d) range(d$y), numeric(2)))
+    # Draw the first strategy, then overlay the rest, each in its own colour.
+    # Explicit per-line colours (rather than a `palette` vector) keep this
+    # robust across tinyplot versions.
+    tinyplot(
+      dens[[1]]$y ~ dens[[1]]$x,
+      type = "l",
+      lwd = 3,
+      col = cols[1],
+      xlim = xlim,
+      ylim = ylim,
+      ylab = "Density",
+      xlab = "Onset-to-isolation delay (days)",
+      theme = "clean"
+    )
+    for (i in seq_along(dens)[-1]) {
+      tinyplot_add(dens[[i]]$y ~ dens[[i]]$x, type = "l", lwd = 3, col = cols[i])
+    }
+    legend(
+      "top",
+      legend = labels,
+      col = cols,
+      lwd = 3,
+      bty = "n",
+      horiz = TRUE
     )
   })
 }

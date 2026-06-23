@@ -4,10 +4,24 @@
 \alias{onset_to_isolation_dist_plot}
 \title{Render the onset-to-isolation delay probability density}
 \usage{
-onset_to_isolation_dist_plot(input)
+onset_to_isolation_dist_plot(input, id_prefix = "", col = "steelblue")
 }
 \arguments{
 \item{input}{The Shiny \code{input} reactive of the calling module.}
+
+\item{id_prefix}{A \code{character} string prepended to the onset-to-isolation
+input IDs read by this plot (e.g. \code{"dct_"}). Must match the \code{id_prefix}
+passed to the corresponding \code{\link[=onset_to_isolation_input]{onset_to_isolation_input()}}. Defaults to \code{""}
+(no prefix).}
+
+\item{col}{plotting color. Character, integer, or vector of length equal to
+the number of categories in the \code{by} variable. See \code{col}. Note that the
+default behaviour in \code{tinyplot} is to vary group colors along any variables
+declared in the \code{by} argument. Thus, specifying colors manually should not
+be necessary unless users wish to override the automatic colors produced by
+this grouping process. Typically, this would only be done if grouping
+features are deferred to some other graphical parameter (i.e., passing the
+"by" keyword to one of \code{pch}, \code{lty}, \code{lwd}, or \code{bg}; see below.)}
 }
 \value{
 Output from \code{\link[shiny:renderPlot]{shiny::renderPlot()}}.
