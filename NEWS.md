@@ -1,3 +1,7 @@
+# propose v0.2.1
+
+A patch release to fix a deployment error on shinyapps.io. The deployment of `{propose}` v0.2.0 errored because the `{brand.yml}` package was not installed in the deployment environment — `{rsconnect}` resolves only `Depends`/`Imports`/`LinkingTo` dependencies, and `{brand.yml}` is a suggested dependency of `{bslib}`. This has been resolved by adding `{brand.yml}` to `Imports` in the `DESCRIPTION`.
+
 # propose v0.2.0
 
 The second minor release of `{propose}`. This release is coupled with the release of [`{ringbp}` v1.0.0](https://github.com/epiforecasts/ringbp/releases/tag/v1.0.0).
