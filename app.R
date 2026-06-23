@@ -8,7 +8,15 @@ library(bibtex)
 library(waiter)
 
 ui <- page_navbar(
-  title = actionLink("go_home", "{propose}", style = "color: inherit; text-decoration: none;"),
+  title = actionLink(
+    inputId = "go_home",
+    label = tags$img(
+      src = "name_logo.png",
+      height = "40px",
+      alt = "Propose logo"
+    ),
+    style = "color: inherit; text-decoration: none;"
+  ),
   theme = bs_theme(brand = TRUE),
   id = "navbarid",
   fillable = FALSE,
@@ -20,7 +28,7 @@ ui <- page_navbar(
     div(
       class = "bg-light p-5 rounded-lg m-3 text-center",
       img(
-        src = "logo.png",
+        src = "hex_logo.png",
         style = "height: 180px; margin-bottom: 2rem; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));"
       ),
       h1("Control Pandemics Early", class = "display-4"),
