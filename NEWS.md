@@ -1,4 +1,8 @@
-# propose (development version)
+# propose v0.2.0
+
+The second minor release of `{propose}`. This release is coupled with the release of [`{ringbp}` v1.0.0](https://github.com/epiforecasts/ringbp/releases/tag/v1.0.0).
+
+This release contains several updates, many addressing feedback from the (pre-)alpha testing at the [ESCAPE](https://www.escapepandemics.com/) General Assembly 2026.
 
 ## Features
 
