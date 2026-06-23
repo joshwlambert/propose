@@ -88,17 +88,45 @@ ui <- page_navbar(
       )
     ),
     tags$div(
-      style = "max-width: 720px; margin: 1.5rem auto;",
-      card(
-        style = "background-color: #047857; color: white; border: none;",
-        card_body(
-          class = "text-center py-4",
-          actionLink(
-            "go_tracing_effectiveness",
+      style = "display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+               margin-top: 1.5rem;",
+      # top-left: colour block
+      tags$div(
+        style = "background-color: #CBD8C3; min-height: 220px;"
+      ),
+      # top-right: contact tracing effectiveness link block
+      actionLink(
+        "go_tracing_effectiveness",
+        tagList(
+          bs_icon("people", size = "3rem"),
+          tags$span(
             tagList("Effectiveness of contact tracing ", bs_icon("arrow-right")),
-            style = "color: white; font-weight: 600; font-size: 1.25rem; text-decoration: underline;"
+            style = "font-weight: 600; font-size: 1.6rem;"
           )
-        )
+        ),
+        style = "background-color: #111111; color: white;
+                 min-height: 220px; display: flex; flex-direction: column;
+                 align-items: center; justify-content: center; gap: 0.75rem;
+                 padding: 1.5rem; text-align: center; text-decoration: none;"
+      ),
+      # bottom-left: contact tracing strategies link block
+      actionLink(
+        "go_tracing_strategies",
+        tagList(
+          bs_icon("diagram-3", size = "3rem"),
+          tags$span(
+            tagList("Contact tracing strategies ", bs_icon("arrow-right")),
+            style = "font-weight: 600; font-size: 1.6rem;"
+          )
+        ),
+        style = "background-color: #111111; color: white;
+                 min-height: 220px; display: flex; flex-direction: column;
+                 align-items: center; justify-content: center; gap: 0.75rem;
+                 padding: 1.5rem; text-align: center; text-decoration: none;"
+      ),
+      # bottom-right: colour block
+      tags$div(
+        style = "background-color: #EADFC9; min-height: 220px;"
       )
     )
   ),
@@ -118,6 +146,10 @@ ui <- page_navbar(
     nav_panel(
       title = "Tracing Effectiveness",
       tracing_effectiveness_ui("tracing_effectiveness")
+    ),
+    nav_panel(
+      title = "Tracing Strategies",
+      tracing_strategies_ui("tracing_strategies")
     )
   ),
   nav_menu(
@@ -204,6 +236,11 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbarid", selected = "Tracing Effectiveness")
   })
 
+  # logic to jump to the contact tracing strategies page from the Home page
+  observeEvent(input$go_tracing_strategies, {
+    updateTabsetPanel(session, "navbarid", selected = "Tracing Strategies")
+  })
+
   # file path for {ringbp} vignettes rendered in docs UI
   addResourcePath(
     prefix = 'ringbp_docs',
@@ -213,6 +250,7 @@ server <- function(input, output, session) {
   explore_server("explore")
   compare_server("compare")
   tracing_effectiveness_server("tracing_effectiveness")
+  tracing_strategies_server("tracing_strategies")
   about_server("about")
   citation_server("citation")
   manual_server("manual", session)
