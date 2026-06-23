@@ -30,7 +30,7 @@ page_title <- function(title, ...) {
 
     # Logo
     tags$img(
-      src = "logo.svg",
+      src = "hex_logo.svg",
       style = "width: 110px;"
     )
   )
