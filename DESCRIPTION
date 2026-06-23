@@ -19,6 +19,7 @@ Depends:
     R (>= 4.2.0)
 Imports:
     bibtex,
+    brand.yml,
     bsicons,
     bslib,
     data.table,
