@@ -1,5 +1,37 @@
 # propose (development version)
 
+## Features
+
+* Added selectable pathogen parameter presets (_Disease X_, _COVID-19_ and _Ebola_) to the Explore page, which populate the simulation parameters with values based on estimates from the literature (#33).
+
+* Added a "Reset Defaults" button to the Explore page to restore all simulation parameters to their default values (#32).
+
+* Improved the outbreak trajectory plot on the Explore page by only plotting times where the outbreak is active (i.e. not extinct or reached the maximum number of cases) (#43).
+
+## User interface
+
+* Reorganised the Explore sidebar into **Pathogen**, **Intervention** and **Simulation Control** parameter groups (#37).
+
+* Added contextual tooltips to all parameter controls, including offspring distribution, incubation period, symptom event probability, onset-to-isolation, contact tracing, intervention and simulation control parameters (#42).
+
+* Added a Docs menu providing the `{propose}` manual and the `{ringbp}` vignettes (#36, #38).
+
+* Added a banner on the Home page linking to the `{propose}` manual (#36).
+
+* Added an FAQ entry and manual content explaining the Negative binomial offspring distribution dispersion parameter (_k_) (#34).
+
+* Added [theming](https://rstudio.github.io/bslib/articles/brand-yml/index.html) loaded from [`_brand.yml`](https://posit-dev.github.io/brand-yml/) (#19).
+
+## Structure and internals
+
+* Added the `PROPOSE_DEFAULTS` list of default simulation parameters, with per-pathogen presets, and the `reset_pathogen_params()` helper to reset the Explore page parameters (#32, #33).
+
+* Added `*_input()` helper functions for shared parameter panels: `contact_tracing_input()`, `symptom_event_prob_input()`, `onset_to_isolation_input()` and `incubation_input()` (#37).
+
+* Added the `shape_tip()` and `scale_tip()` helper functions for generating distribution parameter tooltips (#42).
+
+* Added the Docs module (`docs_ui()`) and the manual module (`manual_ui()` and `manual_server()`) (#36, #38).
+
 # propose v0.1.0
 
 First minor release of `{propose}`, a Shiny application for exploring outbreak control with targeted, individual-level interventions using the branching process simulations from `{ringbp}`.
