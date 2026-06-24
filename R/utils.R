@@ -157,6 +157,38 @@ reset_pathogen_params <- function(session, defaults) {
     "incubation_scale",
     value = defaults$incubation_scale
   )
+  # basic incubation UI: mean derived from the advanced default distribution
+  incubation_mean <- round(
+    switch(
+      defaults$incubation_distribution,
+      lnorm = epiparameter::convert_params_to_summary_stats(
+        "lnorm",
+        meanlog = defaults$incubation_meanlog,
+        sdlog = defaults$incubation_sdlog
+      )$mean,
+      gamma = epiparameter::convert_params_to_summary_stats(
+        "gamma",
+        shape = defaults$incubation_shape,
+        scale = defaults$incubation_scale
+      )$mean,
+      weibull = epiparameter::convert_params_to_summary_stats(
+        "weibull",
+        shape = defaults$incubation_shape,
+        scale = defaults$incubation_scale
+      )$mean
+    ),
+    1
+  )
+  updateNumericInput(
+    session,
+    "basic_incubation_mean",
+    value = incubation_mean
+  )
+  updateRadioButtons(
+    session,
+    "basic_incubation_variability",
+    selected = "moderate"
+  )
   updateNumericInput(
     session,
     "asymptomatic",
