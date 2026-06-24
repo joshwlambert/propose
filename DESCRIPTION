@@ -23,6 +23,7 @@ Imports:
     bsicons,
     bslib,
     data.table,
+    epiparameter,
     shiny,
     shinyFeedback,
     ringbp (>= 1.0.0),
