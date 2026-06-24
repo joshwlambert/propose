@@ -217,7 +217,17 @@ tracing_effectiveness_server <- function(id) {
     })
 
     incubation_period <- reactive({
-      if (input$incubation_distribution == "lnorm") {
+      if (isTRUE(input$incubation_ui == "basic")) {
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$basic_incubation_variability)
+        req(!is.na(input$basic_incubation_mean), input$basic_incubation_mean > 0)
+        shape <- BASIC_DELAY_SHAPE[[input$basic_incubation_variability]]
+        \(n) rgamma(
+          n = n,
+          shape = shape,
+          scale = input$basic_incubation_mean / shape
+        )
+      } else if (input$incubation_distribution == "lnorm") {
         \(n) rlnorm(n = n, meanlog = input$incubation_meanlog, sdlog = input$incubation_sdlog)
       } else if (input$incubation_distribution == "gamma") {
         \(n) rgamma(n = n, shape = input$incubation_shape, scale = input$incubation_scale)
