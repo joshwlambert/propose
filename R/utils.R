@@ -115,6 +115,23 @@ reset_pathogen_params <- function(session, defaults) {
     "isolated_disp",
     value = defaults$isolated_disp
   )
+  # basic transmissibility UI: R0s mirror the advanced defaults, variability
+  # resets to homogeneous (the basic UI default)
+  updateNumericInput(
+    session,
+    "basic_community_r0",
+    value = defaults$community_r0
+  )
+  updateNumericInput(
+    session,
+    "basic_isolated_r0",
+    value = defaults$isolated_r0
+  )
+  updateRadioButtons(
+    session,
+    "basic_transmission_variability",
+    selected = "homogeneous"
+  )
   updateSelectInput(
     session,
     "incubation_distribution",
