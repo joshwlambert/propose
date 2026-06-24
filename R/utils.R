@@ -37,8 +37,8 @@ PROPOSE_DEFAULTS <- list(
     isolated_r0 = 0.5,
     # delays
     incubation_distribution = "lnorm",
-    incubation_shape = 1.525,
-    incubation_scale = 0.629,
+    incubation_meanlog = 1.525,
+    incubation_sdlog = 0.629,
     # event probs
     asymptomatic = 0.35,
     presymptomatic_transmission = 0.4
