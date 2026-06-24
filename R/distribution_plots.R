@@ -221,7 +221,7 @@ incubation_dist_plot <- function(input) {
 #' @inheritParams offspring_dist_plot
 #' @param id_prefix A `character` string prepended to the onset-to-isolation
 #' input IDs read by this plot (e.g. `"dct_"`). Must match the `id_prefix`
-#' passed to the corresponding [onset_to_isolation_input()]. Defaults to `""`
+#' passed to the corresponding [delays_input()]. Defaults to `""`
 #' (no prefix).
 #' @inheritParams tinyplot::tinyplot
 #'
@@ -262,6 +262,18 @@ onset_to_isolation_dist_plot <- function(input,
 onset_to_isolation_density <- function(input, id_prefix = "") {
   # Read the prefixed onset-to-isolation inputs for this strategy
   iid <- function(suffix) input[[paste0(id_prefix, suffix)]]
+  # basic UI: Gamma with the mean fixed and shape from the variability choice
+  if (isTRUE(iid("onset_to_isolation_ui") == "basic")) {
+    variability <- iid("basic_onset_to_isolation_variability")
+    mean <- iid("basic_onset_to_isolation_mean")
+    req(variability)
+    req(!is.na(mean), mean > 0)
+    shape <- BASIC_DELAY_SHAPE[[variability]]
+    scale <- mean / shape
+    q_max <- qgamma(0.99, shape = shape, scale = scale)
+    x <- seq(0, q_max, length.out = 200)
+    return(data.frame(x = x, y = dgamma(x, shape = shape, scale = scale)))
+  }
   distribution <- iid("onset_to_isolation_distribution")
   req(distribution)
   if (distribution == "lnorm") {

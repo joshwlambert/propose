@@ -11,7 +11,7 @@ onset_to_isolation_dist_plot(input, id_prefix = "", col = "steelblue")
 
 \item{id_prefix}{A \code{character} string prepended to the onset-to-isolation
 input IDs read by this plot (e.g. \code{"dct_"}). Must match the \code{id_prefix}
-passed to the corresponding \code{\link[=onset_to_isolation_input]{onset_to_isolation_input()}}. Defaults to \code{""}
+passed to the corresponding \code{\link[=delays_input]{delays_input()}}. Defaults to \code{""}
 (no prefix).}
 
 \item{col}{plotting color. Character, integer, or vector of length equal to
