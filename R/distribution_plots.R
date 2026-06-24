@@ -56,28 +56,40 @@ offspring_x_max <- function(distribution, r0, disp) {
 #' @keywords internal
 offspring_dist_plot <- function(input) {
   renderPlot({
-    req(input$community_offspring_distribution)
-    req(input$isolated_offspring_distribution)
-    req(!is.na(input$community_r0), input$community_r0 >= 0)
-    req(!is.na(input$isolated_r0), input$isolated_r0 >= 0)
-    if (input$community_offspring_distribution == "nbinom") {
-      req(!is.na(input$community_disp), input$community_disp > 0)
+    # handle different parameterisation from basic and advanced UIs
+    if (isTRUE(input$transmissibility_ui == "basic")) {
+      # guard for startup where input is NULL before the radioButtons registers
+      req(input$basic_transmission_variability)
+      k <- BASIC_K[[input$basic_transmission_variability]]
+      community_distribution <- "nbinom"
+      isolated_distribution <- "nbinom"
+      community_r0 <- input$basic_community_r0
+      isolated_r0 <- input$basic_isolated_r0
+      community_disp <- k
+      isolated_disp <- k
+    } else {
+      community_distribution <- input$community_offspring_distribution
+      isolated_distribution <- input$isolated_offspring_distribution
+      community_r0 <- input$community_r0
+      isolated_r0 <- input$isolated_r0
+      community_disp <- input$community_disp
+      isolated_disp <- input$isolated_disp
     }
-    if (input$isolated_offspring_distribution == "nbinom") {
-      req(!is.na(input$isolated_disp), input$isolated_disp > 0)
+
+    # validate parameters shared by UI modes
+    req(community_distribution, isolated_distribution)
+    req(!is.na(community_r0), community_r0 >= 0)
+    req(!is.na(isolated_r0), isolated_r0 >= 0)
+    if (community_distribution == "nbinom") {
+      req(!is.na(community_disp), community_disp > 0)
+    }
+    if (isolated_distribution == "nbinom") {
+      req(!is.na(isolated_disp), isolated_disp > 0)
     }
 
     x_max <- max(
-      offspring_x_max(
-        input$community_offspring_distribution,
-        input$community_r0,
-        input$community_disp
-      ),
-      offspring_x_max(
-        input$isolated_offspring_distribution,
-        input$isolated_r0,
-        input$isolated_disp
-      ),
+      offspring_x_max(community_distribution, community_r0, community_disp),
+      offspring_x_max(isolated_distribution, isolated_r0, isolated_disp),
       5
     )
     x <- 0:x_max
@@ -85,9 +97,9 @@ offspring_dist_plot <- function(input) {
       data.frame(
         x = x,
         density = offspring_pmf(
-          input$community_offspring_distribution,
-          input$community_r0,
-          input$community_disp,
+          community_distribution,
+          community_r0,
+          community_disp,
           x
         ),
         setting = "Community"
@@ -95,9 +107,9 @@ offspring_dist_plot <- function(input) {
       data.frame(
         x = x,
         density = offspring_pmf(
-          input$isolated_offspring_distribution,
-          input$isolated_r0,
-          input$isolated_disp,
+          isolated_distribution,
+          isolated_r0,
+          isolated_disp,
           x
         ),
         setting = "Isolated"
