@@ -141,49 +141,61 @@ offspring_dist_plot <- function(input) {
 #' @keywords internal
 incubation_dist_plot <- function(input) {
   renderPlot({
-    req(input$incubation_distribution)
-    if (input$incubation_distribution == "lnorm") {
-      req(!is.na(input$incubation_meanlog), !is.na(input$incubation_sdlog))
-      req(input$incubation_sdlog > 0)
-      q_max <- qlnorm(
-        0.99,
-        meanlog = input$incubation_meanlog,
-        sdlog = input$incubation_sdlog
-      )
+    # handle different parameterisation from basic and advanced UIs
+    if (isTRUE(input$incubation_ui == "basic")) {
+      # guard for startup where input is NULL before the radioButtons registers
+      req(input$basic_incubation_variability)
+      req(!is.na(input$basic_incubation_mean), input$basic_incubation_mean > 0)
+      shape <- BASIC_DELAY_SHAPE[[input$basic_incubation_variability]]
+      scale <- input$basic_incubation_mean / shape
+      q_max <- qgamma(0.99, shape = shape, scale = scale)
       x <- seq(0, q_max, length.out = 200)
-      y <- dlnorm(
-        x,
-        meanlog = input$incubation_meanlog,
-        sdlog = input$incubation_sdlog
-      )
-    } else if (input$incubation_distribution == "gamma") {
-      req(!is.na(input$incubation_shape), !is.na(input$incubation_scale))
-      req(input$incubation_shape > 0, input$incubation_scale > 0)
-      q_max <- qgamma(
-        0.99,
-        shape = input$incubation_shape,
-        scale = input$incubation_scale
-      )
-      x <- seq(0, q_max, length.out = 200)
-      y <- dgamma(
-        x,
-        shape = input$incubation_shape,
-        scale = input$incubation_scale
-      )
-    } else if (input$incubation_distribution == "weibull") {
-      req(!is.na(input$incubation_shape), !is.na(input$incubation_scale))
-      req(input$incubation_shape > 0, input$incubation_scale > 0)
-      q_max <- qweibull(
-        0.99,
-        shape = input$incubation_shape,
-        scale = input$incubation_scale
-      )
-      x <- seq(0, q_max, length.out = 200)
-      y <- dweibull(
-        x,
-        shape = input$incubation_shape,
-        scale = input$incubation_scale
-      )
+      y <- dgamma(x, shape = shape, scale = scale)
+    } else {
+      req(input$incubation_distribution)
+      if (input$incubation_distribution == "lnorm") {
+        req(!is.na(input$incubation_meanlog), !is.na(input$incubation_sdlog))
+        req(input$incubation_sdlog > 0)
+        q_max <- qlnorm(
+          0.99,
+          meanlog = input$incubation_meanlog,
+          sdlog = input$incubation_sdlog
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dlnorm(
+          x,
+          meanlog = input$incubation_meanlog,
+          sdlog = input$incubation_sdlog
+        )
+      } else if (input$incubation_distribution == "gamma") {
+        req(!is.na(input$incubation_shape), !is.na(input$incubation_scale))
+        req(input$incubation_shape > 0, input$incubation_scale > 0)
+        q_max <- qgamma(
+          0.99,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dgamma(
+          x,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+      } else if (input$incubation_distribution == "weibull") {
+        req(!is.na(input$incubation_shape), !is.na(input$incubation_scale))
+        req(input$incubation_shape > 0, input$incubation_scale > 0)
+        q_max <- qweibull(
+          0.99,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+        x <- seq(0, q_max, length.out = 200)
+        y <- dweibull(
+          x,
+          shape = input$incubation_shape,
+          scale = input$incubation_scale
+        )
+      }
     }
     tinyplot(
       y ~ x,
