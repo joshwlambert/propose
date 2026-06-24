@@ -1,3 +1,20 @@
+#' Negative Binomial dispersion (`k`) for the basic pathogen transmissibility
+#' UI
+#'
+#' @description
+#' Maps the `basic_transmission_variability` radio choices in
+#' [offspring_input()] to the Negative Binomial dispersion parameter (`size`
+#' in [stats::rnbinom()]). `"homogeneous"` (`k = Inf`) is equivalent to a
+#' Poisson offspring distribution, `"moderate"` (`k = 1`) to a Geometric,
+#' and `"high"` (`k = 0.1`) gives strong superspreading.
+#'
+#' @keywords internal
+BASIC_K <- c(
+  homogeneous = Inf,
+  moderate = 1,
+  high = 0.1
+)
+
 #' Generate [bslib::accordion()] with inputs for parameterising `community` and
 #' `isolated` arguments in [ringbp::offspring_opts()]
 #'
@@ -36,69 +53,134 @@ offspring_input <- function(ns, ...) {
 
   accordion(
     accordion_panel(
-      title = "Offspring distribution parameters:",
+      title = "Pathogen transmissibility",
       icon = bs_icon("diagram-3-fill"),
-      selectInput(
-        inputId = ns("community_offspring_distribution"),
-        label = tagList(
-          "Community Offspring Distribution",
-          tooltip(bs_icon("info-circle"), offspring_tip)
-        ),
+
+      # basic or advanced UI options
+      radioButtons(
+        inputId = ns("transmissibility_ui"),
+        label = "User mode",
         choices = list(
-          "Negative Binomial" = "nbinom",
-          "Poisson" = "pois",
-          "Geometric" = "geom"
+          "Basic" = "basic",
+          "Advanced" = "advanced"
         )
       ),
-      numericInput(
-        ns("community_r0"),
-        label = tagList(
-          "Community R0",
-          tooltip(bs_icon("info-circle"), r0_tip("community"))
-        ),
-        value = PROPOSE_DEFAULTS$disease_x$community_r0
-      ),
+
+      # basic transmissibility UI
       conditionalPanel(
-        condition = "input.community_offspring_distribution == 'nbinom'",
+        condition = "input.transmissibility_ui == 'basic'",
         numericInput(
-          ns("community_disp"),
+          ns("basic_community_r0"),
           label = tagList(
-            HTML("Community Dispersion (<em>k</em>)"),
-            tooltip(bs_icon("info-circle"), disp_tip)
+            "Average number of secondary infections (R0)",
+            tooltip(
+              bs_icon("info-circle"),
+              "The basic reproduction number (R0) is the average number of
+              secondary infections caused by a primary infection in a population
+              of entirely susceptible individuals."
+            )
           ),
-          value = PROPOSE_DEFAULTS$disease_x$community_disp
+          value = 2
+        ),
+        numericInput(
+          ns("basic_isolated_r0"),
+          label = tagList(
+            "Average number of secondary infections while isolated (R0)",
+            tooltip(bs_icon("info-circle"), r0_tip("isolated"))
+          ),
+          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
+        ),
+        radioButtons(
+          inputId = ns("basic_transmission_variability"),
+          label = tagList(
+            "Transmission variability",
+            tooltip(
+              bs_icon("info-circle"),
+              "How much the number of secondary infections varies between
+              individuals. Homogeneous transmission means everyone infects a
+              similar number of people, while higher variability allows for
+              superspreading, where a few individuals cause most infections.
+              These options set the dispersion (k) of a Negative Binomial
+              offspring distribution: homogeneous (k = Inf, equivalent to
+              Poisson), moderate (k = 1, equivalent to Geometric), and high
+              (k = 0.1)."
+            )
+          ),
+          choices = list(
+            "Homogeneous transmission" = "homogeneous",
+            "Moderate transmission variability" = "moderate",
+            "High transmission variability" = "high"
+          )
         ),
         ns = ns
       ),
-      selectInput(
-        inputId = ns("isolated_offspring_distribution"),
-        label = tagList(
-          "Isolated Offspring Distribution",
-          tooltip(bs_icon("info-circle"), offspring_tip)
-        ),
-        choices = list(
-          "Negative Binomial" = "nbinom",
-          "Poisson" = "pois",
-          "Geometric" = "geom"
-        )
-      ),
-      numericInput(
-        ns("isolated_r0"),
-        label = tagList(
-          "Isolated R0",
-          tooltip(bs_icon("info-circle"), r0_tip("isolated"))
-        ),
-        value = PROPOSE_DEFAULTS$disease_x$isolated_r0
-      ),
+
+      # advanced transmissibility UI
       conditionalPanel(
-        condition = "input.isolated_offspring_distribution == 'nbinom'",
-        numericInput(
-          ns("isolated_disp"),
+        condition = "input.transmissibility_ui == 'advanced'",
+        selectInput(
+          inputId = ns("community_offspring_distribution"),
           label = tagList(
-            HTML("Isolated Dispersion (<em>k</em>)"),
-            tooltip(bs_icon("info-circle"), disp_tip)
+            "Community Offspring Distribution",
+            tooltip(bs_icon("info-circle"), offspring_tip)
           ),
-          value = PROPOSE_DEFAULTS$disease_x$isolated_disp
+          choices = list(
+            "Negative Binomial" = "nbinom",
+            "Poisson" = "pois",
+            "Geometric" = "geom"
+          )
+        ),
+        numericInput(
+          ns("community_r0"),
+          label = tagList(
+            "Community R0",
+            tooltip(bs_icon("info-circle"), r0_tip("community"))
+          ),
+          value = PROPOSE_DEFAULTS$disease_x$community_r0
+        ),
+        conditionalPanel(
+          condition = "input.community_offspring_distribution == 'nbinom'",
+          numericInput(
+            ns("community_disp"),
+            label = tagList(
+              HTML("Community Dispersion (<em>k</em>)"),
+              tooltip(bs_icon("info-circle"), disp_tip)
+            ),
+            value = PROPOSE_DEFAULTS$disease_x$community_disp
+          ),
+          ns = ns
+        ),
+        selectInput(
+          inputId = ns("isolated_offspring_distribution"),
+          label = tagList(
+            "Isolated Offspring Distribution",
+            tooltip(bs_icon("info-circle"), offspring_tip)
+          ),
+          choices = list(
+            "Negative Binomial" = "nbinom",
+            "Poisson" = "pois",
+            "Geometric" = "geom"
+          )
+        ),
+        numericInput(
+          ns("isolated_r0"),
+          label = tagList(
+            "Isolated R0",
+            tooltip(bs_icon("info-circle"), r0_tip("isolated"))
+          ),
+          value = PROPOSE_DEFAULTS$disease_x$isolated_r0
+        ),
+        conditionalPanel(
+          condition = "input.isolated_offspring_distribution == 'nbinom'",
+          numericInput(
+            ns("isolated_disp"),
+            label = tagList(
+              HTML("Isolated Dispersion (<em>k</em>)"),
+              tooltip(bs_icon("info-circle"), disp_tip)
+            ),
+            value = PROPOSE_DEFAULTS$disease_x$isolated_disp
+          ),
+          ns = ns
         ),
         ns = ns
       )
@@ -111,7 +193,8 @@ offspring_input <- function(ns, ...) {
 #'
 #' Companion server function intended to be called once inside a module
 #' [shiny::moduleServer()] block. Wires up [shinyFeedback::showFeedbackDanger()]
-#' for `community_r0` and `isolated_r0`.
+#' for the advanced (`community_r0`, `isolated_r0`) and basic
+#' (`basic_community_r0`, `basic_isolated_r0`) reproduction number inputs.
 #'
 #' @param input The Shiny `input` reactive of the calling module.
 #'
@@ -138,6 +221,28 @@ offspring_feedback_server <- function(input) {
       )
     } else {
       hideFeedback("isolated_r0")
+    }
+  })
+  observeEvent(input$basic_community_r0, {
+    req(!is.na(input$basic_community_r0))
+    if (input$basic_community_r0 < 0) {
+      showFeedbackDanger(
+        "basic_community_r0",
+        text = "Error: R0 cannot be negative."
+      )
+    } else {
+      hideFeedback("basic_community_r0")
+    }
+  })
+  observeEvent(input$basic_isolated_r0, {
+    req(!is.na(input$basic_isolated_r0))
+    if (input$basic_isolated_r0 < 0) {
+      showFeedbackDanger(
+        "basic_isolated_r0",
+        text = "Error: R0 cannot be negative."
+      )
+    } else {
+      hideFeedback("basic_isolated_r0")
     }
   })
   invisible(NULL)
