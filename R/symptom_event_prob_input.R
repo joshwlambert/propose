@@ -14,32 +14,38 @@ symptom_event_prob_input <- function(ns, ...) {
       numericInput(
         ns("asymptomatic"),
         label = tagList(
-          "Probability asymptomatic:",
+          "The percentage of infected individuals who are asymptomatic (on average)",
           tooltip(
             bs_icon("info-circle"),
-            "Probability that an infected individual shows no symptoms
-            (asymptomatic) throughout their entire infectious period. 0 causes
-            everyone to develop symptoms during their infection. Conversely,
-            1 causes no one to develop symptoms. Asymptomatic individuals
-            never develop symptoms and so are never isolated, and their
-            contacts are never traced."
+            "The percentage of infected individuals who show no symptoms
+            (asymptomatic) throughout their entire infectious period, on
+            average. Each case is asymptomatic independently with this
+            percentage as its chance, so the realised proportion varies between
+            simulations. 0% causes everyone to develop symptoms during their
+            infection; conversely, 100% causes no one to develop symptoms.
+            Asymptomatic individuals never develop symptoms and so are never
+            isolated, and their contacts are never traced."
           )
         ),
-        value = PROPOSE_DEFAULTS$disease_x$asymptomatic
+        value = PROPOSE_DEFAULTS$disease_x$asymptomatic,
+        min = 0,
+        max = 100
       ),
       numericInput(
         ns("presymptomatic_transmission"),
         label = tagList(
-          "Probability of presymptomatic transmission:",
+          "The percentage of transmission that occurs before symptom onset",
           tooltip(
             bs_icon("info-circle"),
-            "The proportion of all transmission events that occur before the
+            "The percentage of all transmission that occurs before the
             infector's symptom onset. Higher values mean more transmission
             happens during the presymptomatic phase, before isolation can be
             triggered by symptoms."
           )
         ),
-        value = PROPOSE_DEFAULTS$disease_x$presymptomatic_transmission
+        value = PROPOSE_DEFAULTS$disease_x$presymptomatic_transmission,
+        min = 0,
+        max = 100
       )
     ),
     open = FALSE
@@ -55,10 +61,10 @@ symptom_event_prob_input <- function(ns, ...) {
 symptom_event_prob_feedback_server <- function(input) {
   observeEvent(input$asymptomatic, {
     req(!is.na(input$asymptomatic))
-    if (input$asymptomatic < 0 || input$asymptomatic > 1) {
+    if (input$asymptomatic < 0 || input$asymptomatic > 100) {
       showFeedbackDanger(
         "asymptomatic",
-        text = "Error: Probability of asymptomatic cases must be between 0 and 1."
+        text = "Error: Percentage of asymptomatic cases must be between 0 and 100."
       )
     } else {
       hideFeedback("asymptomatic")
@@ -66,10 +72,10 @@ symptom_event_prob_feedback_server <- function(input) {
   })
   observeEvent(input$presymptomatic_transmission, {
     req(!is.na(input$presymptomatic_transmission))
-    if (input$presymptomatic_transmission < 0 || input$presymptomatic_transmission > 1) {
+    if (input$presymptomatic_transmission < 0 || input$presymptomatic_transmission > 100) {
       showFeedbackDanger(
         "presymptomatic_transmission",
-        text = "Error: Probability of presymptomatic transmission cases must be between 0 and 1."
+        text = "Error: Percentage of presymptomatic transmission must be between 0 and 100."
       )
     } else {
       hideFeedback("presymptomatic_transmission")

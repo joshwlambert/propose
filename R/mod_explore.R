@@ -312,9 +312,9 @@ explore_server <- function(id) {
         color = transparent(0.75)
       )
       on.exit(waiter_hide())
-      req(input$asymptomatic >= 0 && input$asymptomatic <= 1)
-      req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 1)
-      req(input$symptomatic_traced >= 0 && input$symptomatic_traced <= 1)
+      req(input$asymptomatic >= 0 && input$asymptomatic <= 100)
+      req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 100)
+      req(input$symptomatic_traced >= 0 && input$symptomatic_traced <= 100)
       req(input$cap_max_days >= 1)
       req(input$cap_cases >= 1)
 
@@ -331,9 +331,11 @@ explore_server <- function(id) {
         offspring = offspring(),
         delays = delays(),
         event_probs = event_prob_opts(
-          asymptomatic = input$asymptomatic,
-          presymptomatic_transmission = input$presymptomatic_transmission,
-          symptomatic_traced = input$symptomatic_traced
+          # UI collects percentages; the model expects proportions (0-1)
+          asymptomatic = input$asymptomatic / 100,
+          presymptomatic_transmission = input$presymptomatic_transmission / 100,
+          # UI collects a percentage; the model expects a proportion (0-1)
+          symptomatic_traced = input$symptomatic_traced / 100
         ),
         interventions = intervention_opts(quarantine = input$quarantine),
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)

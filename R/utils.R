@@ -24,8 +24,8 @@ PROPOSE_DEFAULTS <- list(
     incubation_meanlog = 1.5,
     incubation_sdlog = 0.4,
     # event probs
-    asymptomatic = 0.1,
-    presymptomatic_transmission = 0.1
+    asymptomatic = 10,
+    presymptomatic_transmission = 10
   ),
   covid_19 = list(
     # pathogen parameters
@@ -40,8 +40,8 @@ PROPOSE_DEFAULTS <- list(
     incubation_meanlog = 1.525,
     incubation_sdlog = 0.629,
     # event probs
-    asymptomatic = 0.35,
-    presymptomatic_transmission = 0.4
+    asymptomatic = 35,
+    presymptomatic_transmission = 40
   ),
   ebola = list(
     # pathogen parameters
@@ -56,7 +56,7 @@ PROPOSE_DEFAULTS <- list(
     incubation_shape = 1.578,
     incubation_scale = 6.528,
     # event probs
-    asymptomatic = 0.27,
+    asymptomatic = 27,
     presymptomatic_transmission = 0
   ),
   # intervetnion parameters
@@ -65,7 +65,7 @@ PROPOSE_DEFAULTS <- list(
   onset_to_isolation_meanlog = 2,
   onset_to_isolation_sdlog = 0.5,
   # contact tracing
-  symptomatic_traced = 0.8,
+  symptomatic_traced = 80,
   # intervention
   quarantine = FALSE,
   # sim controls

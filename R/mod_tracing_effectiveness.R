@@ -48,7 +48,7 @@ tracing_effectiveness_ui <- function(id) {
           )
         ),
         tags$b("Contact Tracing Sweep"),
-        contact_tracing_seq_input(ns = ns, from = 0, to = 1, by = 0.2),
+        contact_tracing_seq_input(ns = ns, from = 0, to = 100, by = 20),
         numericInput(
           ns("replicates"),
           label = tagList(
@@ -273,19 +273,21 @@ tracing_effectiveness_server <- function(id) {
 
     sweep_results <- eventReactive(input$simulate, {
       req(!is.na(input$symptomatic_traced_from), !is.na(input$symptomatic_traced_to), !is.na(input$symptomatic_traced_by))
-      req(input$symptomatic_traced_from >= 0, input$symptomatic_traced_to <= 1)
+      req(input$symptomatic_traced_from >= 0, input$symptomatic_traced_to <= 100)
       req(input$symptomatic_traced_from <= input$symptomatic_traced_to)
       req(input$symptomatic_traced_by > 0)
       req(input$replicates >= 1, input$initial_cases >= 1)
       req(input$cap_max_days >= 1, input$cap_cases >= 1)
-      req(input$asymptomatic >= 0, input$asymptomatic <= 1)
-      req(input$presymptomatic_transmission >= 0, input$presymptomatic_transmission <= 1)
+      req(input$asymptomatic >= 0, input$asymptomatic <= 100)
+      req(input$presymptomatic_transmission >= 0, input$presymptomatic_transmission <= 100)
 
+      # UI collects percentages; convert the swept values to proportions (0-1)
+      # for the model.
       tracing_seq <- seq(
         from = input$symptomatic_traced_from,
         to = input$symptomatic_traced_to,
         by = input$symptomatic_traced_by
-      )
+      ) / 100
 
       waiter_show(html = loading, color = transparent(0.75))
       on.exit(waiter_hide())
@@ -297,8 +299,9 @@ tracing_effectiveness_server <- function(id) {
           offspring = offspring(),
           delays = delays(),
           event_probs = event_prob_opts(
-            asymptomatic = input$asymptomatic,
-            presymptomatic_transmission = input$presymptomatic_transmission,
+            # UI collects percentages; the model expects proportions (0-1)
+            asymptomatic = input$asymptomatic / 100,
+            presymptomatic_transmission = input$presymptomatic_transmission / 100,
             symptomatic_traced = p
           ),
           interventions = intervention_opts(quarantine = input$quarantine),
@@ -326,7 +329,7 @@ tracing_effectiveness_server <- function(id) {
       })
 
       df <- data.frame(
-        tracing_pct = tracing_seq * 100,
+        tracing_pct = tracing_seq,
         control_pct = vapply(per_scenario, `[[`, numeric(1), "pcontrol") * 100,
         median_reff = vapply(per_scenario, `[[`, numeric(1), "median_reff"),
         lwr_reff = vapply(per_scenario, `[[`, numeric(1), "lwr_reff"),

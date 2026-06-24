@@ -398,13 +398,14 @@ presymptomatic_dist_plot <- function(input) {
     req(!is.na(input$presymptomatic_transmission))
     req(
       input$presymptomatic_transmission >= 0,
-      input$presymptomatic_transmission <= 1
+      input$presymptomatic_transmission <= 100
     )
     # Match ringbp's parameterisation: xi = 0, omega = 2, alpha derived from
     # the proportion of transmission that occurs before symptom onset.
+    # UI collects percentages; the model expects proportions (0-1).
     opts <- ringbp::event_prob_opts(
-      asymptomatic = if (!is.na(input$asymptomatic)) input$asymptomatic else 0,
-      presymptomatic_transmission = input$presymptomatic_transmission,
+      asymptomatic = if (!is.na(input$asymptomatic)) input$asymptomatic / 100 else 0,
+      presymptomatic_transmission = input$presymptomatic_transmission / 100,
       # symptomatic_traced doesn't influence the skew-normal alpha used below;
       # supply any value in [0, 1] to satisfy event_prob_opts()'s checks.
       symptomatic_traced = 0

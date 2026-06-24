@@ -14,17 +14,21 @@ contact_tracing_input <- function(ns, ...) {
       numericInput(
         ns("symptomatic_traced"),
         label = tagList(
-          "Probability of contact traced",
+          "The percentage of contacts that are successfully traced (on average)",
           tooltip(
             bs_icon("info-circle"),
-            "Probability that a contact of a symptomatic infectious
-            individual is successfully traced. Traced individuals are isolated
-            at the earliest of the time their infector is isolated or until
-            they get a positive test result and isolate themselves, whichever
-            comes first."
+            "The percentage of contacts of a symptomatic infectious individual
+            that are successfully traced, on average. Each contact is traced
+            independently with this percentage as its chance, so the realised
+            proportion varies between simulations. Traced individuals are
+            isolated at the earliest of the time their infector is isolated or
+            until they get a positive test result and isolate themselves,
+            whichever comes first."
           )
         ),
-        value = PROPOSE_DEFAULTS$symptomatic_traced
+        value = PROPOSE_DEFAULTS$symptomatic_traced,
+        min = 0,
+        max = 100
       )
     ),
     open = FALSE
@@ -36,16 +40,18 @@ contact_tracing_input <- function(ns, ...) {
 #' (`symptomatic_traced` argument in [ringbp::event_prob_opts()]) to sweep over
 #'
 #' @param ns A namespace created with [shiny::NS()].
-#' @param from,to,by `numeric` values input into [seq()].
+#' @param from,to,by `numeric` percentages (between 0 and 100) seeding the
+#'   `From`/`To`/`By` inputs. The consuming module divides the swept values by
+#'   100 to obtain proportions before passing them to the model.
 #' @param ... [dots] Not used, will throw a warning if arguments are supplied.
 #'
 #' @return A [bslib::accordion()] object.
 #' @keywords internal
 contact_tracing_seq_input <- function(ns, from, to, by, ...) {
   chkDots(...)
-  seq_tip <- "Probability that a contact of a symptomatic infectious
-    individual is successfully traced. The 'From', 'To', and 'By' inputs
-    parameterise a seq() of probabilities (between 0 and 1) over which the
+  seq_tip <- "The percentage of contacts of a symptomatic infectious individual
+    that are successfully traced, on average. The 'From', 'To', and 'By' inputs
+    parameterise a seq() of percentages (between 0 and 100) over which the
     outbreak simulation is repeated."
   accordion(
     accordion_panel(
@@ -59,7 +65,7 @@ contact_tracing_seq_input <- function(ns, from, to, by, ...) {
         ),
         value = from,
         min = 0,
-        max = 1
+        max = 100
       ),
       numericInput(
         ns("symptomatic_traced_to"),
@@ -69,7 +75,7 @@ contact_tracing_seq_input <- function(ns, from, to, by, ...) {
         ),
         value = to,
         min = 0,
-        max = 1
+        max = 100
       ),
       numericInput(
         ns("symptomatic_traced_by"),
@@ -79,7 +85,7 @@ contact_tracing_seq_input <- function(ns, from, to, by, ...) {
         ),
         value = by,
         min = 0,
-        max = 1
+        max = 100
       )
     ),
     open = TRUE
@@ -95,10 +101,10 @@ contact_tracing_seq_input <- function(ns, from, to, by, ...) {
 contact_tracing_feedback_server <- function(input) {
   observeEvent(input$symptomatic_traced, {
     req(!is.na(input$symptomatic_traced))
-    if (input$symptomatic_traced < 0 || input$symptomatic_traced > 1) {
+    if (input$symptomatic_traced < 0 || input$symptomatic_traced > 100) {
       showFeedbackDanger(
         "symptomatic_traced",
-        text = "Error: Probability of a symptomatic contact being traced must be between 0 and 1."
+        text = "Error: Percentage of symptomatic contacts traced must be between 0 and 100."
       )
     } else {
       hideFeedback("symptomatic_traced")
@@ -119,10 +125,10 @@ contact_tracing_feedback_server <- function(input) {
 contact_tracing_seq_feedback_server <- function(input) {
   observeEvent(input$symptomatic_traced_from, {
     req(!is.na(input$symptomatic_traced_from))
-    if (input$symptomatic_traced_from < 0 || input$symptomatic_traced_from > 1) {
+    if (input$symptomatic_traced_from < 0 || input$symptomatic_traced_from > 100) {
       showFeedbackDanger(
         "symptomatic_traced_from",
-        text = "Error: 'From' must be between 0 and 1."
+        text = "Error: 'From' must be between 0 and 100."
       )
     } else {
       hideFeedback("symptomatic_traced_from")
@@ -130,10 +136,10 @@ contact_tracing_seq_feedback_server <- function(input) {
   })
   observeEvent(input$symptomatic_traced_to, {
     req(!is.na(input$symptomatic_traced_to))
-    if (input$symptomatic_traced_to < 0 || input$symptomatic_traced_to > 1) {
+    if (input$symptomatic_traced_to < 0 || input$symptomatic_traced_to > 100) {
       showFeedbackDanger(
         "symptomatic_traced_to",
-        text = "Error: 'To' must be between 0 and 1."
+        text = "Error: 'To' must be between 0 and 100."
       )
     } else if (!is.na(input$symptomatic_traced_from) &&
                input$symptomatic_traced_to < input$symptomatic_traced_from) {
@@ -147,10 +153,10 @@ contact_tracing_seq_feedback_server <- function(input) {
   })
   observeEvent(input$symptomatic_traced_by, {
     req(!is.na(input$symptomatic_traced_by))
-    if (input$symptomatic_traced_by <= 0 || input$symptomatic_traced_by > 1) {
+    if (input$symptomatic_traced_by <= 0 || input$symptomatic_traced_by > 100) {
       showFeedbackDanger(
         "symptomatic_traced_by",
-        text = "Error: 'By' must be greater than 0 and at most 1."
+        text = "Error: 'By' must be greater than 0 and at most 100."
       )
     } else {
       hideFeedback("symptomatic_traced_by")

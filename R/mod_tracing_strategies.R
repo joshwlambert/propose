@@ -149,10 +149,10 @@ tracing_strategies_ui <- function(id) {
             numericInput(
               ns("app_uptake"),
               label = tagList(
-                "Proportion of the population using the contact tracing app",
+                "Percentage of the population using the contact tracing app",
                 tooltip(
                   bs_icon("info-circle"),
-                  "The proportion of the population actively using the app.
+                  "The percentage of the population actively using the app.
                   Because digital tracing requires both the infected person
                   and the exposed contact to have the app installed to
                   register an interaction, the probability of a contact
@@ -160,10 +160,10 @@ tracing_strategies_ui <- function(id) {
                   adoption rate."
                 )
               ),
-              value = 0.5,
+              value = 50,
               min = 0,
-              max = 1,
-              step = 0.1,
+              max = 100,
+              step = 10,
               width = "100%"
             ),
             numericInput(
@@ -180,10 +180,10 @@ tracing_strategies_ui <- function(id) {
                   some contacts will be missed."
                 )
               ),
-              value = 0.5,
+              value = 50,
               min = 0,
-              max = 1,
-              step = 0.1,
+              max = 100,
+              step = 10,
               width = "100%"
             ),
             layout_columns(
@@ -236,27 +236,27 @@ tracing_strategies_ui <- function(id) {
             numericInput(
               ns("contact_known"),
               label = tagList(
-                "Proportion of contacts that are known to the infected
+                "Percentage of contacts that are known to the infected
                 individual.",
                 tooltip(
                   bs_icon("info-circle"),
-                  "Proportion of contacts known is the fraction of people that
+                  "Percentage of contacts known is the percentage of people that
                   the infected individual has interacted with over their
                   infectious period that are known and could be named by the
                   infector. Interactions with an unknown contact cannot be
                   recalled and thus not traced."
                 )
               ),
-              value = 0.5,
+              value = 50,
               min = 0,
-              max = 1,
-              step = 0.1,
+              max = 100,
+              step = 10,
               width = "100%"
             ),
             numericInput(
               ns("contact_recall"),
               label = tagList(
-                "Proportion of contacts that can be accurately recalled and
+                "Percentage of contacts that can be accurately recalled and
                 their willingness to share those details.",
                 tooltip(
                   bs_icon("info-circle"),
@@ -268,16 +268,16 @@ tracing_strategies_ui <- function(id) {
                   versus stranger)."
                 )
               ),
-              value = 0.5,
+              value = 50,
               min = 0,
-              max = 1,
-              step = 0.1,
+              max = 100,
+              step = 10,
               width = "100%"
             ),
             numericInput(
               ns("system_coverage"),
               label = tagList(
-                "Proportion of reported contacts that are successfully traced",
+                "Percentage of reported contacts that are successfully traced",
                 tooltip(
                   bs_icon("info-circle"),
                   "The centralised contact tracing system will aim to contact
@@ -287,10 +287,10 @@ tracing_strategies_ui <- function(id) {
                   is less than 100% some reported contacts will be missed."
                 )
               ),
-              value = 0.5,
+              value = 50,
               min = 0,
-              max = 1,
-              step = 0.1,
+              max = 100,
+              step = 10,
               width = "100%"
             ),
             layout_columns(
@@ -337,27 +337,27 @@ tracing_strategies_ui <- function(id) {
             numericInput(
               ns("ict_contact_known"),
               label = tagList(
-                "Proportion of contacts that are known to the infected
+                "Percentage of contacts that are known to the infected
                 individual.",
                 tooltip(
                   bs_icon("info-circle"),
-                  "Proportion of contacts known is the fraction of people that
+                  "Percentage of contacts known is the percentage of people that
                   the infected individual has interacted with over their
                   infectious period that are known and could be named by the
                   infector. Interactions with an unknown contact cannot be
                   recalled and thus not traced."
                 )
               ),
-              value = 0.5,
+              value = 50,
               min = 0,
-              max = 1,
-              step = 0.1,
+              max = 100,
+              step = 10,
               width = "100%"
             ),
             numericInput(
               ns("contact_informed"),
               label = tagList(
-                "Proportion of known contacts that are contacted directly by
+                "Percentage of known contacts that are contacted directly by
                 the infected individual.",
                 tooltip(
                   bs_icon("info-circle"),
@@ -366,10 +366,10 @@ tracing_strategies_ui <- function(id) {
                   alert them that they may be infected."
                 )
               ),
-              value = 0.5,
+              value = 50,
               min = 0,
-              max = 1,
-              step = 0.1,
+              max = 100,
+              step = 10,
               width = "100%"
             ),
             layout_columns(
@@ -697,8 +697,8 @@ tracing_strategies_server <- function(id) {
         color = transparent(0.75)
       )
       on.exit(waiter_hide())
-      req(input$asymptomatic >= 0 && input$asymptomatic <= 1)
-      req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 1)
+      req(input$asymptomatic >= 0 && input$asymptomatic <= 100)
+      req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 100)
       req(input$cap_max_days >= 1)
       req(input$cap_cases >= 1)
 
@@ -713,21 +713,24 @@ tracing_strategies_server <- function(id) {
       if (isTRUE(input$digital_contact_tracing)) {
         # Digital tracing coverage: both the infector and contact need the app
         # (uptake squared), scaled by the app's sensitivity.
-        req(!is.na(input$app_uptake), input$app_uptake >= 0, input$app_uptake <= 1)
+        req(!is.na(input$app_uptake), input$app_uptake >= 0, input$app_uptake <= 100)
         req(
           !is.na(input$app_sensitivity),
           input$app_sensitivity >= 0,
-          input$app_sensitivity <= 1
+          input$app_sensitivity <= 100
         )
-        dct_symptomatic_traced <- input$app_uptake^2 * input$app_sensitivity
+        # UI collects percentages; convert to proportions (0-1) before combining
+        dct_symptomatic_traced <- (input$app_uptake / 100)^2 *
+          (input$app_sensitivity / 100)
         dct_scenario <- scenario_sim(
           n = input$replicates,
           initial_cases = input$initial_cases,
           offspring = offspring(),
           delays = dct_delays(),
           event_probs = event_prob_opts(
-            asymptomatic = input$asymptomatic,
-            presymptomatic_transmission = input$presymptomatic_transmission,
+            # UI collects percentages; the model expects proportions (0-1)
+            asymptomatic = input$asymptomatic / 100,
+            presymptomatic_transmission = input$presymptomatic_transmission / 100,
             symptomatic_traced = dct_symptomatic_traced
           ),
           interventions = intervention_opts(quarantine = input$dct_quarantine),
@@ -741,29 +744,31 @@ tracing_strategies_server <- function(id) {
         req(
           !is.na(input$contact_known),
           input$contact_known >= 0,
-          input$contact_known <= 1
+          input$contact_known <= 100
         )
         req(
           !is.na(input$contact_recall),
           input$contact_recall >= 0,
-          input$contact_recall <= 1
+          input$contact_recall <= 100
         )
         req(
           !is.na(input$system_coverage),
           input$system_coverage >= 0,
-          input$system_coverage <= 1
+          input$system_coverage <= 100
         )
 
-        mct_symptomatic_traced <- input$contact_known * input$contact_recall *
-          input$system_coverage
+        # UI collects percentages; convert to proportions (0-1) before combining
+        mct_symptomatic_traced <- (input$contact_known / 100) *
+          (input$contact_recall / 100) * (input$system_coverage / 100)
         mct_scenario <- scenario_sim(
           n = input$replicates,
           initial_cases = input$initial_cases,
           offspring = offspring(),
           delays = mct_delays(),
           event_probs = event_prob_opts(
-            asymptomatic = input$asymptomatic,
-            presymptomatic_transmission = input$presymptomatic_transmission,
+            # UI collects percentages; the model expects proportions (0-1)
+            asymptomatic = input$asymptomatic / 100,
+            presymptomatic_transmission = input$presymptomatic_transmission / 100,
             symptomatic_traced = mct_symptomatic_traced
           ),
           interventions = intervention_opts(quarantine = input$mct_quarantine),
@@ -776,22 +781,25 @@ tracing_strategies_server <- function(id) {
         req(
           !is.na(input$ict_contact_known),
           input$ict_contact_known >= 0,
-          input$ict_contact_known <= 1
+          input$ict_contact_known <= 100
         )
         req(
           !is.na(input$contact_informed),
           input$contact_informed >= 0,
-          input$contact_informed <= 1
+          input$contact_informed <= 100
         )
-        ict_symptomatic_traced <- input$ict_contact_known * input$contact_informed
+        # UI collects percentages; convert to proportions (0-1) before combining
+        ict_symptomatic_traced <- (input$ict_contact_known / 100) *
+          (input$contact_informed / 100)
         ict_scenario <- scenario_sim(
           n = input$replicates,
           initial_cases = input$initial_cases,
           offspring = offspring(),
           delays = ict_delays(),
           event_probs = event_prob_opts(
-            asymptomatic = input$asymptomatic,
-            presymptomatic_transmission = input$presymptomatic_transmission,
+            # UI collects percentages; the model expects proportions (0-1)
+            asymptomatic = input$asymptomatic / 100,
+            presymptomatic_transmission = input$presymptomatic_transmission / 100,
             symptomatic_traced = ict_symptomatic_traced
           ),
           interventions = intervention_opts(quarantine = input$ict_quarantine),
@@ -953,16 +961,16 @@ tracing_strategies_server <- function(id) {
         )
       }
       # Digital tracing coverage is derived from the app parameters
-      updateNumericInput(session, "app_uptake", value = 0.5)
-      updateNumericInput(session, "app_sensitivity", value = 0.5)
+      updateNumericInput(session, "app_uptake", value = 50)
+      updateNumericInput(session, "app_sensitivity", value = 50)
       # Manual tracing coverage is derived from known contacts, recall and
       # system coverage
-      updateNumericInput(session, "contact_known", value = 0.5)
-      updateNumericInput(session, "contact_recall", value = 0.5)
-      updateNumericInput(session, "system_coverage", value = 0.5)
+      updateNumericInput(session, "contact_known", value = 50)
+      updateNumericInput(session, "contact_recall", value = 50)
+      updateNumericInput(session, "system_coverage", value = 50)
       # Informal tracing coverage is derived from known and informed contacts
-      updateNumericInput(session, "ict_contact_known", value = 0.5)
-      updateNumericInput(session, "contact_informed", value = 0.5)
+      updateNumericInput(session, "ict_contact_known", value = 50)
+      updateNumericInput(session, "contact_informed", value = 50)
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
       updateNumericInput(session, "replicates", value = PROPOSE_DEFAULTS$replicates)
