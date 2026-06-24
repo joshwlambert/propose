@@ -97,10 +97,10 @@ tracing_effectiveness_ui <- function(id) {
           )
         ),
         offspring_input(ns = ns),
-        incubation_input(ns = ns),
+        delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),
         tags$b("Intervention Parameters"),
-        onset_to_isolation_input(ns = ns),
+        delays_input(ns = ns, delay_type = "onset_to_isolation"),
         intervention_input(ns = ns),
         tags$b("Simulation Control Parameters"),
         sim_input(ns = ns)
@@ -237,7 +237,16 @@ tracing_effectiveness_server <- function(id) {
     })
 
     onset_to_isolation <- reactive({
-      if (input$onset_to_isolation_distribution == "lnorm") {
+      if (isTRUE(input$onset_to_isolation_ui == "basic")) {
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$basic_onset_to_isolation_variability)
+        req(
+          !is.na(input$basic_onset_to_isolation_mean),
+          input$basic_onset_to_isolation_mean > 0
+        )
+        shape <- BASIC_DELAY_SHAPE[[input$basic_onset_to_isolation_variability]]
+        \(n) rgamma(n = n, shape = shape, scale = input$basic_onset_to_isolation_mean / shape)
+      } else if (input$onset_to_isolation_distribution == "lnorm") {
         \(n) rlnorm(n = n, meanlog = input$onset_to_isolation_meanlog, sdlog = input$onset_to_isolation_sdlog)
       } else if (input$onset_to_isolation_distribution == "gamma") {
         \(n) rgamma(n = n, shape = input$onset_to_isolation_shape, scale = input$onset_to_isolation_scale)

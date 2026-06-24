@@ -95,7 +95,7 @@ tracing_strategies_ui <- function(id) {
           )
         ),
         offspring_input(ns = ns),
-        incubation_input(ns = ns),
+        delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),
         tags$b("Simulation Control Parameters"),
         sim_input(ns = ns)
@@ -188,7 +188,7 @@ tracing_strategies_ui <- function(id) {
             ),
             layout_columns(
               col_widths = c(6, 6),
-              onset_to_isolation_input(ns = ns, id_prefix = "dct_"),
+              delays_input(ns = ns, delay_type = "onset_to_isolation", id_prefix = "dct_"),
               plotOutput(ns("dct_onset_to_isolation_dist_plot"))
             ),
             checkboxInput(
@@ -295,7 +295,7 @@ tracing_strategies_ui <- function(id) {
             ),
             layout_columns(
               col_widths = c(6, 6),
-              onset_to_isolation_input(ns = ns, id_prefix = "mct_"),
+              delays_input(ns = ns, delay_type = "onset_to_isolation", id_prefix = "mct_"),
               plotOutput(ns("mct_onset_to_isolation_dist_plot"))
             ),
             checkboxInput(
@@ -374,7 +374,7 @@ tracing_strategies_ui <- function(id) {
             ),
             layout_columns(
               col_widths = c(6, 6),
-              onset_to_isolation_input(ns = ns, id_prefix = "ict_"),
+              delays_input(ns = ns, delay_type = "onset_to_isolation", id_prefix = "ict_"),
               plotOutput(ns("ict_onset_to_isolation_dist_plot"))
             ),
             checkboxInput(
@@ -523,7 +523,20 @@ tracing_strategies_server <- function(id) {
     # Setup onset-to-isolation delay for each tracing strategy ----------------
     # digital contact tracing
     dct_onset_to_isolation <- reactive({
-      if (input$dct_onset_to_isolation_distribution == "lnorm") {
+      if (isTRUE(input$dct_onset_to_isolation_ui == "basic")) {
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$dct_basic_onset_to_isolation_variability)
+        req(
+          !is.na(input$dct_basic_onset_to_isolation_mean),
+          input$dct_basic_onset_to_isolation_mean > 0
+        )
+        shape <- BASIC_DELAY_SHAPE[[input$dct_basic_onset_to_isolation_variability]]
+        \(n) rgamma(
+          n = n,
+          shape = shape,
+          scale = input$dct_basic_onset_to_isolation_mean / shape
+        )
+      } else if (input$dct_onset_to_isolation_distribution == "lnorm") {
         \(n) rlnorm(
           n = n,
           meanlog = input$dct_onset_to_isolation_meanlog,
@@ -545,7 +558,20 @@ tracing_strategies_server <- function(id) {
     })
     # manual contact tracing
     mct_onset_to_isolation <- reactive({
-      if (input$mct_onset_to_isolation_distribution == "lnorm") {
+      if (isTRUE(input$mct_onset_to_isolation_ui == "basic")) {
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$mct_basic_onset_to_isolation_variability)
+        req(
+          !is.na(input$mct_basic_onset_to_isolation_mean),
+          input$mct_basic_onset_to_isolation_mean > 0
+        )
+        shape <- BASIC_DELAY_SHAPE[[input$mct_basic_onset_to_isolation_variability]]
+        \(n) rgamma(
+          n = n,
+          shape = shape,
+          scale = input$mct_basic_onset_to_isolation_mean / shape
+        )
+      } else if (input$mct_onset_to_isolation_distribution == "lnorm") {
         \(n) rlnorm(
           n = n,
           meanlog = input$mct_onset_to_isolation_meanlog,
@@ -567,7 +593,20 @@ tracing_strategies_server <- function(id) {
     })
     # informal contact tracing
     ict_onset_to_isolation <- reactive({
-      if (input$ict_onset_to_isolation_distribution == "lnorm") {
+      if (isTRUE(input$ict_onset_to_isolation_ui == "basic")) {
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$ict_basic_onset_to_isolation_variability)
+        req(
+          !is.na(input$ict_basic_onset_to_isolation_mean),
+          input$ict_basic_onset_to_isolation_mean > 0
+        )
+        shape <- BASIC_DELAY_SHAPE[[input$ict_basic_onset_to_isolation_variability]]
+        \(n) rgamma(
+          n = n,
+          shape = shape,
+          scale = input$ict_basic_onset_to_isolation_mean / shape
+        )
+      } else if (input$ict_onset_to_isolation_distribution == "lnorm") {
         \(n) rlnorm(
           n = n,
           meanlog = input$ict_onset_to_isolation_meanlog,
@@ -887,6 +926,25 @@ tracing_strategies_server <- function(id) {
           session,
           paste0(prefix, "onset_to_isolation_sdlog"),
           value = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+        )
+        # basic onset-to-isolation UI: mean derived from the advanced (lnorm)
+        # default, variability resets to moderate
+        updateNumericInput(
+          session,
+          paste0(prefix, "basic_onset_to_isolation_mean"),
+          value = round(
+            epiparameter::convert_params_to_summary_stats(
+              "lnorm",
+              meanlog = PROPOSE_DEFAULTS$onset_to_isolation_meanlog,
+              sdlog = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+            )$mean,
+            1
+          )
+        )
+        updateRadioButtons(
+          session,
+          paste0(prefix, "basic_onset_to_isolation_variability"),
+          selected = "moderate"
         )
         updateCheckboxInput(
           session,

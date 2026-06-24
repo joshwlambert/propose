@@ -73,10 +73,10 @@ explore_ui <- function(id) {
           )
         ),
         offspring_input(ns = ns),
-        incubation_input(ns = ns),
+        delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),
         tags$b("Intervention Parameters"),
-        onset_to_isolation_input(ns = ns),
+        delays_input(ns = ns, delay_type = "onset_to_isolation"),
         contact_tracing_input(ns = ns),
         intervention_input(ns = ns),
         tags$b("Simulation Control Parameters"),
@@ -229,7 +229,20 @@ explore_server <- function(id) {
     })
 
     onset_to_isolation <- reactive({
-      if (input$onset_to_isolation_distribution == "lnorm") {
+      if (isTRUE(input$onset_to_isolation_ui == "basic")) {
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$basic_onset_to_isolation_variability)
+        req(
+          !is.na(input$basic_onset_to_isolation_mean),
+          input$basic_onset_to_isolation_mean > 0
+        )
+        shape <- BASIC_DELAY_SHAPE[[input$basic_onset_to_isolation_variability]]
+        \(n) rgamma(
+          n = n,
+          shape = shape,
+          scale = input$basic_onset_to_isolation_mean / shape
+        )
+      } else if (input$onset_to_isolation_distribution == "lnorm") {
         \(n) rlnorm(
           n = n,
           meanlog = input$onset_to_isolation_meanlog,
@@ -454,6 +467,25 @@ explore_server <- function(id) {
         session,
         "onset_to_isolation_sdlog",
         value = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+      )
+      # basic onset-to-isolation UI: mean derived from the advanced (lnorm)
+      # default, variability resets to moderate
+      updateNumericInput(
+        session,
+        "basic_onset_to_isolation_mean",
+        value = round(
+          epiparameter::convert_params_to_summary_stats(
+            "lnorm",
+            meanlog = PROPOSE_DEFAULTS$onset_to_isolation_meanlog,
+            sdlog = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+          )$mean,
+          1
+        )
+      )
+      updateRadioButtons(
+        session,
+        "basic_onset_to_isolation_variability",
+        selected = "moderate"
       )
       updateNumericInput(
         session,
