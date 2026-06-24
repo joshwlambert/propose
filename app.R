@@ -144,11 +144,6 @@ ui <- page_navbar(
     icon = bs_icon("sliders"),
     explore_ui("explore")
   ),
-  nav_panel(
-    title = "Compare",
-    icon = bs_icon("circle-square"),
-    compare_ui("compare")
-  ),
   nav_menu(
     title = "Analyses",
     icon = bs_icon("graph-up-arrow"),
@@ -257,7 +252,6 @@ server <- function(input, output, session) {
   )
 
   explore_server("explore")
-  compare_server("compare")
   tracing_effectiveness_server("tracing_effectiveness")
   tracing_strategies_server("tracing_strategies")
   about_server("about")
