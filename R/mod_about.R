@@ -17,6 +17,7 @@ about_ui <- function(id) {
         scenarios, and visualise the outbreak dynamics and the probability of
         extinction."
       ),
+      tags$hr(),
       tags$h3(
         class = "title",
         "Development team"
@@ -58,7 +59,7 @@ about_ui <- function(id) {
                         class = "github-icon")
         )
     ),
-
+    tags$hr(),
     tags$div(
       tags$h4("Disclaimer & Terms of Use"),
       tags$p(
@@ -88,7 +89,12 @@ about_ui <- function(id) {
       this dashboard.")
       )
     ),
-
+    tags$hr(),
+    tags$div(
+      tags$h4("{propose} Version")
+    ),
+    textOutput(ns("propose_version")),
+    tags$br(),
     tags$div(
       tags$h4("{ringbp} Version")
     ),
@@ -104,6 +110,7 @@ about_ui <- function(id) {
 #' @keywords internal
 about_server <- function(id) {
   moduleServer(id, function(input, output, session) {
+    output$propose_version <- renderText(paste0("v", packageVersion("propose")))
     output$ringbp_version <- renderText(paste0("v", packageVersion("ringbp")))
   })
 }
