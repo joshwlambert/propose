@@ -454,19 +454,32 @@ tracing_strategies_server <- function(id) {
     sim_feedback_server(input)
 
     community <- reactive({
-      req(input$community_r0 >= 0)
-      req(input$isolated_r0 >= 0)
-      if (input$community_offspring_distribution == "nbinom") {
+      if (isTRUE(input$transmissibility_ui == "basic")) {
+        req(!is.na(input$basic_community_r0), input$basic_community_r0 >= 0)
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$basic_transmission_variability)
+        k <- BASIC_K[[input$basic_transmission_variability]]
+        \(n) rnbinom(n = n, mu = input$basic_community_r0, size = k)
+      } else if (input$community_offspring_distribution == "nbinom") {
+        req(input$community_r0 >= 0)
         \(n) rnbinom(n = n, mu = input$community_r0, size = input$community_disp)
       } else if (input$community_offspring_distribution == "pois") {
+        req(input$community_r0 >= 0)
         \(n) rpois(n = n, lambda = input$community_r0)
       } else if (input$community_offspring_distribution == "geom") {
+        req(input$community_r0 >= 0)
         \(n) rgeom(n = n, prob = 1 / (1 + input$community_r0))
       }
     })
 
     isolated <- reactive({
-      if (input$isolated_offspring_distribution == "nbinom") {
+      if (isTRUE(input$transmissibility_ui == "basic")) {
+        req(!is.na(input$basic_isolated_r0), input$basic_isolated_r0 >= 0)
+        # guard for startup where input is NULL before the radioButtons registers
+        req(input$basic_transmission_variability)
+        k <- BASIC_K[[input$basic_transmission_variability]]
+        \(n) rnbinom(n = n, mu = input$basic_isolated_r0, size = k)
+      } else if (input$isolated_offspring_distribution == "nbinom") {
         \(n) rnbinom(n = n, mu = input$isolated_r0, size = input$isolated_disp)
       } else if (input$isolated_offspring_distribution == "pois") {
         \(n) rpois(n = n, lambda = input$isolated_r0)
