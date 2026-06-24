@@ -4,12 +4,19 @@ meta:
     home: https://t3zjq0-joshua0lambert.shinyapps.io/propose/
     github: https://github.com/joshwlambert/propose
 
-logo: hex_logo.png
+logo:
+  images:
+    hex-logo: www/hex_logo.png
+    name-logo: www/name_logo.png
 
 color:
   palette:
     blue: "#333B76"
     green: "#50C878"
+    sage: "#CBD8C3"
+    linen: "#EADFC9"
+    cream: "#F7F4EB"
+    terracotta: "#D07A5E"
   primary: blue
   danger: green
 
