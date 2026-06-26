@@ -329,7 +329,8 @@ tracing_effectiveness_server <- function(id) {
       })
 
       df <- data.frame(
-        tracing_pct = tracing_seq,
+        # plot tracing_pct and control_pct as %
+        tracing_pct = tracing_seq * 100,
         control_pct = vapply(per_scenario, `[[`, numeric(1), "pcontrol") * 100,
         median_reff = vapply(per_scenario, `[[`, numeric(1), "median_reff"),
         lwr_reff = vapply(per_scenario, `[[`, numeric(1), "lwr_reff"),
