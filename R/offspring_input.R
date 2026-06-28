@@ -15,6 +15,25 @@ BASIC_K <- c(
   high = 0.1
 )
 
+# tooltip messages for offspring distribution parameters
+offspring_tip <- HTML(
+  "The probability distribution governing the number of
+              secondary cases produced by each infected individual. Negative
+              Binomial allows for heterogeneity in transmission (superspreading)
+              via the dispersion parameter <em>k</em>; Poisson assumes
+              homogeneous transmission; Geometric has more heterogeneity in
+              transmission than Poisson, and is a special case of the Negative
+              Binomial with <em>k</em> = 1."
+)
+
+disp_tip <- HTML(
+  "The dispersion parameter (<em>k</em>) of the Negative Binomial offspring
+    distribution. Lower values indicate greater heterogeneity in
+    transmission (i.e. more superspreading), while <em>k</em> = 1 is
+    equivalent to the Geometric and large values of <em>k</em>
+  approximate a Poisson distribution."
+)
+
 #' Generate [bslib::accordion()] with inputs for parameterising `community` and
 #' `isolated` arguments in [ringbp::offspring_opts()]
 #'
@@ -26,16 +45,6 @@ BASIC_K <- c(
 offspring_input <- function(ns, ...) {
   chkDots(...)
 
-  # tooltip messages for offspring distribution parameters
-  offspring_tip <- HTML(
-    "The probability distribution governing the number of
-              secondary cases produced by each infected individual. Negative
-              Binomial allows for heterogeneity in transmission (superspreading)
-              via the dispersion parameter <em>k</em>; Poisson assumes
-              homogeneous transmission; Geometric has more heterogeneity in
-              transmission than Poisson, and is a special case of the Negative
-              Binomial with <em>k</em> = 1."
-  )
   r0_tip <- function(setting) {
     paste0(
       "The basic reproduction number for transmission among ", setting,
@@ -43,13 +52,6 @@ offspring_input <- function(ns, ...) {
       single infectious individual in a fully susceptible population."
     )
   }
-  disp_tip <- HTML(
-    "The dispersion parameter (<em>k</em>) of the Negative Binomial offspring
-    distribution. Lower values indicate greater heterogeneity in
-    transmission (i.e. more superspreading), while <em>k</em> = 1 is
-    equivalent to the Geometric and large values of <em>k</em>
-    approximate a Poisson distribution."
-  )
 
   accordion(
     accordion_panel(
