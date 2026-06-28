@@ -16,7 +16,7 @@ BASIC_K <- c(
 )
 
 # tooltip messages for offspring distribution parameters
-offspring_tip <- HTML(
+offspring_tip <- shiny::HTML(
   "The probability distribution governing the number of
               secondary cases produced by each infected individual. Negative
               Binomial allows for heterogeneity in transmission (superspreading)
@@ -26,7 +26,7 @@ offspring_tip <- HTML(
               Binomial with <em>k</em> = 1."
 )
 
-disp_tip <- HTML(
+disp_tip <- shiny::HTML(
   "The dispersion parameter (<em>k</em>) of the Negative Binomial offspring
     distribution. Lower values indicate greater heterogeneity in
     transmission (i.e. more superspreading), while <em>k</em> = 1 is
