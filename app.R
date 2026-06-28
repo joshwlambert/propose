@@ -99,11 +99,11 @@ ui <- page_navbar(
     tags$div(
       style = "display: grid; grid-template-columns: 1fr 1fr; gap: 0;
                margin-top: 1.5rem;",
-      # top-left: colour block
+      # first-row-left: colour block
       tags$div(
         style = "background-color: #CBD8C3; min-height: 220px;"
       ),
-      # top-right: contact tracing effectiveness link block
+      # first-row-right: contact tracing effectiveness link block
       actionLink(
         "go_tracing_effectiveness",
         tagList(
@@ -118,7 +118,7 @@ ui <- page_navbar(
                  align-items: center; justify-content: center; gap: 0.75rem;
                  padding: 1.5rem; text-align: center; text-decoration: none;"
       ),
-      # bottom-left: contact tracing strategies link block
+      # second-row-left: contact tracing strategies link block
       actionLink(
         "go_tracing_strategies",
         tagList(
@@ -133,9 +133,28 @@ ui <- page_navbar(
                  align-items: center; justify-content: center; gap: 0.75rem;
                  padding: 1.5rem; text-align: center; text-decoration: none;"
       ),
-      # bottom-right: colour block
+      # second-row-right: colour block
       tags$div(
         style = "background-color: #EADFC9; min-height: 220px;"
+      ),
+      # third-row-left: colour block
+      tags$div(
+        style = "background-color: #F7F4EB; min-height: 220px;"
+      ),
+      # third-row-right: outbreak size & length link block
+      actionLink(
+        "go_outbreak_size",
+        tagList(
+          bs_icon("bar-chart-line", size = "3rem"),
+          tags$span(
+            tagList("Outbreak size & length ", bs_icon("arrow-right")),
+            style = "font-weight: 600; font-size: 1.6rem;"
+          )
+        ),
+        style = "background-color: #111111; color: white;
+                 min-height: 220px; display: flex; flex-direction: column;
+                 align-items: center; justify-content: center; gap: 0.75rem;
+                 padding: 1.5rem; text-align: center; text-decoration: none;"
       )
     )
   ),
@@ -154,6 +173,10 @@ ui <- page_navbar(
     nav_panel(
       title = "Tracing Strategies",
       tracing_strategies_ui("tracing_strategies")
+    ),
+    nav_panel(
+      title = "Outbreak Size & Length",
+      outbreak_size_ui("outbreak_size")
     )
   ),
   nav_menu(
@@ -245,6 +268,11 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbarid", selected = "Tracing Strategies")
   })
 
+  # logic to jump to the outbreak size & length page from the Home page
+  observeEvent(input$go_outbreak_size, {
+    updateTabsetPanel(session, "navbarid", selected = "Outbreak Size & Length")
+  })
+
   # file path for {ringbp} vignettes rendered in docs UI
   addResourcePath(
     prefix = 'ringbp_docs',
@@ -254,6 +282,7 @@ server <- function(input, output, session) {
   explore_server("explore")
   tracing_effectiveness_server("tracing_effectiveness")
   tracing_strategies_server("tracing_strategies")
+  outbreak_size_server("outbreak_size")
   about_server("about")
   citation_server("citation")
   manual_server("manual", session)
