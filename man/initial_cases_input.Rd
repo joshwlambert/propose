@@ -5,10 +5,13 @@
 \title{Generate \code{\link[bslib:card]{bslib::card()}} with input for number of initial cases in the
 simulation}
 \usage{
-initial_cases_input(ns, ...)
+initial_cases_input(ns, value = PROPOSE_DEFAULTS$initial_cases, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}
+
+\item{value}{The initial value of \code{\link[shiny:sliderInput]{shiny::sliderInput()}}. Defaults to
+\code{PROPOSE_DEFAULTS$initial_cases}.}
 
 \item{...}{\link{dots} Not used, will throw a warning if arguments are supplied.}
 }

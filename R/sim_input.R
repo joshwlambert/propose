@@ -126,11 +126,13 @@ replicates_input <- function(ns, ...) {
 #' simulation
 #'
 #' @param ns A namespace created with [shiny::NS()].
+#' @param value The initial value of [shiny::sliderInput()]. Defaults to
+#'   `PROPOSE_DEFAULTS$initial_cases`.
 #' @param ... [dots] Not used, will throw a warning if arguments are supplied.
 #'
 #' @return A [bslib::card()] object.
 #' @keywords internal
-initial_cases_input <- function(ns, ...) {
+initial_cases_input <- function(ns, value = PROPOSE_DEFAULTS$initial_cases, ...) {
   card(
     card_header(
       "Number of initial cases:",
@@ -145,7 +147,7 @@ initial_cases_input <- function(ns, ...) {
     sliderInput(
       ns("initial_cases"),
       label = "",
-      value = PROPOSE_DEFAULTS$initial_cases, min = 1, max = 100
+      value = value, min = 1, max = 100
     )
   )
 }
