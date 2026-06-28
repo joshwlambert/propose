@@ -62,7 +62,7 @@ outbreak_size_ui <- function(id) {
           value = 100,
           min = 1
         ),
-        initial_cases_input(ns = ns),
+        initial_cases_input(ns = ns, value = 1),
         tags$b("Pathogen Parameters"),
         card(
           class = "allow-overflow",
@@ -528,7 +528,7 @@ outbreak_size_server <- function(id) {
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
       updateNumericInput(session, "replicates", value = 100)
-      updateSliderInput(session, "initial_cases", value = PROPOSE_DEFAULTS$initial_cases)
+      updateSliderInput(session, "initial_cases", value = 1)
     })
   })
 }
