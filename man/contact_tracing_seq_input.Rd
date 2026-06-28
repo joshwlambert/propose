@@ -11,7 +11,9 @@ contact_tracing_seq_input(ns, from, to, by, ...)
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}
 
-\item{from, to, by}{\code{numeric} values input into \code{\link[=seq]{seq()}}.}
+\item{from, to, by}{\code{numeric} percentages (between 0 and 100) seeding the
+\code{From}/\code{To}/\code{By} inputs. The consuming module divides the swept values by
+100 to obtain proportions before passing them to the model.}
 
 \item{...}{\link{dots} Not used, will throw a warning if arguments are supplied.}
 }
