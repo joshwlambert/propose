@@ -100,7 +100,6 @@ tracing_effectiveness_ui <- function(id) {
         delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),
         tags$b("Intervention Parameters"),
-        delays_input(ns = ns, delay_type = "onset_to_isolation"),
         intervention_input(ns = ns),
         tags$b("Simulation Control Parameters"),
         sim_input(ns = ns)
