@@ -1,40 +1,3 @@
-#' Generate [bslib::accordion()] with inputs for parameterising the
-#' `symptomatic_traced` argument in [ringbp::event_prob_opts()]
-#'
-#' @param ns A namespace created with [shiny::NS()].
-#' @param ... [dots] Not used, will throw a warning if arguments are supplied.
-#'
-#' @return A [bslib::accordion()] object.
-#' @keywords internal
-contact_tracing_input <- function(ns, ...) {
-  accordion(
-    accordion_panel(
-      title = "Contact tracing:",
-      icon = bs_icon("people-fill"),
-      numericInput(
-        ns("symptomatic_traced"),
-        label = tagList(
-          "The percentage of contacts that are successfully traced (on average)",
-          tooltip(
-            bs_icon("info-circle"),
-            "The percentage of contacts of a symptomatic infectious individual
-            that are successfully traced, on average. Each contact is traced
-            independently with this percentage as its chance, so the realised
-            proportion varies between simulations. Traced individuals are
-            isolated at the earliest of the time their infector is isolated or
-            until they get a positive test result and isolate themselves,
-            whichever comes first."
-          )
-        ),
-        value = PROPOSE_DEFAULTS$symptomatic_traced,
-        min = 0,
-        max = 100
-      )
-    ),
-    open = FALSE
-  )
-}
-
 #' Generate [bslib::accordion()] with `From`/`To`/`By` numeric inputs that
 #' parameterise a [seq()] of contact tracing probabilities
 #' (`symptomatic_traced` argument in [ringbp::event_prob_opts()]) to sweep over
@@ -92,7 +55,8 @@ contact_tracing_seq_input <- function(ns, from, to, by, ...) {
   )
 }
 
-#' Register input-validation feedback for [contact_tracing_input()]
+#' Register input-validation feedback for the `symptomatic_traced` contact
+#' tracing input rendered by [intervention_input()]
 #'
 #' @param input The Shiny `input` reactive of the calling module.
 #'

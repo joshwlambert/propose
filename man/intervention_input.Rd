@@ -2,13 +2,22 @@
 % Please edit documentation in R/intervention_input.R
 \name{intervention_input}
 \alias{intervention_input}
-\title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with input for parameterising the
+\title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising model
+interventions: the \code{onset_to_isolation} argument in \code{\link[ringbp:delay_opts]{ringbp::delay_opts()}},
+\code{symptomatic_traced} argument in \code{\link[ringbp:event_prob_opts]{ringbp::event_prob_opts()}}, and
 \code{quarantine} argument in \code{\link[ringbp:intervention_opts]{ringbp::intervention_opts()}}}
 \usage{
-intervention_input(ns, ...)
+intervention_input(ns, isolation_switch = FALSE, contact_tracing = FALSE, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}
+
+\item{isolation_switch}{A \code{logical} scalar. When \code{TRUE} the master
+\code{isolation_on} switch is shown and gates the other controls. Defaults to
+\code{FALSE}.}
+
+\item{contact_tracing}{A \code{logical} scalar. When \code{TRUE} the single contact
+tracing percentage input is included. Defaults to \code{FALSE}.}
 
 \item{...}{\link{dots} Not used, will throw a warning if arguments are supplied.}
 }
@@ -16,7 +25,21 @@ intervention_input(ns, ...)
 A \code{\link[bslib:accordion]{bslib::accordion()}} object.
 }
 \description{
-Generate \code{\link[bslib:accordion]{bslib::accordion()}} with input for parameterising the
-\code{quarantine} argument in \code{\link[ringbp:intervention_opts]{ringbp::intervention_opts()}}
+Renders the "Interventions" accordion. The onset-to-isolation delay
+(\code{\link[=delays_input]{delays_input()}}) and the \code{quarantine} checkbox (the \code{quarantine} argument
+in \code{\link[ringbp:intervention_opts]{ringbp::intervention_opts()}}) are always included. The other controls are
+composed via flags so each page can show only the intervention inputs it
+needs:
+\itemize{
+\item \code{contact_tracing = TRUE} adds the single contact tracing percentage input
+(the \code{symptomatic_traced} argument in \code{\link[ringbp:event_prob_opts]{ringbp::event_prob_opts()}}). Pages
+that sweep contact tracing (e.g. the Tracing Effectiveness page) leave this
+\code{FALSE} and supply their own sweep input (\code{\link[=contact_tracing_seq_input]{contact_tracing_seq_input()}}).
+\item \code{isolation_switch = TRUE} prepends a master \code{\link[bslib:input_switch]{bslib::input_switch()}}
+(\code{isolation_on}) and reveals the controls above (plus \code{quarantine}) only
+when it is on. When the switch is off, the consuming module overrides
+\code{onset_to_isolation} to a very large finite delay so no isolation (and hence
+no contact tracing) occurs.
+}
 }
 \keyword{internal}

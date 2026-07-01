@@ -2,7 +2,8 @@
 % Please edit documentation in R/contact_tracing_input.R
 \name{contact_tracing_feedback_server}
 \alias{contact_tracing_feedback_server}
-\title{Register input-validation feedback for \code{\link[=contact_tracing_input]{contact_tracing_input()}}}
+\title{Register input-validation feedback for the \code{symptomatic_traced} contact
+tracing input rendered by \code{\link[=intervention_input]{intervention_input()}}}
 \usage{
 contact_tracing_feedback_server(input)
 }
@@ -13,6 +14,7 @@ contact_tracing_feedback_server(input)
 Invisible \code{NULL}; called for side-effects.
 }
 \description{
-Register input-validation feedback for \code{\link[=contact_tracing_input]{contact_tracing_input()}}
+Register input-validation feedback for the \code{symptomatic_traced} contact
+tracing input rendered by \code{\link[=intervention_input]{intervention_input()}}
 }
 \keyword{internal}
