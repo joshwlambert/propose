@@ -27,13 +27,19 @@ BASIC_DELAY_SHAPE <- c(
 #' by this function (e.g. `"dct_"`). Allows the inputs to be reused several
 #' times within the same module (e.g. one set per contact tracing strategy)
 #' without clashing. Defaults to `""` (no prefix).
+#' @param accordion A `logical` scalar. When `TRUE` (default) the inputs are
+#' returned inside their own [bslib::accordion()]. When `FALSE` only the inner
+#' controls (a [shiny::tagList()]) are returned, so they can be composed inside
+#' another container (e.g. the combined "Interventions" accordion).
 #' @param ... [dots] Not used, will throw a warning if arguments are supplied.
 #'
-#' @return A [bslib::accordion()] object.
+#' @return A [bslib::accordion()] object, or a [shiny::tagList()] when
+#' `accordion = FALSE`.
 #' @keywords internal
 delays_input <- function(ns,
                          delay_type = c("incubation", "onset_to_isolation"),
                          id_prefix = "",
+                         accordion = TRUE,
                          ...) {
   chkDots(...)
   delay_type <- match.arg(delay_type)
@@ -96,10 +102,7 @@ delays_input <- function(ns,
     )
   }
 
-  accordion(
-    accordion_panel(
-      title = delay$Name,
-      icon = bs_icon("hourglass-split"),
+  controls <- tagList(
 
       # basic or advanced UI options
       radioButtons(
@@ -263,6 +266,17 @@ delays_input <- function(ns,
         ),
         ns = ns
       )
+  )
+
+  if (!accordion) {
+    return(controls)
+  }
+
+  accordion(
+    accordion_panel(
+      title = delay$Name,
+      icon = bs_icon("hourglass-split"),
+      controls
     ),
     open = FALSE
   )
