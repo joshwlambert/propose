@@ -188,7 +188,15 @@ tracing_strategies_ui <- function(id) {
             ),
             layout_columns(
               col_widths = c(6, 6),
-              delays_input(ns = ns, delay_type = "onset_to_isolation", id_prefix = "dct_"),
+              tagList(
+                tags$b("Onset-to-isolation delay"),
+                delays_input(
+                  ns = ns,
+                  delay_type = "onset_to_isolation",
+                  id_prefix = "dct_",
+                  accordion = FALSE
+                )
+              ),
               plotOutput(ns("dct_onset_to_isolation_dist_plot"))
             ),
             checkboxInput(
@@ -295,7 +303,15 @@ tracing_strategies_ui <- function(id) {
             ),
             layout_columns(
               col_widths = c(6, 6),
-              delays_input(ns = ns, delay_type = "onset_to_isolation", id_prefix = "mct_"),
+              tagList(
+                tags$b("Onset-to-isolation delay"),
+                delays_input(
+                  ns = ns,
+                  delay_type = "onset_to_isolation",
+                  id_prefix = "mct_",
+                  accordion = FALSE
+                )
+              ),
               plotOutput(ns("mct_onset_to_isolation_dist_plot"))
             ),
             checkboxInput(
@@ -374,7 +390,15 @@ tracing_strategies_ui <- function(id) {
             ),
             layout_columns(
               col_widths = c(6, 6),
-              delays_input(ns = ns, delay_type = "onset_to_isolation", id_prefix = "ict_"),
+              tagList(
+                tags$b("Onset-to-isolation delay"),
+                delays_input(
+                  ns = ns,
+                  delay_type = "onset_to_isolation",
+                  id_prefix = "ict_",
+                  accordion = FALSE
+                )
+              ),
               plotOutput(ns("ict_onset_to_isolation_dist_plot"))
             ),
             checkboxInput(
