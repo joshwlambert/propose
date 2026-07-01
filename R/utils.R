@@ -1,3 +1,15 @@
+#' Sentinel onset-to-isolation delay used to switch isolation off
+#'
+#' @description
+#' A very large finite onset-to-isolation delay, in days, used when the
+#' intervention (isolation) is switched off. \pkg{ringbp} rejects an infinite
+#' delay (see `ringbp:::check_dist_func()`), so isolation is
+#' instead pushed far beyond any simulation horizon (`cap_max_days`), which makes
+#' cases effectively never isolated while keeping `isolated_time` finite.
+#'
+#' @keywords internal
+NO_ISOLATION_DELAY <- 1e10
+
 #' \pkg{ringbp} simulation defaults used in \pkg{propose}
 #'
 #' @name defaults
@@ -67,6 +79,7 @@ PROPOSE_DEFAULTS <- list(
   # contact tracing
   symptomatic_traced = 80,
   # intervention
+  isolation_on = TRUE,
   quarantine = FALSE,
   # sim controls
   cap_max_days = 100,
