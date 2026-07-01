@@ -9,7 +9,7 @@
 symptom_event_prob_input <- function(ns, ...) {
   accordion(
     accordion_panel(
-      title = "Symptom event probabilities:",
+      title = "Symptom event probabilities",
       icon = bs_icon("person-fill-gear"),
       numericInput(
         ns("asymptomatic"),

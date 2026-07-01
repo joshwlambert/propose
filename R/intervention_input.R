@@ -118,7 +118,7 @@ intervention_input <- function(ns,
 
   accordion(
     accordion_panel(
-      title = "Interventions:",
+      title = "Interventions",
       icon = bs_icon("shield-shaded"),
       body
     ),

@@ -18,7 +18,7 @@ contact_tracing_seq_input <- function(ns, from, to, by, ...) {
     outbreak simulation is repeated."
   accordion(
     accordion_panel(
-      title = "Contact tracing sweep:",
+      title = "Contact tracing sweep",
       icon = bs_icon("people-fill"),
       numericInput(
         ns("symptomatic_traced_from"),

@@ -18,7 +18,7 @@
 sim_input <- function(ns, ...) {
   accordion(
     accordion_panel(
-      title = "Simulation controls: ",
+      title = "Simulation controls",
       icon = bs_icon("gear-wide-connected"),
       numericInput(
         ns("cap_max_days"),
@@ -107,7 +107,7 @@ sim_feedback_server <- function(input) {
 replicates_input <- function(ns, ...) {
   card(
     card_header(
-      "Number of simulation replicates:",
+      "Number of simulation replicates",
       tooltip(
         bsicons::bs_icon("info-circle"),
         "This controls the number of independent outbreaks to simulate.",
@@ -135,7 +135,7 @@ replicates_input <- function(ns, ...) {
 initial_cases_input <- function(ns, value = PROPOSE_DEFAULTS$initial_cases, ...) {
   card(
     card_header(
-      "Number of initial cases:",
+      "Number of initial cases",
       tooltip(
         bsicons::bs_icon("info-circle"),
         "Number of initially infectious individuals at the start of each

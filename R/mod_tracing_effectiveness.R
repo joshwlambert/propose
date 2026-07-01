@@ -79,7 +79,7 @@ tracing_effectiveness_ui <- function(id) {
         card(
           class = "allow-overflow",
           card_header(
-            "Select Pathogen Parameters:",
+            "Select Pathogen Parameters",
             tooltip(
               bsicons::bs_icon("info-circle"),
               "Pathogen parameters based on estimates published in the literature.

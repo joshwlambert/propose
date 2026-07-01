@@ -219,7 +219,7 @@ r0_seq_input <- function(ns, from, to, by, ...) {
 
   accordion(
     accordion_panel(
-      title = "Pathogen transmissibility (R0 sweep):",
+      title = "Pathogen transmissibility (R0 sweep)",
       icon = bs_icon("diagram-3-fill"),
       selectInput(
         ns("community_offspring_distribution"),
