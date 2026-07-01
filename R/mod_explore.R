@@ -76,9 +76,11 @@ explore_ui <- function(id) {
         delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),
         tags$b("Intervention Parameters"),
-        delays_input(ns = ns, delay_type = "onset_to_isolation"),
-        contact_tracing_input(ns = ns),
-        intervention_input(ns = ns),
+        intervention_input(
+          ns = ns,
+          isolation_switch = TRUE,
+          contact_tracing = TRUE
+        ),
         tags$b("Simulation Control Parameters"),
         sim_input(ns = ns)
       ),
@@ -89,6 +91,7 @@ explore_ui <- function(id) {
             title = "Show simulation parameter distributions",
             icon = bs_icon("bar-chart-line"),
             navset_card_underline(
+              id = ns("dist_tabs"),
               nav_panel(
                 "Offspring distribution",
                 plotOutput(ns("offspring_dist_plot"))
@@ -161,6 +164,16 @@ explore_server <- function(id) {
     contact_tracing_feedback_server(input)
     sim_feedback_server(input)
 
+    # hide the onset-to-isolation distribution tab when isolation is switched
+    # off, since the delay is not used by the simulation in that case.
+    observeEvent(input$isolation_on, {
+      if (isTRUE(input$isolation_on)) {
+        nav_show("dist_tabs", target = "Onset-to-isolation")
+      } else {
+        nav_hide("dist_tabs", target = "Onset-to-isolation")
+      }
+    })
+
     community <- reactive({
       if (isTRUE(input$transmissibility_ui == "basic")) {
         req(!is.na(input$basic_community_r0), input$basic_community_r0 >= 0)
@@ -229,6 +242,11 @@ explore_server <- function(id) {
     })
 
     onset_to_isolation <- reactive({
+      # isolation switch off: disable isolation entirely, no cases are
+      # isolated regardless of the (hidden) contact tracing / quarantine inputs
+      if (isFALSE(input$isolation_on)) {
+        return(function(n) rep(NO_ISOLATION_DELAY, n))
+      }
       if (isTRUE(input$onset_to_isolation_ui == "basic")) {
         # guard for startup where input is NULL before the radioButtons registers
         req(input$basic_onset_to_isolation_variability)
@@ -494,6 +512,7 @@ explore_server <- function(id) {
         "symptomatic_traced",
         value = PROPOSE_DEFAULTS$symptomatic_traced
         )
+      update_switch("isolation_on", value = PROPOSE_DEFAULTS$isolation_on, session = session)
       updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
