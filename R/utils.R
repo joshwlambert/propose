@@ -22,8 +22,8 @@ NO_ISOLATION_DELAY <- 1e10
 
 #' @rdname defaults
 PROPOSE_DEFAULTS <- list(
+  # pathogen parameters
   disease_x = list(
-    # pathogen parameters
     # offspring
     community_offspring_distribution = "nbinom",
     community_r0 = 2,
@@ -31,48 +31,226 @@ PROPOSE_DEFAULTS <- list(
     isolated_offspring_distribution = "nbinom",
     isolated_r0 = 0,
     isolated_disp = 1,
-    # delays
+    # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.5,
     incubation_sdlog = 0.4,
-    # event probs
+    # symptom event probs (%)
     asymptomatic = 10,
     presymptomatic_transmission = 10
   ),
-  covid_19 = list(
-    # pathogen parameters
+  covid_19_wt = list(
     # offspring
     community_offspring_distribution = "nbinom",
     community_r0 = 2.66,
     community_disp = 0.1,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.5,
-    # delays
+    # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.525,
     incubation_sdlog = 0.629,
-    # event probs
+    # symptom event probs (%)
     asymptomatic = 35,
     presymptomatic_transmission = 40
   ),
-  ebola = list(
-    # pathogen parameters
+  covid_19_alpha = list(
     # offspring
     community_offspring_distribution = "nbinom",
-    community_r0 = 1.5,
-    community_disp = 5.1,
+    community_r0 = 4.5,
+    community_disp = 0.32,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.5,
+    # incubation period
+    incubation_distribution = "gamma",
+    incubation_shape = 3.08,
+    incubation_scale = 1.58,
+    # symptom event probs (%)
+    asymptomatic = 35,
+    presymptomatic_transmission = 40
+  ),
+  covid_19_delta = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 6.5,
+    community_disp = 0.23,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.5,
+    # incubation period
+    incubation_distribution = "gamma",
+    incubation_shape = 4.43,
+    incubation_scale = 1.01,
+    # symptom event probs (%)
+    asymptomatic = 8.4,
+    presymptomatic_transmission = 40
+  ),
+  covid_19_omicron = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 9.5,
+    community_disp = 0.5,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.5,
+    # incubation period
+    incubation_distribution = "lnorm",
+    incubation_meanlog = 1.19,
+    incubation_sdlog = 0.36,
+    # symptom event probs (%)
+    asymptomatic = 29,
+    presymptomatic_transmission = 40
+  ),
+  sars = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 2.7,
+    community_disp = 0.16,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.05,
+    # incubation period
+    incubation_distribution = "lnorm",
+    incubation_meanlog = 1.39,
+    incubation_sdlog = 0.59,
+    # symptom event probs (%)
+    asymptomatic = 7.5,
+    presymptomatic_transmission = 5.5
+  ),
+  mers = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 0.93,
+    community_disp = 0.26,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.05,
+    # incubation period
+    incubation_distribution = "lnorm",
+    incubation_meanlog = 1.65,
+    incubation_sdlog = 0.53,
+    # symptom event probs (%)
+    asymptomatic = 19,
+    presymptomatic_transmission = 0.01
+  ),
+  ebola_zaire = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 1.75,
+    community_disp = 0.5,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.1,
-    # delays
+    # incubation period
     incubation_distribution = "gamma",
-    incubation_shape = 1.578,
-    incubation_scale = 6.528,
-    # event probs
-    asymptomatic = 27,
+    incubation_shape = 1.58,
+    incubation_scale = 6.53,
+    # symptom event probs (%)
+    asymptomatic = 0,
     presymptomatic_transmission = 0
   ),
-  # intervetnion parameters
-  #delays
+  ebola_sudan = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 2.5,
+    community_disp = 0.3,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.1,
+    # incubation period
+    incubation_distribution = "gamma",
+    incubation_shape = 3.0,
+    incubation_scale = 2.33,
+    # symptom event probs (%)
+    asymptomatic = 0,
+    presymptomatic_transmission = 0
+  ),
+  marburg = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 0.8,
+    community_disp = 0.6,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.1,
+    # incubation period
+    incubation_distribution = "gamma",
+    incubation_shape = 4.7,
+    incubation_scale = 1.6,
+    # symptom event probs (%)
+    asymptomatic = 1,
+    presymptomatic_transmission = 0
+  ),
+  influenza_h5n1 = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 0.15,
+    community_disp = 0.2,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.05,
+    # incubation period
+    incubation_distribution = "lnorm",
+    incubation_meanlog = 1.30,
+    incubation_sdlog = 0.41,
+    # symptom event probs (%)
+    asymptomatic = 3,
+    presymptomatic_transmission = 5
+  ),
+  influenza_h1n1pdm = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 1.44,
+    community_disp = 0.8,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.05,
+    # incubation period
+    incubation_distribution = "gamma",
+    incubation_shape = 3.36,
+    incubation_scale = 0.50,
+    # symptom event probs (%)
+    asymptomatic = 36,
+    presymptomatic_transmission = 20
+  ),
+  influenza_h7n9 = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 0.08,
+    community_disp = 0.2,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.05,
+    # incubation period
+    incubation_distribution = "weibull",
+    incubation_shape = 2.1,
+    incubation_scale = 3.8,
+    # symptom event probs (%)
+    asymptomatic = 10,
+    presymptomatic_transmission = 5
+  ),
+  meningitis_b = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 1.36,
+    community_disp = 1,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.05,
+    # incubation period
+    incubation_distribution = "lnorm",
+    incubation_meanlog = 1.30,
+    incubation_sdlog = 0.41,
+    # symptom event probs (%)
+    asymptomatic = 98, # carriage-model interpretation
+    presymptomatic_transmission = 0
+  ),
+  andes_hantavirus = list(
+    # offspring
+    community_offspring_distribution = "nbinom",
+    community_r0 = 2.12,
+    community_disp = 0.15,
+    isolated_offspring_distribution = "pois",
+    isolated_r0 = 0.2,
+    # incubation period
+    incubation_distribution = "lnorm",
+    incubation_meanlog = 3.13,
+    incubation_sdlog = 0.38,
+    # symptom event probs (%)
+    asymptomatic = 0,
+    presymptomatic_transmission = 0.05
+  ),
+  # intervention parameters
+  # delays
   onset_to_isolation_distribution = "lnorm",
   onset_to_isolation_meanlog = 2,
   onset_to_isolation_sdlog = 0.5,
