@@ -74,26 +74,7 @@ tracing_strategies_ui <- function(id) {
           min = 1
         ),
         tags$b("Pathogen Parameters"),
-        card(
-          class = "allow-overflow",
-          card_header(
-            "Select Pathogen Parameters",
-            tooltip(
-              bsicons::bs_icon("info-circle"),
-              "Pathogen parameters based on estimates published in the literature.
-              The default scenario is 'Disease X' and has generic pathogen parameters."
-            )
-          ),
-          selectInput(
-            ns("pathogen_defaults"),
-            label = "",
-            choices = list(
-              "Disease X" = "disease_x",
-              "COVID-19" = "covid_19",
-              "Ebola" = "ebola"
-            )
-          )
-        ),
+        patho_param_input(ns = ns),
         offspring_input(ns = ns),
         delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),

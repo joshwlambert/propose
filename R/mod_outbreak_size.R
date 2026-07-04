@@ -64,27 +64,7 @@ outbreak_size_ui <- function(id) {
         ),
         initial_cases_input(ns = ns, value = 1),
         tags$b("Pathogen Parameters"),
-        card(
-          class = "allow-overflow",
-          card_header(
-            "Select Pathogen Parameters",
-            tooltip(
-              bsicons::bs_icon("info-circle"),
-              "Pathogen parameters based on estimates published in the literature.
-              The default scenario is 'Disease X' and has generic pathogen parameters.",
-              id = "tooltip"
-            )
-          ),
-          selectInput(
-            ns("pathogen_defaults"),
-            label = "",
-            choices = list(
-              "Disease X" = "disease_x",
-              "COVID-19" = "covid_19",
-              "Ebola" = "ebola"
-            )
-          )
-        ),
+        patho_param_input(ns = ns),
         r0_seq_input(ns = ns, from = 0.1, to = 1.1, by = 0.1),
         delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),
