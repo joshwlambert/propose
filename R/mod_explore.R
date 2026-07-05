@@ -95,6 +95,7 @@ explore_ui <- function(id) {
         value_box(
           title = "Probability of outbreak control",
           value = uiOutput(ns("extinct")),
+          uiOutput(ns("extinct_ci")),
           showcase = bs_icon("virus"),
           theme = "bg-gradient-blue-purple"
         ),
@@ -344,7 +345,27 @@ explore_server <- function(id) {
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
       )
     })
-    output$extinct <- renderText(signif(extinct_prob(scenario()), digits = 2))
+    # probability of outbreak control (proportion of replicates controlled) with
+    # a Clopper-Pearson exact 95% CI
+    control_stats <- reactive({
+      scen <- scenario()
+      n <- max(scen$sim)
+      k <- sum(detect_extinct(scen)$extinct)
+      ci <- stats::binom.test(k, n)$conf.int
+      list(p = k / n, lower = ci[1], upper = ci[2])
+    })
+    output$extinct <- renderText(signif(control_stats()$p, digits = 2))
+    output$extinct_ci <- renderUI({
+      s <- control_stats()
+      tags$small(
+        class = "text-white-50",
+        sprintf(
+          "95%% CI: %s – %s",
+          signif(s$lower, digits = 2),
+          signif(s$upper, digits = 2)
+        )
+      )
+    })
     output$cumulative_cases <- renderPlot({
       if (input$plot_style == "indiv") {
         outbreak <- scenario()
