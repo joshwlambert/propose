@@ -2,7 +2,7 @@
 % Please edit documentation in R/page_title.R
 \name{page_title}
 \alias{page_title}
-\title{Create title for \pkg{propose} page (i.e. \code{\link[bslib:nav-items]{bslib::nav_panel()}})}
+\title{Create title for \pkg{propose} page (i.e. \code{\link[bslib:nav_panel]{bslib::nav_panel()}})}
 \usage{
 page_title(title, ...)
 }
@@ -12,9 +12,9 @@ page_title(title, ...)
 \item{...}{Extra arguments, not currently used (will warn if used).}
 }
 \value{
-A \code{\link[shiny:reexports]{shiny::tags()}} \code{div}.
+A \code{\link[shiny:tags]{shiny::tags()}} \code{div}.
 }
 \description{
-Create title for \pkg{propose} page (i.e. \code{\link[bslib:nav-items]{bslib::nav_panel()}})
+Create title for \pkg{propose} page (i.e. \code{\link[bslib:nav_panel]{bslib::nav_panel()}})
 }
 \keyword{internal}

@@ -14,7 +14,7 @@ Invisible \code{NULL}; called for side-effects.
 }
 \description{
 Companion server function intended to be called once inside a module
-\code{\link[shiny:moduleServer]{shiny::moduleServer()}} block. Wires up \code{\link[shinyFeedback:showFeedback]{shinyFeedback::showFeedbackDanger()}}
+\code{\link[shiny:moduleServer]{shiny::moduleServer()}} block. Wires up \code{\link[shinyFeedback:showFeedbackDanger]{shinyFeedback::showFeedbackDanger()}}
 for the advanced (\code{community_r0}, \code{isolated_r0}) and basic
 (\code{basic_community_r0}, \code{basic_isolated_r0}) reproduction number inputs.
 }

@@ -28,13 +28,13 @@ without clashing. Defaults to \code{""} (no prefix).}
 
 \item{accordion}{A \code{logical} scalar. When \code{TRUE} (default) the inputs are
 returned inside their own \code{\link[bslib:accordion]{bslib::accordion()}}. When \code{FALSE} only the inner
-controls (a \code{\link[shiny:reexports]{shiny::tagList()}}) are returned, so they can be composed inside
+controls (a \code{\link[shiny:tagList]{shiny::tagList()}}) are returned, so they can be composed inside
 another container (e.g. the combined "Interventions" accordion).}
 
 \item{...}{\link{dots} Not used, will throw a warning if arguments are supplied.}
 }
 \value{
-A \code{\link[bslib:accordion]{bslib::accordion()}} object, or a \code{\link[shiny:reexports]{shiny::tagList()}} when
+A \code{\link[bslib:accordion]{bslib::accordion()}} object, or a \code{\link[shiny:tagList]{shiny::tagList()}} when
 \code{accordion = FALSE}.
 }
 \description{

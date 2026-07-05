@@ -14,7 +14,7 @@ UI function.}
 \pkg{ringbp} vignette, including the \code{.html} file extension.}
 }
 \value{
-Output from \code{\link[shiny:reexports]{shiny::tagList()}}.
+Output from \code{\link[shiny:tagList]{shiny::tagList()}}.
 }
 \description{
 Shiny UI for \emph{\strong{Docs}} page

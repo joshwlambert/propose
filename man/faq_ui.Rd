@@ -11,7 +11,7 @@ faq_ui(id)
 UI function.}
 }
 \value{
-Output from \code{\link[shiny:reexports]{shiny::tagList()}}.
+Output from \code{\link[shiny:tagList]{shiny::tagList()}}.
 }
 \description{
 Shiny UI for \emph{\strong{FAQs}} page
