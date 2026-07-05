@@ -142,6 +142,7 @@ explore_server <- function(id) {
     offspring_feedback_server(input)
     symptom_event_prob_feedback_server(input)
     contact_tracing_feedback_server(input)
+    test_sensitivity_feedback_server(input)
     sim_feedback_server(input)
 
     # hide the onset-to-isolation distribution tab when isolation is switched
@@ -313,6 +314,7 @@ explore_server <- function(id) {
       req(input$asymptomatic >= 0 && input$asymptomatic <= 100)
       req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 100)
       req(input$symptomatic_traced >= 0 && input$symptomatic_traced <= 100)
+      req(input$test_sensitivity >= 0 && input$test_sensitivity <= 1)
       req(input$cap_max_days >= 1)
       req(input$cap_cases >= 1)
 
@@ -335,7 +337,10 @@ explore_server <- function(id) {
           # UI collects a percentage; the model expects a proportion (0-1)
           symptomatic_traced = input$symptomatic_traced / 100
         ),
-        interventions = intervention_opts(quarantine = input$quarantine),
+        interventions = intervention_opts(
+          quarantine = input$quarantine,
+          test_sensitivity = input$test_sensitivity
+        ),
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
       )
     })
@@ -494,6 +499,7 @@ explore_server <- function(id) {
         )
       update_switch("isolation_on", value = PROPOSE_DEFAULTS$isolation_on, session = session)
       updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
+      updateNumericInput(session, "test_sensitivity", value = PROPOSE_DEFAULTS$test_sensitivity)
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
       updateSliderInput(session, "replicates", value = PROPOSE_DEFAULTS$replicates)

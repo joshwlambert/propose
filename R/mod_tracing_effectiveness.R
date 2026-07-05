@@ -159,6 +159,7 @@ tracing_effectiveness_server <- function(id) {
     offspring_feedback_server(input)
     symptom_event_prob_feedback_server(input)
     contact_tracing_seq_feedback_server(input)
+    test_sensitivity_feedback_server(input)
     sim_feedback_server(input)
 
     community <- reactive({
@@ -260,6 +261,7 @@ tracing_effectiveness_server <- function(id) {
       req(input$cap_max_days >= 1, input$cap_cases >= 1)
       req(input$asymptomatic >= 0, input$asymptomatic <= 100)
       req(input$presymptomatic_transmission >= 0, input$presymptomatic_transmission <= 100)
+      req(input$test_sensitivity >= 0, input$test_sensitivity <= 1)
 
       # UI collects percentages; convert the swept values to proportions (0-1)
       # for the model.
@@ -284,7 +286,10 @@ tracing_effectiveness_server <- function(id) {
             presymptomatic_transmission = input$presymptomatic_transmission / 100,
             symptomatic_traced = p
           ),
-          interventions = intervention_opts(quarantine = input$quarantine),
+          interventions = intervention_opts(
+            quarantine = input$quarantine,
+            test_sensitivity = input$test_sensitivity
+          ),
           sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
         )
         # `effective_r0` is constant across weeks within each replicate;
