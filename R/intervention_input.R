@@ -145,3 +145,25 @@ intervention_input <- function(ns,
     open = FALSE
   )
 }
+
+#' Register input-validation feedback for the `test_sensitivity` intervention
+#' input rendered by [intervention_input()]
+#'
+#' @param input The Shiny `input` reactive of the calling module.
+#'
+#' @return Invisible `NULL`; called for side-effects.
+#' @keywords internal
+test_sensitivity_feedback_server <- function(input) {
+  observeEvent(input$test_sensitivity, {
+    req(!is.na(input$test_sensitivity))
+    if (input$test_sensitivity < 0 || input$test_sensitivity > 1) {
+      showFeedbackDanger(
+        "test_sensitivity",
+        text = "Error: Test sensitivity must be between 0 and 1."
+      )
+    } else {
+      hideFeedback("test_sensitivity")
+    }
+  })
+  invisible(NULL)
+}
