@@ -216,8 +216,8 @@ manual_ui <- function(id) {
                 p("See ", actionLink(ns("go_faq"), "the FAQ page"), " for answers to common questions."),
                 h2("Citing ", propose_name(), style = "margin-top: 2.5rem;"),
                 p(
-                  "To cite ", propose_name(","), " or the underlying epidemiological model, {ringbp}, or see
-                  a list of papers that use the {ringbp} model, see",
+                  "To cite ", propose_name(","), " or the underlying epidemiological model, ", ringbp_name(","), " or see
+                  a list of papers that use the ", ringbp_name(), " model, see",
                   actionLink(ns("go_citation"), "the Citation page.")
                 ),
                 h2("Funding", style = "margin-top: 2.5rem;"),

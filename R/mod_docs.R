@@ -20,7 +20,7 @@ docs_ui <- function(id, vignette_file_name) {
       bs_icon("info-circle", class = "me-2 fs-1"),
       tags$div(
         tags$b("Notice:"),
-        "This documentation (vignette) is from the {ringbp} package.
+        "This documentation (vignette) is from the ", ringbp_name(), " package.
         It is not a manual for ", propose_name(), " but may help you better understand
         the epidemiological model used by ", propose_name(".")
       )

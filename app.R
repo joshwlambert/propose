@@ -194,18 +194,18 @@ ui <- page_navbar(
       manual_ui("manual")
     ),
     nav_item(tags$hr(class = "dropdown-divider")),
-    nav_item(tags$h6(tags$b("{ringbp} documentation"), class = "dropdown-header")),
+    nav_item(tags$h6(tags$b(ringbp_name(), " documentation"), class = "dropdown-header")),
     nav_item(tags$hr(class = "dropdown-divider")),
     nav_panel(
-      title = "Getting Started with {ringbp}",
+      title = tagList("Getting Started with ", ringbp_name()),
       docs_ui("docs_main", "ringbp.html")
     ),
     nav_panel(
-      title = "{ringbp} Model Description",
+      title = tagList(ringbp_name(), " Model Description"),
       docs_ui("docs_model", "ringbp-model.html")
     ),
     nav_panel(
-      title = "Parameter Sweep with {ringbp}",
+      title = tagList("Parameter Sweep with ", ringbp_name()),
       docs_ui("docs_sweep", "parameter-sweep.html")
     )
   ),
@@ -237,7 +237,7 @@ ui <- page_navbar(
   footer = tags$div(
     style = "padding: 20px; border-top: 1px solid #eee; margin-top: 50px; text-align: center; color: #888;",
     tags$p("© 2026 ", propose_name(), " project."),
-    tags$p("Powered by {ringbp}"),
+    tags$p("Powered by ", ringbp_name()),
     tags$a(
       href = "https://github.com/joshwlambert/propose",
       bs_icon("github", size = "2rem", title = "View source on GitHub"),

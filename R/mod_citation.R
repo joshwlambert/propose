@@ -25,7 +25,7 @@ citation_ui <- function(id) {
     ),
     verbatimTextOutput(ns("ringbp_citation")),
     tags$div(
-      tags$h3("Papers using {ringbp}")
+      tags$h3("Papers using ", ringbp_name())
     ),
     verbatimTextOutput(ns("paper_citations"))
   )
