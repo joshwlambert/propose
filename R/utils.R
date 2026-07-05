@@ -393,6 +393,25 @@ reset_pathogen_params <- function(session, defaults) {
   )
 }
 
+#' The styled app name, *propose*, for use in UI text
+#'
+#' @description
+#' Returns the app name "propose" styled in bold italic, for use inline in UI
+#' text. Bundling it here keeps the styling consistent across the app and makes
+#' restyling a one-line change. Returning [htmltools::HTML()] (rather than
+#' nested tags) also avoids the whitespace \pkg{htmltools} inserts between tag
+#' children, so trailing punctuation can be attached with no rogue space.
+#'
+#' @param suffix A `character` string appended directly after the name with no
+#' separating space, for punctuation such as `"?"`, `"."` or `","`. Defaults to
+#' `""`.
+#'
+#' @return An [htmltools::HTML()] fragment.
+#' @keywords internal
+propose_name <- function(suffix = "") {
+  HTML(paste0("<strong><em>propose</em></strong>", suffix))
+}
+
 #' Generate [bslib::tooltip()] message for delay distribution parameters
 #'
 #' @param distribution a `character` string for the distribution type, e.g.,
