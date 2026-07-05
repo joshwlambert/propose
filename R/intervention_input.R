@@ -85,6 +85,26 @@ intervention_input <- function(ns,
         )
       ),
       value = PROPOSE_DEFAULTS$quarantine
+    ),
+    tags$hr(),
+    numericInput(
+      ns("test_sensitivity"),
+      label = tagList(
+        "Test sensitivity",
+        tooltip(
+          bs_icon("info-circle"),
+          "The proportion of symptomatic infected individuals who test positive
+          and therefore isolate. By default test sensitivity is 1, so every
+          symptomatic case that is tested receives a true positive result and
+          isolates. When test sensitivity is less than 1, some symptomatic cases
+          receive a false negative result and are not isolated through testing,
+          though they may still be isolated if their infector is traced."
+        )
+      ),
+      value = PROPOSE_DEFAULTS$test_sensitivity,
+      min = 0,
+      max = 1,
+      step = 0.05
     )
   )
 
