@@ -412,6 +412,24 @@ propose_name <- function(suffix = "") {
   HTML(paste0("<strong><em>propose</em></strong>", suffix))
 }
 
+#' The styled dependency name, `{ringbp}`, for use in UI text
+#'
+#' @description
+#' Returns the \pkg{ringbp} package name in monospace (a `<code>` element, the
+#' HTML equivalent of markdown backticks), keeping `{ringbp}` styled
+#' consistently across the app's HTML and markdown UI text. Like [propose_name()]
+#' it returns [htmltools::HTML()] so trailing punctuation can be attached with no
+#' rogue whitespace.
+#'
+#' @param suffix A `character` string appended directly after the name with no
+#' separating space, for punctuation such as `"."` or `","`. Defaults to `""`.
+#'
+#' @return An [htmltools::HTML()] fragment.
+#' @keywords internal
+ringbp_name <- function(suffix = "") {
+  HTML(paste0("<code>{ringbp}</code>", suffix))
+}
+
 #' Generate [bslib::tooltip()] message for delay distribution parameters
 #'
 #' @param distribution a `character` string for the distribution type, e.g.,
