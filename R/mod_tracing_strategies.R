@@ -413,18 +413,21 @@ tracing_strategies_ui <- function(id) {
               value_box(
                 title = "Probability of Outbreak Control with Digital Contact Tracing",
                 value = uiOutput(ns("dct_extinct")),
+                uiOutput(ns("dct_extinct_ci")),
                 showcase = bs_icon("virus"),
                 theme = "bg-gradient-blue-purple"
               ),
               value_box(
                 title = "Probability of Outbreak Control with Manual Contact Tracing",
                 value = uiOutput(ns("mct_extinct")),
+                uiOutput(ns("mct_extinct_ci")),
                 showcase = bs_icon("virus"),
                 theme = "bg-gradient-green-yellow"
               ),
               value_box(
                 title = "Probability of Outbreak Control with Informal Contact Tracing",
                 value = uiOutput(ns("ict_extinct")),
+                uiOutput(ns("ict_extinct_ci")),
                 showcase = bs_icon("virus"),
                 theme = "bg-gradient-pink-purple"
               )
@@ -819,27 +822,48 @@ tracing_strategies_server <- function(id) {
         ict_scenario = ict_scenario
       )
     })
+    # probability of outbreak control (proportion of replicates controlled) with
+    # a Clopper-Pearson exact 95% CI, computed per strategy. Returns NULL when a
+    # strategy was not simulated so the value box can fall back to NA.
+    control_stats <- function(scen) {
+      if (is.null(scen)) {
+        return(NULL)
+      }
+      n <- max(scen$sim)
+      k <- sum(detect_extinct(scen)$extinct)
+      ci <- stats::binom.test(k, n)$conf.int
+      list(p = k / n, lower = ci[1], upper = ci[2])
+    }
+    control_ci_caption <- function(s) {
+      if (is.null(s)) {
+        return(NULL)
+      }
+      tags$small(
+        class = "text-white-50",
+        sprintf(
+          "95%% CI: %s – %s",
+          signif(s$lower, digits = 2),
+          signif(s$upper, digits = 2)
+        )
+      )
+    }
+
+    dct_stats <- reactive(control_stats(scenario()$dct_scenario))
+    mct_stats <- reactive(control_stats(scenario()$mct_scenario))
+    ict_stats <- reactive(control_stats(scenario()$ict_scenario))
+
     output$dct_extinct <- renderText(
-      if (!is.null(scenario()$dct_scenario)) {
-        signif(extinct_prob(scenario()$dct_scenario), digits = 2)
-      } else {
-        NA
-      }
+      if (is.null(dct_stats())) NA else signif(dct_stats()$p, digits = 2)
     )
+    output$dct_extinct_ci <- renderUI(control_ci_caption(dct_stats()))
     output$mct_extinct <- renderText(
-      if (!is.null(scenario()$mct_scenario)) {
-      signif(extinct_prob(scenario()$mct_scenario), digits = 2)
-      } else {
-        NA
-      }
+      if (is.null(mct_stats())) NA else signif(mct_stats()$p, digits = 2)
     )
+    output$mct_extinct_ci <- renderUI(control_ci_caption(mct_stats()))
     output$ict_extinct <- renderText(
-      if (!is.null(scenario()$ict_scenario)) {
-        signif(extinct_prob(scenario()$ict_scenario), digits = 2)
-      } else {
-        NA
-      }
+      if (is.null(ict_stats())) NA else signif(ict_stats()$p, digits = 2)
     )
+    output$ict_extinct_ci <- renderUI(control_ci_caption(ict_stats()))
 
     # Cumulative outbreak size by tracing strategy --------------------------
     output$cumulative_outbreak_size <- renderPlot({
