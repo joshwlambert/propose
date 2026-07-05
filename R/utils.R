@@ -259,6 +259,7 @@ PROPOSE_DEFAULTS <- list(
   # intervention
   isolation_on = TRUE,
   quarantine = FALSE,
+  test_sensitivity = 1,
   # sim controls
   cap_max_days = 100,
   cap_cases = 5000,
