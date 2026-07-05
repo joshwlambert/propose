@@ -16,7 +16,7 @@ manual_ui <- function(id) {
       "Overview",
       nav_panel("Overview",
                 h2("Overview"),
-                p("{propose} is a public health decision support tool for
+                p(propose_name(), " is a public health decision support tool for
                   early infectious disease outbreak response."),
                 p("It runs an epidemic model where individuals are either in
                   the ", tags$em("community"), " or ", tags$em("isolated"), ".")
@@ -25,7 +25,7 @@ manual_ui <- function(id) {
       "Getting Started",
       nav_panel("Quick Start",
                 h2("Getting Started"),
-                p("When you first open {propose} you land on the home page.
+                p("When you first open ", propose_name(), " you land on the home page.
                   From here you can jump straight to the ", tags$em("Explore"),
                   " page by clicking on the 'Start Exploring' button, or you
                   can navigate the app using the tabs at the top of the page.
@@ -36,7 +36,7 @@ manual_ui <- function(id) {
       ),
       nav_panel("Explore outbreak scenarios",
                 h2("Using the Explore page"),
-                h5("Understand how to explore outbreak scenarios in {propose}"),
+                h5("Understand how to explore outbreak scenarios in ", propose_name()),
                 p("Once you are on the Explore page you can set up outbreak
                   scenarios by specifying the characteristics (parameters) of
                   the pathogen and the intervention, and then simulate
@@ -56,7 +56,7 @@ manual_ui <- function(id) {
                 p("A good way to start using the Explore page is to select a
                   Pathogen from the 'Select Pathogen Parameters'. This populates
                   the pathogen parameters with values representative of the
-                  chosen pathogen. Currently, {propose} contains parameters for:"),
+                  chosen pathogen. Currently, ", propose_name(), " contains parameters for:"),
                 tags$ul(
                   tags$li("COVID-19"),
                   tags$li("Ebola")
@@ -179,7 +179,7 @@ manual_ui <- function(id) {
                   simulated. If you click 'Cancel' then the outbreak will not be
                   simulated, and you'll be returned to the Explore page."),
                 h3("Explore results", style = "margin-top: 2.5rem;"),
-                p("Currently {propose} visualises two aspects of the outbreaks:"),
+                p("Currently ", propose_name(), " visualises two aspects of the outbreaks:"),
                 tags$ul(
                   tags$li("Cumulative cases"),
                   tags$li("Weekly cases")
@@ -210,13 +210,13 @@ manual_ui <- function(id) {
       ),
       "Help & Support",
       nav_panel("Info",
-                h2("Information about {propose}"),
-                p("See ", actionLink(ns("go_about"), "the About page"), " for general information on {propose}."),
+                h2("Information about ", propose_name()),
+                p("See ", actionLink(ns("go_about"), "the About page"), " for general information on ", propose_name(".")),
                 h2("Frequently Asked Questions", style = "margin-top: 2.5rem;"),
                 p("See ", actionLink(ns("go_faq"), "the FAQ page"), " for answers to common questions."),
-                h2("Citing {propose}", style = "margin-top: 2.5rem;"),
+                h2("Citing ", propose_name(), style = "margin-top: 2.5rem;"),
                 p(
-                  "To cite {propose}, or the underlying epidemiological model, {ringbp}, or see
+                  "To cite ", propose_name(","), " or the underlying epidemiological model, {ringbp}, or see
                   a list of papers that use the {ringbp} model, see",
                   actionLink(ns("go_citation"), "the Citation page.")
                 ),
@@ -224,7 +224,7 @@ manual_ui <- function(id) {
                 p("See ", actionLink(ns("go_funding"), "the funding page"), " for information on the project funders."),
                 h2("Report an issue or contribute to the project", style = "margin-top: 2.5rem;"),
                 p("If you experience an issue that you'd like to report, or
-                  would like to contribute to the development of {propose},
+                  would like to contribute to the development of ", propose_name(","), "
                   see the ", actionLink(ns("go_contact"), "the contact page.")),
       )
     )

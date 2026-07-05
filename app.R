@@ -34,7 +34,8 @@ ui <- page_navbar(
       ),
       h1("Control Pandemics Early", class = "display-4"),
       p(
-        "{propose} is a web interface for modelling targeted individual-level interventions for infectious disease outbreak control.",
+        propose_name(),
+        " is a web interface for modelling targeted individual-level interventions for infectious disease outbreak control.",
         class = "lead"
       ),
       hr(class = "my-4"),
@@ -56,8 +57,11 @@ ui <- page_navbar(
       ),
       card(
         card_header(bs_icon("graph-up"), "Gain Insights"),
-        "Out of the box structured analyses and visualisations provided in {propose} enable
-        quick scientific and policy-relevant insights"
+        tags$p(
+          "Out of the box structured analyses and visualisations provided in ",
+          propose_name(),
+          " enable quick scientific and policy-relevant insights"
+        )
       )
     ),
     # Docs banner
@@ -76,7 +80,7 @@ ui <- page_navbar(
       tags$div(
         style = "text-align: left;",
         tags$p(
-          "New to {propose}?",
+          "New to ", propose_name("?"),
           class = "mb-1",
           style = "font-size: 1.25rem; font-weight: 300;"
         ),
@@ -182,10 +186,11 @@ ui <- page_navbar(
   nav_menu(
     title = "Docs",
     icon = bs_icon("book"),
-    nav_item(tags$h6(tags$b("{propose} documentation"), class = "dropdown-header")),
+    nav_item(tags$h6(tags$b(tags$em("propose"), " documentation"), class = "dropdown-header")),
     nav_item(tags$hr(class = "dropdown-divider")),
     nav_panel(
-      title = "{propose} manual",
+      title = tagList(propose_name(), " manual"),
+      value = "manual",
       manual_ui("manual")
     ),
     nav_item(tags$hr(class = "dropdown-divider")),
@@ -231,7 +236,7 @@ ui <- page_navbar(
   ),
   footer = tags$div(
     style = "padding: 20px; border-top: 1px solid #eee; margin-top: 50px; text-align: center; color: #888;",
-    tags$p("© 2026 {propose} project."),
+    tags$p("© 2026 ", propose_name(), " project."),
     tags$p("Powered by {ringbp}"),
     tags$a(
       href = "https://github.com/joshwlambert/propose",
@@ -255,7 +260,7 @@ server <- function(input, output, session) {
 
   # logic to jump to the manual from the Home page docs banner
   observeEvent(input$go_manual, {
-    updateTabsetPanel(session, "navbarid", selected = "{propose} manual")
+    updateTabsetPanel(session, "navbarid", selected = "manual")
   })
 
   # logic to jump to the contact tracing effectiveness page from the Home page

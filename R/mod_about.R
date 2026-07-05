@@ -12,7 +12,7 @@ about_ui <- function(id) {
 
     tags$div(
       markdown(
-        "{propose} is a web application for running the {ringbp} R package.
+        "***propose*** is a web application for running the {ringbp} R package.
         It provides an _Explore_ page to try and model under different epidemic
         scenarios, and visualise the outbreak dynamics and the probability of
         extinction."
@@ -91,7 +91,7 @@ about_ui <- function(id) {
     ),
     tags$hr(),
     tags$div(
-      tags$h4("{propose} Version")
+      tags$h4(propose_name(), " Version")
     ),
     textOutput(ns("propose_version")),
     tags$br(),

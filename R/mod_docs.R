@@ -21,8 +21,8 @@ docs_ui <- function(id, vignette_file_name) {
       tags$div(
         tags$b("Notice:"),
         "This documentation (vignette) is from the {ringbp} package.
-        It is not a manual for {propose} but may help you better understand
-        the epidemiological model used by {propose}."
+        It is not a manual for ", propose_name(), " but may help you better understand
+        the epidemiological model used by ", propose_name(".")
       )
     ),
 

@@ -18,8 +18,8 @@ contact_ui <- function(id) {
       ),
       card_body(
         markdown(
-          "* If you have general question about `{propose}` please email (<font color='orange'>left</font>).
-          * If you have a problem to report about `{propose}` please raise an
+          "* If you have general question about ***propose*** please email (<font color='orange'>left</font>).
+          * If you have a problem to report about ***propose*** please raise an
           issue on GitHub (<font color='green'>centre</font>).
           * If you would like to contribute to the project see instructions
           (<font color='blue'>right</font>)"
@@ -37,7 +37,7 @@ contact_ui <- function(id) {
         ),
         card_body(
           markdown(
-            "To contact the lead developer of the `{propose}` app please email:
+            "To contact the lead developer of the ***propose*** app please email:
         joshua.lambert@lshtm.ac.uk"
           )
         )
@@ -50,10 +50,10 @@ contact_ui <- function(id) {
         ),
         card_body(
           markdown(
-            "If you have an issue with {propose} please file an issue on the
+            "If you have an issue with ***propose*** please file an issue on the
         GitHub repository at the link below:
 
-        [`{propose}` Issue tracker](https://github.com/joshwlambert/propose/issues/new).
+        [***propose*** Issue tracker](https://github.com/joshwlambert/propose/issues/new).
 
         You will need a GitHub account to do this."
           )
@@ -70,10 +70,10 @@ contact_ui <- function(id) {
             "If you have any questions about how to contribute to the project
         please see our [Contributing guidelines](https://github.com/joshwlambert/propose/blob/main/.github/CONTRIBUTING.md).
 
-        `{propose}` is an open-source project, and contributions to the project
+        ***propose*** is an open-source project, and contributions to the project
         will be fairly recognised.
 
-        `{propose}` has an MIT license, therefore, you may copy and modify the
+        ***propose*** has an MIT license, therefore, you may copy and modify the
         app for your own purposes, however, we encourage you to contribute your
         changes to this project as they may benefit other users."
           )

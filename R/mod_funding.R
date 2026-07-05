@@ -13,7 +13,7 @@ funding_ui <- function(id) {
     tags$div(
       style = "padding-top: 30px; padding-bottom: 30px;",
       markdown(
-        "`{propose}` is developed at the [Centre for the Mathematical
+        "***propose*** is developed at the [Centre for the Mathematical
         Modelling of Infectious Diseases](https://www.lshtm.ac.uk/research/centres/centre-mathematical-modelling-infectious-diseases)
         at the [London School of Hygiene and Tropical Medicine](https://www.lshtm.ac.uk/)
         and is funded by [ESCAPE](https://www.escapepandemics.com/) and

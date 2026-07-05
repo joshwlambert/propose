@@ -12,7 +12,7 @@ citation_ui <- function(id) {
 
     tags$div(
       markdown(
-        "When using the `{propose}` Shiny app please cite the work using:"
+        "When using the ***propose*** Shiny app please cite the work using:"
       )
     ),
     verbatimTextOutput(ns("propose_citation")),
@@ -20,7 +20,7 @@ citation_ui <- function(id) {
       markdown(
         "If you are additionally using the `{ringbp}` R package or would also
         like to cite the package with the epidemiological model powering
-        `{propose}`, please use:"
+        ***propose***, please use:"
       )
     ),
     verbatimTextOutput(ns("ringbp_citation")),
