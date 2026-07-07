@@ -6,6 +6,12 @@ Version: 0.2.1.9000
 Authors@R: c(
     person("Joshua W.", "Lambert", , "joshua.lambert@lshtm.ac.uk", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-5218-3046")),
+    person("Jiaxin", "Zhou", , "jiaxin.zhou@lshtm.ac.uk", role = c("aut"),
+           comment = c(ORCID = "0000-0002-6615-0752")),
+    person("John", "Edmunds", , "john.edmunds@lshtm.ac.uk", role = c("aut"),
+           comment = c(ORCID = "0000-0002-9179-2917")),
+    person("Jack", "Ward", , "Jack.P.Ward@warwick.ac.uk", role = c("aut"),
+           comment = c(ORCID = "0009-0006-3757-3306")),
     person("London School of Hygiene and Tropical Medicine, LSHTM", role = "cph",
            comment = c(ROR = "00a0jsq62"))
   )
