@@ -1,5 +1,5 @@
 Package: propose
-Title: A Shiny app for proposing and evaluating targeted intervention
+Title: A web app for proposing and evaluating targeted intervention
     scenarios in an emerging epidemic or pandemic using the {ringbp} R
     package
 Version: 0.2.1.9000

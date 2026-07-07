@@ -12,7 +12,7 @@ citation_ui <- function(id) {
 
     tags$div(
       markdown(
-        "When using the ***propose*** Shiny app please cite the work using:"
+        "When using the ***propose*** web app please cite the work using:"
       )
     ),
     verbatimTextOutput(ns("propose_citation")),

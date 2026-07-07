@@ -1,4 +1,4 @@
-# ***propose***: a Shiny app for proposing and evaluating targeted intervention scenarios in an emerging epidemic or pandemic using the `{ringbp}` R package <img src="www/hex_logo.svg" align="right" width="120" />
+# ***propose***: a web app for proposing and evaluating targeted intervention scenarios in an emerging epidemic or pandemic using the `{ringbp}` R package <img src="www/hex_logo.svg" align="right" width="120" />
 
 > [!WARNING]
 > Under active development
@@ -8,6 +8,23 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18979784.svg)](https://doi.org/10.5281/zenodo.18979784)
 
 <!-- badges: end -->
+
+## About ***propose***
+
+***propose*** is a web application built using the [Shiny](https://shiny.posit.co/)
+web framework for R. It provides an interactive, point-and-click interface to the
+branching process outbreak simulations in the [`{ringbp}`](https://github.com/epiforecasts/ringbp)
+R package, allowing users to explore targeted, individual-level interventions
+(such as contact tracing and case isolation) for an emerging epidemic or pandemic
+without writing any code.
+
+You can use ***propose*** in two ways:
+
+* **Online** — a hosted version is available at
+  <https://t3zjq0-joshua0lambert.shinyapps.io/propose/>, with no installation
+  required.
+* **Locally** — install the package (see below), then clone this repository and
+  launch the app from the project root with `shiny::runApp()`.
 
 ## Install ***propose***
 
