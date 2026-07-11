@@ -160,6 +160,35 @@ ui <- page_navbar(
                  align-items: center; justify-content: center; gap: 0.75rem;
                  padding: 1.5rem; text-align: center; text-decoration: none;"
       )
+    ),
+    # Case studies banner
+    tags$div(
+      style = "background-color: #D07A5E;
+               color: white;
+               padding: 3rem 2rem;
+               margin-top: 3rem;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               gap: 0.75rem;
+               text-align: center;",
+      bs_icon("globe-americas", size = "3rem"),
+      tags$p(
+        "Real-world targeted intervention strategies for infectious disease outbreaks",
+        class = "mb-2",
+        style = "font-size: 1.25rem; font-weight: 300; max-width: 700px;"
+      ),
+      actionLink(
+        "go_case_singapore",
+        tagList("Singapore COVID-19 ", bs_icon("arrow-right")),
+        style = "color: white; font-weight: 600; font-size: 1.1rem; text-decoration: underline;"
+      ),
+      actionLink(
+        "go_case_england",
+        tagList("England COVID-19 ", bs_icon("arrow-right")),
+        style = "color: white; font-weight: 600; font-size: 1.1rem; text-decoration: underline;"
+      )
     )
   ),
   nav_panel(
@@ -207,6 +236,17 @@ ui <- page_navbar(
     nav_panel(
       title = tagList("Parameter Sweep with ", ringbp_name()),
       docs_ui("docs_sweep", "parameter-sweep.html")
+    ),
+    nav_item(tags$hr(class = "dropdown-divider")),
+    nav_item(tags$h6(tags$b("Case studies"), class = "dropdown-header")),
+    nav_item(tags$hr(class = "dropdown-divider")),
+    nav_panel(
+      title = "COVID-19 Singapore",
+      case_study_ui("case_singapore", "covid_singapore.html")
+    ),
+    nav_panel(
+      title = "COVID-19 England",
+      case_study_ui("case_england", "covid_england.html")
     )
   ),
   nav_panel(
@@ -276,6 +316,14 @@ server <- function(input, output, session) {
   # logic to jump to the outbreak size & length page from the Home page
   observeEvent(input$go_outbreak_size, {
     updateTabsetPanel(session, "navbarid", selected = "Outbreak Size & Length")
+  })
+
+  # logic to jump to the case study pages from the Home page
+  observeEvent(input$go_case_singapore, {
+    updateTabsetPanel(session, "navbarid", selected = "COVID-19 Singapore")
+  })
+  observeEvent(input$go_case_england, {
+    updateTabsetPanel(session, "navbarid", selected = "COVID-19 England")
   })
 
   # file path for {ringbp} vignettes rendered in docs UI
