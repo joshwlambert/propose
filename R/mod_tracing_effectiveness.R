@@ -236,8 +236,32 @@ tracing_effectiveness_server <- function(id) {
       }
     })
 
+    # asymptomatic offspring, only used when the advanced UI toggle is enabled
+    # (named to avoid confusion with input$asymptomatic, the % asymptomatic)
+    asymptomatic_offspring <- reactive({
+      req(input$asymptomatic_offspring_distribution)
+      req(!is.na(input$asymptomatic_r0), input$asymptomatic_r0 >= 0)
+      if (input$asymptomatic_offspring_distribution == "nbinom") {
+        req(!is.na(input$asymptomatic_disp), input$asymptomatic_disp > 0)
+        \(n) rnbinom(n = n, mu = input$asymptomatic_r0, size = input$asymptomatic_disp)
+      } else if (input$asymptomatic_offspring_distribution == "pois") {
+        \(n) rpois(n = n, lambda = input$asymptomatic_r0)
+      } else if (input$asymptomatic_offspring_distribution == "geom") {
+        \(n) rgeom(n = n, prob = 1 / (1 + input$asymptomatic_r0))
+      }
+    })
+
     offspring <- reactive({
-      offspring_opts(community = community(), isolated = isolated())
+      if (isTRUE(input$transmissibility_ui == "advanced") &&
+          isTRUE(input$asymptomatic_transmissibility_different)) {
+        offspring_opts(
+          community = community(),
+          isolated = isolated(),
+          asymptomatic = asymptomatic_offspring()
+        )
+      } else {
+        offspring_opts(community = community(), isolated = isolated())
+      }
     })
 
     delays <- reactive({
