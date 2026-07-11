@@ -1,0 +1,227 @@
+  <header class="p-4 p-md-5 mb-4 rounded-3 text-bg-primary shadow-sm">
+    <p class="text-uppercase small fw-bold mb-2 opacity-75">Contact Tracing Strategy — Case Study Library</p>
+    <h1 class="display-5 fw-bold mb-3">Case 01: Singapore</h1>
+    <p class="fs-5 mb-4">Hybrid digital-assisted contact tracing and tiered quarantine strategy during COVID-19, 2020–2022.</p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-3" aria-label="Case metadata">
+      <div class="col"><div class="h-100 p-3 rounded-3 bg-white bg-opacity-10 border border-light border-opacity-25">
+        <div class="small text-uppercase opacity-75 mb-1">Country / Region</div><div class="fw-semibold">Singapore</div>
+      </div></div>
+      <div class="col"><div class="h-100 p-3 rounded-3 bg-white bg-opacity-10 border border-light border-opacity-25">
+        <div class="small text-uppercase opacity-75 mb-1">Pathogen</div><div class="fw-semibold">SARS-CoV-2</div>
+      </div></div>
+      <div class="col"><div class="h-100 p-3 rounded-3 bg-white bg-opacity-10 border border-light border-opacity-25">
+        <div class="small text-uppercase opacity-75 mb-1">Strategy type</div><div class="fw-semibold">Digital-assisted hybrid tracing</div>
+      </div></div>
+    </div>
+  </header>
+
+  <nav class="card shadow-sm mb-4" aria-label="Page navigation">
+    <div class="card-body py-3">
+      <h2 class="h6 text-uppercase text-muted mb-2">On this page</h2>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-sm btn-outline-primary" href="#sg-status">Project status</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-abstract">Abstract</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-background">Background</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-strategy">Contact Tracing Strategy</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-quarantine">Notification & Quarantine</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-evidence">Key Data & Evidence</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-limitations">Limitations & Failure Points</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-parameters">Extractable Parameters</a>
+        <a class="btn btn-sm btn-outline-primary" href="#sg-references">References</a>
+      </div>
+    </div>
+  </nav>
+
+  <section id="sg-status" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">Project status</h2>
+    <div class="alert alert-warning mb-0">
+      <strong>Work in progress:</strong> This case study library is currently under development. If you notice incorrect information, missing context, or broken links, please <a href="#" class="alert-link" onclick="document.querySelector(`a[data-value='Contact Us']`)?.click(); return false;">contact us</a>.
+    </div>
+  </div></section>
+
+  <section id="sg-abstract" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">1. Abstract</h2>
+    <p>Singapore was among the earliest governments to deploy a nationwide digital contact tracing system during the COVID-19 pandemic. Launched on 20 March 2020, the TraceTogether programme combined a Bluetooth smartphone app with a physical token device. It operated alongside manual tracing and was used centrally by the Ministry of Health contact tracing teams.</p>
+    <p>Once a user tested positive for COVID-19, MOH requested that the user's device upload Bluetooth proximity data. MOH then decrypted the data centrally to generate a preliminary contact list. For token users without smartphones, data could not be extracted remotely; an authorised MOH contact tracer was required to physically retrieve data from the device.</p>
+    <p>Based on assessed exposure risk, contacts were identified and classified into three tiers with different quarantine strengths. Quarantine was triggered immediately upon notification, not upon symptom onset.</p>
+
+    <div class="row row-cols-2 row-cols-md-4 g-3 mt-1">
+      <div class="col"><div class="card h-100 bg-primary-subtle border-0">
+        <div class="card-body"><div class="fs-4 fw-bold text-primary lh-1 mb-1">20%</div><div class="small text-muted">adoption one month after launch</div></div>
+      </div></div>
+      <div class="col"><div class="card h-100 bg-primary-subtle border-0">
+        <div class="card-body"><div class="fs-4 fw-bold text-primary lh-1 mb-1">&gt;70%</div><div class="small text-muted">after token rollout and reopening incentive</div></div>
+      </div></div>
+      <div class="col"><div class="card h-100 bg-primary-subtle border-0">
+        <div class="card-body"><div class="fs-4 fw-bold text-primary lh-1 mb-1">93.3%</div><div class="small text-muted">confirmed cases with a registered device during Delta/Omicron waves</div></div>
+      </div></div>
+      <div class="col"><div class="card h-100 bg-primary-subtle border-0">
+        <div class="card-body"><div class="fs-4 fw-bold text-primary lh-1 mb-1">9.8 h</div><div class="small text-muted">faster notification for digital-only tracing</div></div>
+      </div></div>
+    </div>
+  </div></section>
+
+  <section id="sg-background" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">2. Background</h2>
+    <h3 class="h5 mt-4">2.1 Epidemic context</h3>
+    <p>Singapore confirmed its first COVID-19 case on 23 January 2020. By 16 March 2020, 243 cases had been confirmed, with 62.7% of linked early cases detected through contact tracing. Total pandemic burden was 3,006,155 confirmed cases and 2,024 deaths, corresponding to a CFR of 0.07%.</p>
+
+    <h3 class="h5 mt-4">2.2 Enabling conditions</h3>
+    <p>Two factors were directly relevant to TraceTogether deployment: Singapore's pre-existing Smart Nation digital infrastructure enabled rapid development and rollout, and institutional experience from the 2003 SARS outbreak meant contact tracing protocols were already embedded in public health practice.</p>
+  </div></section>
+
+  <section id="sg-strategy" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">3. Contact Tracing Strategy</h2>
+    <h3 class="h5 mt-4">3.1 System architecture</h3>
+    <p>The system was hybrid manual + digital. TraceTogether provided supplementary Bluetooth proximity data to MOH human tracers; it did not replace manual interviewing.</p>
+    <p>System components included: <strong>TraceTogether App</strong>, a Bluetooth smartphone app; <strong>TraceTogether Token</strong>, a free portable Bluetooth device for non-smartphone users; and <strong>SafeEntry</strong>, a mandatory venue check-in system integrated with TraceTogether from May 2021.</p>
+
+    <div class="card bg-primary-subtle border-0 border-start border-primary border-4 my-3"><div class="card-body">
+      <p class="fw-bold mb-2">Tracing workflow</p>
+      <ol class="mb-0">
+        <li>Case confirmed → MOH notifies case to upload TraceTogether Bluetooth data.</li>
+        <li>Human tracers conduct recall-based interviews to identify known contacts.</li>
+        <li>MOH decrypts TraceTogether Bluetooth logs to capture unknown or forgotten contacts.</li>
+        <li>SafeEntry venue logs are used for additional triangulation.</li>
+        <li>Close contacts are notified → tiered quarantine orders are issued.</li>
+      </ol>
+    </div></div>
+
+    <h3 class="h5 mt-4">3.2 Implementation phases</h3>
+    <div class="d-flex flex-column gap-3 mt-2">
+      <div class="card bg-warning-subtle border-0"><div class="card-body">
+        <h3 class="h6 fw-bold mb-2">Phase 1 — Voluntary (March–August 2020)</h3>
+        <p class="mb-0">App launched on 20 March 2020. Adoption reached 20% (~1.1 million users) within one month. By June 2020, adoption was approximately 25%, well below the 75% effectiveness target.</p>
+      </div></div>
+      <div class="card bg-success-subtle border-0"><div class="card-body">
+        <h3 class="h6 fw-bold mb-2">Phase 2 — Policy incentivisation (September 2020–April 2021)</h3>
+        <p class="mb-0">Free tokens were distributed from 14 September 2020. Adoption surpassed 70% by 21 December 2020, reaching 3.8 million users: 2.05 million app users and 1.75 million token users. This threshold was explicitly set as the prerequisite for Phase 3 economic reopening. Adoption exceeded 80% by February 2021.</p>
+      </div></div>
+      <div class="card bg-info-subtle border-0"><div class="card-body">
+        <h3 class="h6 fw-bold mb-2">Phase 3 — De facto mandatory (May 2021 onwards)</h3>
+        <p class="mb-0">From 17 May 2021, TraceTogether-only SafeEntry check-in was mandated at all high-throughput venues. Adoption among confirmed cases reached 93.3% during the Delta/Omicron waves.</p>
+      </div></div>
+    </div>
+  </div></section>
+
+  <section id="sg-quarantine" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">4. Notification & Quarantine Mechanism</h2>
+    <p><strong>Trigger mechanism:</strong> Upon confirmed positive test, MOH requested data upload from the case. MOH then decrypted Bluetooth logs, generated a contact list, and issued quarantine orders. Token data could not be remotely extracted; an authorised tracer had to physically retrieve data from the device. There was no automated app-to-app push; every case required a human processing step.</p>
+    <p><strong>Contact response:</strong> The response was exposure-triggered, not symptom-triggered. Contacts quarantined immediately upon notification and were tiered by assessed risk level.</p>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-primary">
+          <tr><th>Tier</th><th>Label</th><th>Required action</th><th>Duration</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>High risk</strong></td><td>Quarantine Order (QO)</td><td>Legally enforced home quarantine for 10 days. Government Quarantine Facility available if home quarantine unsuitable; exit permitted only for PCR tests.</td><td>10 days from last exposure</td></tr>
+          <tr><td><strong>Medium risk</strong></td><td>Health Risk Warning (HRW)</td><td>Legally required immediate self-isolation at home plus PCR test.</td><td>Until negative PCR confirmed</td></tr>
+          <tr><td><strong>Low risk</strong></td><td>Health Risk Alert (HRA)</td><td>Health monitoring and ART as advised.</td><td>10 days</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small text-muted">Quarantine duration was revised from 14 to 10 days in September 2021 following evidence on the Delta variant's shorter incubation period.</p>
+  </div></section>
+
+  <section id="sg-evidence" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">5. Key Data & Evidence</h2>
+
+    <h3 class="h5 mt-4">5.1 Coverage / adoption rate</h3>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-primary">
+          <tr><th>Timepoint</th><th>Adoption rate</th><th>Reference</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>April 2020, one month post-launch</td><td><strong>20%</strong> (~1.1 million users)</td><td>GovTech, cited by Goggin, Media International Australia 2020</td></tr>
+          <tr><td>June 2020</td><td><strong>~25%</strong> (~1.8 million users)</td><td>SMU Newsroom</td></tr>
+          <tr><td>21 December 2020</td><td><strong>&gt;70%</strong> (3.8 million users)</td><td>MDDI Official</td></tr>
+          <tr><td>February 2021</td><td><strong>&gt;80%</strong></td><td>Lee et al., JMIR 2021</td></tr>
+          <tr><td>August 2021–February 2022, Delta/Omicron waves</td><td><strong>93.3%</strong> of confirmed cases with registered device</td><td>Chow et al., BMC Public Health 2023</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="h5 mt-4">5.2 Tracing delays</h3>
+    <ul>
+      <li><strong>Exposure to quarantine order:</strong> Mean time from exposure to quarantine order increased from 1.5 days in January 2021 to 2 days in July 2021; maximum 14 days in hard-to-trace cases.</li>
+      <li><strong>Quarantine duration:</strong> Duration revised from 14 to 10 days in September 2021 following evidence on Delta variant incubation period.</li>
+    </ul>
+
+    <h3 class="h5 mt-4">5.3 Effectiveness outcomes</h3>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-primary">
+          <tr><th>Metric</th><th>Value</th><th>Reference</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Notification delay saving, digital-only vs manual + digital</td><td><strong>9.8 hours faster</strong> (34.9% reduction)</td><td>Chow et al., BMC Public Health 2023</td></tr>
+          <tr><td>Positivity rate — digital-only identified contacts</td><td><strong>3.6%</strong></td><td>Chow et al., BMC Public Health 2023</td></tr>
+          <tr><td>Positivity rate — manual + digital, Quarantine Order</td><td><strong>12.5%</strong></td><td>Chow et al., BMC Public Health 2023</td></tr>
+          <tr><td>Positivity rate — manual + digital, Health Risk Warning</td><td><strong>6.2%</strong></td><td>Chow et al., BMC Public Health 2023</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="h5 mt-4">5.4 Rt / epidemic-level impact</h3>
+    <p>Not available. TraceTogether was always deployed alongside concurrent NPIs. No independent estimate of TraceTogether's isolated contribution to Rt exists in the literature; any Rt figure from this period would conflate multiple interventions.</p>
+  </div></section>
+
+  <section id="sg-limitations" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">6. Limitations & Failure Points</h2>
+    <ul>
+      <li><strong>iOS Bluetooth background limitation:</strong> reduced detection sensitivity for iPhone users in Phase 1 before a later technical fix.</li>
+      <li><strong>Speed–precision tradeoff:</strong> digital-only contacts had a positivity rate of 3.6%, substantially lower than hybrid manually traced contacts at 6.2%–12.5%, suggesting higher false-positive contact identification in digital tracing.</li>
+      <li><strong>Privacy policy reversal:</strong> in early 2021 it emerged that police could access TraceTogether data for criminal investigations, contradicting the original contact-tracing-only assurance and damaging public trust.</li>
+      <li><strong>Scalability ceiling:</strong> during the Delta wave, case volumes outpaced the system's processing capacity, contributing to Singapore's pivot from elimination to living with COVID-19.</li>
+    </ul>
+  </div></section>
+
+  <section id="sg-parameters" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">7. Extractable Parameters for Modelling</h2>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-primary">
+          <tr><th>Parameter</th><th>Extracted value</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Early voluntary adoption</td><td>20%–25%</td><td>Coverage under voluntary app-only phase.</td></tr>
+          <tr><td>Post-token adoption</td><td>&gt;70% by December 2020; &gt;80% by February 2021</td><td>Coverage increased after token rollout and reopening incentives.</td></tr>
+          <tr><td>Device registration among confirmed cases</td><td>93.3%</td><td>High apparent coverage during Delta/Omicron waves.</td></tr>
+          <tr><td>Digital tracing notification speed gain</td><td>9.8 hours faster; 34.9% reduction</td><td>Maps to contact notification delay parameter.</td></tr>
+          <tr><td>Digital-only identified contact positivity</td><td>3.6%</td><td>Suggests faster but less precise contact identification.</td></tr>
+          <tr><td>Hybrid/manual identified contact positivity</td><td>6.2%–12.5%</td><td>Suggests higher-risk contacts captured through manual/hybrid tracing.</td></tr>
+          <tr><td>Quarantine duration</td><td>14 days → 10 days</td><td>Duration was pathogen/variant-evidence responsive.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-info mb-0">
+      <strong>Suggested modelling use:</strong> digital and manual tracing should not be collapsed into a single tracing coverage parameter. They differ in speed, contact pool, and precision.
+    </div>
+  </div></section>
+
+  <section id="sg-references" class="card shadow-sm mb-4"><div class="card-body p-4 p-md-5">
+    <h2 class="h3 text-primary border-bottom pb-2 mb-3">References</h2>
+    <ol class="references small">
+      <li>Chow BWK, Lim YD, Poh RCH, Ko A, Hong GH, Zou SWL, et al. Use of a digital contact tracing system in Singapore to mitigate COVID-19 spread. <em>BMC Public Health</em>. 2023;23:2253.</li>
+      <li>Lee JK, Lin L, Kang H. The influence of normative perceptions on the uptake of the COVID-19 TraceTogether digital contact tracing system. <em>JMIR Public Health and Surveillance</em>. 2021;7(11):e30462.</li>
+      <li>Kleinman RA, Merkel C. Digital contact tracing for COVID-19. <em>CMAJ</em>. 2020;192(24):E653–E656.</li>
+      <li>Lee EWJ, Ho SS. Framing digital contact tracing in Singapore. <em>Journalism & Mass Communication Quarterly</em>. 2020;98(1):329–348.</li>
+      <li>Ng Y, Li Z, Chua YX, et al. Evaluation of the effectiveness of surveillance and containment measures for the first 100 patients with COVID-19 in Singapore. <em>MMWR</em>. 2020;69(11):307–311.</li>
+      <li>Ministry of Digital Development and Information, Singapore. Factsheet: enhancements to the TraceTogether application. 2020.</li>
+      <li>Ministry of Digital Development and Information, Singapore. TraceTogether adoption surpasses 70%. 2020.</li>
+      <li>Government Technology Agency of Singapore. Two reasons why Singapore is sticking with TraceTogether's protocol. 2020.</li>
+      <li>Goggin G. COVID-19 apps in Singapore and Australia: reimagining healthy nations with digital technology. <em>Media International Australia</em>. 2020;177(1):61–75.</li>
+      <li>Ministry of Health, Singapore. Mandatory use of TraceTogether at higher-risk venues from 17 May. 2021.</li>
+      <li>Singapore Parliament. Written reply on quarantine order timelines. 2021.</li>
+      <li>Ministry of Health, Singapore. Reduction in quarantine period and new household isolation arrangements. 2021.</li>
+      <li>Lee Kuan Yew School of Public Policy, NUS. TraceTogether: questions of data and privacy. 2021.</li>
+      <li>Heilweil R. Singapore's contact tracing app was used in a criminal investigation. <em>MIT Technology Review</em>. 2021.</li>
+      <li>SMU Office of Research. The Singapore TraceTogether story. SMU Newsroom. 2022.</li>
+      <li>Ministry of Health, Singapore. COVID-19 situation report and statistics.</li>
+    </ol>
+  </div></section>
+
+  <p class="text-center text-muted small mt-4 mb-0">Contact Tracing Strategy — Case Study Library · Case 01 · Singapore · Compiled by Jiaxin Zhou, LSHTM</p>
