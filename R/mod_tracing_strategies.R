@@ -79,7 +79,14 @@ tracing_strategies_ui <- function(id) {
         delays_input(ns = ns, delay_type = "incubation"),
         symptom_event_prob_input(ns = ns),
         tags$b("Simulation Control Parameters"),
-        sim_input(ns = ns)
+        sim_input(ns = ns),
+        tags$p(
+          class = "text-muted small mt-3",
+          bs_icon("info-circle"),
+          HTML("&nbsp;"),
+          "On this page non-pharmaceutical interventions (NPIs) are assumed to be
+          active from the start of the outbreak (no activation delay)."
+        )
       ),
       mainPanel(
         accordion(
