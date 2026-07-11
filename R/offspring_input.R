@@ -34,8 +34,15 @@ disp_tip <- shiny::HTML(
   approximate a Poisson distribution."
 )
 
-#' Generate [bslib::accordion()] with inputs for parameterising `community` and
-#' `isolated` arguments in [ringbp::offspring_opts()]
+#' Generate [bslib::accordion()] with inputs for parameterising the `community`,
+#' `isolated` and `asymptomatic` arguments in [ringbp::offspring_opts()]
+#'
+#' @description
+#' The advanced UI mode additionally exposes an optional "Different asymptomatic
+#' transmissibility" toggle. When enabled it reveals a separate offspring
+#' distribution, R0 and dispersion (`k`) for asymptomatic cases (the
+#' `asymptomatic` argument of [ringbp::offspring_opts()]); when disabled,
+#' asymptomatic cases are assumed to transmit identically to `community` cases.
 #'
 #' @param ns A namespace created with [shiny::NS()].
 #' @param ... [dots] Not used, will throw a warning if arguments are supplied.
@@ -181,6 +188,61 @@ offspring_input <- function(ns, ...) {
               tooltip(bs_icon("info-circle"), disp_tip)
             ),
             value = PROPOSE_DEFAULTS$disease_x$isolated_disp
+          ),
+          ns = ns
+        ),
+
+        # optional distinct asymptomatic transmissibility. When off, the
+        # simulation assumes asymptomatic cases transmit identically to
+        # community cases (the ringbp::offspring_opts() default).
+        input_switch(
+          ns("asymptomatic_transmissibility_different"),
+          label = tagList(
+            "Different asymptomatic transmissibility",
+            tooltip(
+              bs_icon("info-circle"),
+              "By default, asymptomatic cases are assumed to transmit
+              identically to symptomatic community cases. Enable this to
+              parameterise a separate offspring distribution, R0 and dispersion
+              (k) for asymptomatic cases. This only affects the simulation when
+              a non-zero percentage of cases are asymptomatic."
+            )
+          ),
+          value = FALSE
+        ),
+        conditionalPanel(
+          condition = "input.asymptomatic_transmissibility_different == true",
+          selectInput(
+            inputId = ns("asymptomatic_offspring_distribution"),
+            label = tagList(
+              "Asymptomatic Offspring Distribution",
+              tooltip(bs_icon("info-circle"), offspring_tip)
+            ),
+            choices = list(
+              "Negative Binomial" = "nbinom",
+              "Poisson" = "pois",
+              "Geometric" = "geom"
+            )
+          ),
+          numericInput(
+            ns("asymptomatic_r0"),
+            label = tagList(
+              "Asymptomatic R0",
+              tooltip(bs_icon("info-circle"), r0_tip("asymptomatic"))
+            ),
+            value = PROPOSE_DEFAULTS$disease_x$asymptomatic_r0
+          ),
+          conditionalPanel(
+            condition = "input.asymptomatic_offspring_distribution == 'nbinom'",
+            numericInput(
+              ns("asymptomatic_disp"),
+              label = tagList(
+                HTML("Asymptomatic Dispersion (<em>k</em>)"),
+                tooltip(bs_icon("info-circle"), disp_tip)
+              ),
+              value = PROPOSE_DEFAULTS$disease_x$asymptomatic_disp
+            ),
+            ns = ns
           ),
           ns = ns
         ),
@@ -357,7 +419,7 @@ r0_seq_feedback_server <- function(input) {
 #'
 #' Companion server function intended to be called once inside a module
 #' [shiny::moduleServer()] block. Wires up [shinyFeedback::showFeedbackDanger()]
-#' for the advanced (`community_r0`, `isolated_r0`) and basic
+#' for the advanced (`community_r0`, `isolated_r0`, `asymptomatic_r0`) and basic
 #' (`basic_community_r0`, `basic_isolated_r0`) reproduction number inputs.
 #'
 #' @param input The Shiny `input` reactive of the calling module.
@@ -385,6 +447,17 @@ offspring_feedback_server <- function(input) {
       )
     } else {
       hideFeedback("isolated_r0")
+    }
+  })
+  observeEvent(input$asymptomatic_r0, {
+    req(!is.na(input$asymptomatic_r0))
+    if (input$asymptomatic_r0 < 0) {
+      showFeedbackDanger(
+        "asymptomatic_r0",
+        text = "Error: Asymptomatic R0 cannot be negative."
+      )
+    } else {
+      hideFeedback("asymptomatic_r0")
     }
   })
   observeEvent(input$basic_community_r0, {

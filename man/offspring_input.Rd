@@ -2,8 +2,8 @@
 % Please edit documentation in R/offspring_input.R
 \name{offspring_input}
 \alias{offspring_input}
-\title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising \code{community} and
-\code{isolated} arguments in \code{\link[ringbp:offspring_opts]{ringbp::offspring_opts()}}}
+\title{Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising the \code{community},
+\code{isolated} and \code{asymptomatic} arguments in \code{\link[ringbp:offspring_opts]{ringbp::offspring_opts()}}}
 \usage{
 offspring_input(ns, ...)
 }
@@ -16,7 +16,10 @@ offspring_input(ns, ...)
 A \code{\link[bslib:accordion]{bslib::accordion()}} object.
 }
 \description{
-Generate \code{\link[bslib:accordion]{bslib::accordion()}} with inputs for parameterising \code{community} and
-\code{isolated} arguments in \code{\link[ringbp:offspring_opts]{ringbp::offspring_opts()}}
+The advanced UI mode additionally exposes an optional "Different asymptomatic
+transmissibility" toggle. When enabled it reveals a separate offspring
+distribution, R0 and dispersion (\code{k}) for asymptomatic cases (the
+\code{asymptomatic} argument of \code{\link[ringbp:offspring_opts]{ringbp::offspring_opts()}}); when disabled,
+asymptomatic cases are assumed to transmit identically to \code{community} cases.
 }
 \keyword{internal}
