@@ -187,3 +187,25 @@ test_sensitivity_feedback_server <- function(input) {
   })
   invisible(NULL)
 }
+
+#' Register input-validation feedback for the `npi_activation_day` intervention
+#' input rendered by [intervention_input()]
+#'
+#' @param input The Shiny `input` reactive of the calling module.
+#'
+#' @return Invisible `NULL`; called for side-effects.
+#' @keywords internal
+npi_activation_day_feedback_server <- function(input) {
+  observeEvent(input$npi_activation_day, {
+    req(!is.na(input$npi_activation_day))
+    if (input$npi_activation_day < 0) {
+      showFeedbackDanger(
+        "npi_activation_day",
+        text = "Error: NPI activation day cannot be negative."
+      )
+    } else {
+      hideFeedback("npi_activation_day")
+    }
+  })
+  invisible(NULL)
+}
