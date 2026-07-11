@@ -56,6 +56,9 @@ offspring_x_max <- function(distribution, r0, disp) {
 #' @keywords internal
 offspring_dist_plot <- function(input) {
   renderPlot({
+    # asymptomatic cases are only drawn as a separate group when the advanced
+    # UI toggle is enabled; otherwise they are assumed equal to community.
+    show_asymptomatic <- FALSE
     # handle different parameterisation from basic and advanced UIs
     if (isTRUE(input$transmissibility_ui == "basic")) {
       # guard for startup where input is NULL before the radioButtons registers
@@ -74,6 +77,12 @@ offspring_dist_plot <- function(input) {
       isolated_r0 <- input$isolated_r0
       community_disp <- input$community_disp
       isolated_disp <- input$isolated_disp
+      if (isTRUE(input$asymptomatic_transmissibility_different)) {
+        show_asymptomatic <- TRUE
+        asymptomatic_distribution <- input$asymptomatic_offspring_distribution
+        asymptomatic_r0 <- input$asymptomatic_r0
+        asymptomatic_disp <- input$asymptomatic_disp
+      }
     }
 
     # validate parameters shared by UI modes
@@ -86,10 +95,22 @@ offspring_dist_plot <- function(input) {
     if (isolated_distribution == "nbinom") {
       req(!is.na(isolated_disp), isolated_disp > 0)
     }
+    if (show_asymptomatic) {
+      req(asymptomatic_distribution)
+      req(!is.na(asymptomatic_r0), asymptomatic_r0 >= 0)
+      if (asymptomatic_distribution == "nbinom") {
+        req(!is.na(asymptomatic_disp), asymptomatic_disp > 0)
+      }
+    }
 
     x_max <- max(
       offspring_x_max(community_distribution, community_r0, community_disp),
       offspring_x_max(isolated_distribution, isolated_r0, isolated_disp),
+      if (show_asymptomatic) {
+        offspring_x_max(asymptomatic_distribution, asymptomatic_r0, asymptomatic_disp)
+      } else {
+        0
+      },
       5
     )
     x <- 0:x_max
@@ -114,6 +135,27 @@ offspring_dist_plot <- function(input) {
         ),
         setting = "Isolated"
       )
+    )
+    if (show_asymptomatic) {
+      df <- rbind(
+        df,
+        data.frame(
+          x = x,
+          density = offspring_pmf(
+            asymptomatic_distribution,
+            asymptomatic_r0,
+            asymptomatic_disp,
+            x
+          ),
+          setting = "Asymptomatic"
+        )
+      )
+    }
+    # fix a stable group order so Community and Isolated keep the same colours
+    # whether or not the Asymptomatic group is present (tinyplot otherwise
+    # orders the groups alphabetically, shifting the palette)
+    df$setting <- droplevels(
+      factor(df$setting, levels = c("Community", "Isolated", "Asymptomatic"))
     )
     tinyplot(
       density ~ x | setting,
