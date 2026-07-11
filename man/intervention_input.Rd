@@ -26,10 +26,12 @@ A \code{\link[bslib:accordion]{bslib::accordion()}} object.
 }
 \description{
 Renders the "Interventions" accordion. The onset-to-isolation delay
-(\code{\link[=delays_input]{delays_input()}}) and the \code{quarantine} checkbox (the \code{quarantine} argument
-in \code{\link[ringbp:intervention_opts]{ringbp::intervention_opts()}}) are always included. The other controls are
-composed via flags so each page can show only the intervention inputs it
-needs:
+(\code{\link[=delays_input]{delays_input()}}), the \code{quarantine} checkbox (the \code{quarantine} argument
+in \code{\link[ringbp:intervention_opts]{ringbp::intervention_opts()}}), the test sensitivity input and the NPI
+activation day input are always included. The NPI activation day gates the
+time-varying \code{symptomatic_traced} and \code{test_sensitivity} model arguments via
+\code{\link[=npi_activation]{npi_activation()}} in the consuming module. The other controls are composed via
+flags so each page can show only the intervention inputs it needs:
 \itemize{
 \item \code{contact_tracing = TRUE} adds the single contact tracing percentage input
 (the \code{symptomatic_traced} argument in \code{\link[ringbp:event_prob_opts]{ringbp::event_prob_opts()}}). Pages

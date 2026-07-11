@@ -5,10 +5,12 @@
 #'
 #' @description
 #' Renders the "Interventions" accordion. The onset-to-isolation delay
-#' ([delays_input()]) and the `quarantine` checkbox (the `quarantine` argument
-#' in [ringbp::intervention_opts()]) are always included. The other controls are
-#' composed via flags so each page can show only the intervention inputs it
-#' needs:
+#' ([delays_input()]), the `quarantine` checkbox (the `quarantine` argument
+#' in [ringbp::intervention_opts()]), the test sensitivity input and the NPI
+#' activation day input are always included. The NPI activation day gates the
+#' time-varying `symptomatic_traced` and `test_sensitivity` model arguments via
+#' [npi_activation()] in the consuming module. The other controls are composed via
+#' flags so each page can show only the intervention inputs it needs:
 #'
 #' * `contact_tracing = TRUE` adds the single contact tracing percentage input
 #'   (the `symptomatic_traced` argument in [ringbp::event_prob_opts()]). Pages
@@ -105,6 +107,24 @@ intervention_input <- function(ns,
       min = 0,
       max = 1,
       step = 0.05
+    ),
+    tags$hr(),
+    numericInput(
+      ns("npi_activation_day"),
+      label = tagList(
+        "NPI activation day",
+        tooltip(
+          bs_icon("info-circle"),
+          "The day of the outbreak on which non-pharmaceutical interventions
+          (NPIs) become active. Before this day no cases are isolated through
+          testing and no contacts are traced, representing the delay before
+          interventions can be implemented. A value of 0 means interventions
+          are active immediately."
+        )
+      ),
+      value = PROPOSE_DEFAULTS$npi_activation_day,
+      min = 0,
+      step = 1
     )
   )
 
