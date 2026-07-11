@@ -168,6 +168,7 @@ outbreak_size_server <- function(id) {
     symptom_event_prob_feedback_server(input)
     contact_tracing_feedback_server(input)
     test_sensitivity_feedback_server(input)
+    npi_activation_day_feedback_server(input)
     sim_feedback_server(input)
 
     # hide the onset-to-isolation distribution tab when isolation is switched
@@ -352,6 +353,7 @@ outbreak_size_server <- function(id) {
       req(input$presymptomatic_transmission >= 0 && input$presymptomatic_transmission <= 100)
       req(input$symptomatic_traced >= 0 && input$symptomatic_traced <= 100)
       req(input$test_sensitivity >= 0 && input$test_sensitivity <= 1)
+      req(!is.na(input$npi_activation_day), input$npi_activation_day >= 0)
       req(input$cap_max_days >= 1)
       req(input$cap_cases >= 1)
 
@@ -372,12 +374,17 @@ outbreak_size_server <- function(id) {
         # UI collects percentages; the model expects proportions (0-1)
         asymptomatic = input$asymptomatic / 100,
         presymptomatic_transmission = input$presymptomatic_transmission / 100,
-        # UI collects a percentage; the model expects a proportion (0-1)
-        symptomatic_traced = input$symptomatic_traced / 100
+        # UI collects a percentage; the model expects a proportion (0-1).
+        # Gate the value so NPIs only activate from `npi_activation_day`.
+        symptomatic_traced = npi_activation(
+          input$symptomatic_traced / 100, input$npi_activation_day
+        )
       )
       interventions <- intervention_opts(
         quarantine = input$quarantine,
-        test_sensitivity = input$test_sensitivity
+        test_sensitivity = npi_activation(
+          input$test_sensitivity, input$npi_activation_day
+        )
       )
       sim <- sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
 
@@ -530,6 +537,7 @@ outbreak_size_server <- function(id) {
       update_switch("isolation_on", value = PROPOSE_DEFAULTS$isolation_on, session = session)
       updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
       updateNumericInput(session, "test_sensitivity", value = PROPOSE_DEFAULTS$test_sensitivity)
+      updateNumericInput(session, "npi_activation_day", value = PROPOSE_DEFAULTS$npi_activation_day)
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
       updateNumericInput(session, "replicates", value = 100)

@@ -160,6 +160,7 @@ tracing_effectiveness_server <- function(id) {
     symptom_event_prob_feedback_server(input)
     contact_tracing_seq_feedback_server(input)
     test_sensitivity_feedback_server(input)
+    npi_activation_day_feedback_server(input)
     sim_feedback_server(input)
 
     community <- reactive({
@@ -286,6 +287,7 @@ tracing_effectiveness_server <- function(id) {
       req(input$asymptomatic >= 0, input$asymptomatic <= 100)
       req(input$presymptomatic_transmission >= 0, input$presymptomatic_transmission <= 100)
       req(input$test_sensitivity >= 0, input$test_sensitivity <= 1)
+      req(!is.na(input$npi_activation_day), input$npi_activation_day >= 0)
 
       # UI collects percentages; convert the swept values to proportions (0-1)
       # for the model.
@@ -308,11 +310,14 @@ tracing_effectiveness_server <- function(id) {
             # UI collects percentages; the model expects proportions (0-1)
             asymptomatic = input$asymptomatic / 100,
             presymptomatic_transmission = input$presymptomatic_transmission / 100,
-            symptomatic_traced = p
+            # gate the swept value so NPIs only activate from `npi_activation_day`
+            symptomatic_traced = npi_activation(p, input$npi_activation_day)
           ),
           interventions = intervention_opts(
             quarantine = input$quarantine,
-            test_sensitivity = input$test_sensitivity
+            test_sensitivity = npi_activation(
+              input$test_sensitivity, input$npi_activation_day
+            )
           ),
           sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
         )
