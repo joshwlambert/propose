@@ -320,12 +320,47 @@ PROPOSE_DEFAULTS <- list(
   isolation_on = TRUE,
   quarantine = FALSE,
   test_sensitivity = 1,
+  # day of the outbreak on which NPIs activate (0 = active immediately)
+  npi_activation_day = 0,
   # sim controls
   cap_max_days = 100,
   cap_cases = 5000,
   replicates = 5,
   initial_cases = 5
 )
+
+#' Wrap an intervention value in a time-varying NPI-activation function
+#'
+#' @description
+#' Non-pharmaceutical interventions (NPIs) are assumed to activate on a given
+#' day of the outbreak. Before that day the intervention value is 0 (no
+#' contact tracing / no test-driven isolation); on and after it the
+#' user-specified value applies. This mirrors how the `symptomatic_traced`
+#' argument in [ringbp::event_prob_opts()] and the `test_sensitivity` argument
+#' in [ringbp::intervention_opts()] accept a function of time `t`.
+#'
+#' [ringbp] coerces scalar intervention values to constant functions of `t`
+#' internally, and only ever evaluates them at the (continuous, strictly
+#' positive) `onset` / `exposure` times of cases, so `activation_day = 0`
+#' reproduces the original scalar behaviour exactly. The strict `t >`
+#' comparison follows the same convention as upstream ringbp usage; it would
+#' only differ from the scalar if the function were ever evaluated at a
+#' discrete `t = 0`, which ringbp does not do.
+#'
+#' @param value A `numeric` scalar in `[0, 1]`: the intervention value applied
+#' once NPIs are active.
+#' @param activation_day A `numeric` scalar: the day of the outbreak on which
+#' NPIs activate. `0` means active immediately.
+#'
+#' @return A `function` of a single `numeric` argument `t`.
+#' @keywords internal
+npi_activation <- function(value, activation_day) {
+  # snapshot both args into the returned closure now, rather than capturing
+  # promises that resolve lazily on first call (e.g. if called in a loop)
+  force(value)
+  force(activation_day)
+  function(t) ifelse(t > activation_day, value, 0)
+}
 
 #' Reset the pathogen parameters in the ***Explore*** page to default values
 #'
