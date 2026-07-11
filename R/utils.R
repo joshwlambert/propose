@@ -31,6 +31,10 @@ PROPOSE_DEFAULTS <- list(
     isolated_offspring_distribution = "nbinom",
     isolated_r0 = 0,
     isolated_disp = 1,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 2,
+    asymptomatic_disp = 1,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.5,
@@ -46,6 +50,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.1,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.5,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 2.66,
+    asymptomatic_disp = 0.1,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.525,
@@ -61,6 +69,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.32,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.5,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 4.5,
+    asymptomatic_disp = 0.32,
     # incubation period
     incubation_distribution = "gamma",
     incubation_shape = 3.08,
@@ -76,6 +88,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.23,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.5,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 6.5,
+    asymptomatic_disp = 0.23,
     # incubation period
     incubation_distribution = "gamma",
     incubation_shape = 4.43,
@@ -91,6 +107,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.5,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.5,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 9.5,
+    asymptomatic_disp = 0.5,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.19,
@@ -106,6 +126,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.16,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.05,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 2.7,
+    asymptomatic_disp = 0.16,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.39,
@@ -121,6 +145,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.26,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.05,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 0.93,
+    asymptomatic_disp = 0.26,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.65,
@@ -136,6 +164,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.5,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.1,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 1.75,
+    asymptomatic_disp = 0.5,
     # incubation period
     incubation_distribution = "gamma",
     incubation_shape = 1.58,
@@ -151,6 +183,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.3,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.1,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 2.5,
+    asymptomatic_disp = 0.3,
     # incubation period
     incubation_distribution = "gamma",
     incubation_shape = 3.0,
@@ -166,6 +202,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.6,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.1,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 0.8,
+    asymptomatic_disp = 0.6,
     # incubation period
     incubation_distribution = "gamma",
     incubation_shape = 4.7,
@@ -181,6 +221,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.2,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.05,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 0.15,
+    asymptomatic_disp = 0.2,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.30,
@@ -196,6 +240,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.8,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.05,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 1.44,
+    asymptomatic_disp = 0.8,
     # incubation period
     incubation_distribution = "gamma",
     incubation_shape = 3.36,
@@ -211,6 +259,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.2,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.05,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 0.08,
+    asymptomatic_disp = 0.2,
     # incubation period
     incubation_distribution = "weibull",
     incubation_shape = 2.1,
@@ -226,6 +278,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 1,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.05,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 1.36,
+    asymptomatic_disp = 1,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 1.30,
@@ -241,6 +297,10 @@ PROPOSE_DEFAULTS <- list(
     community_disp = 0.15,
     isolated_offspring_distribution = "pois",
     isolated_r0 = 0.2,
+    # asymptomatic offspring (defaults mirror community)
+    asymptomatic_offspring_distribution = "nbinom",
+    asymptomatic_r0 = 2.12,
+    asymptomatic_disp = 0.15,
     # incubation period
     incubation_distribution = "lnorm",
     incubation_meanlog = 3.13,
@@ -306,6 +366,28 @@ reset_pathogen_params <- function(session, defaults) {
     session,
     "isolated_disp",
     value = defaults$isolated_disp
+  )
+  # asymptomatic transmissibility: reset the toggle off (asymptomatic assumed
+  # equal to community) and restore the (hidden) asymptomatic offspring inputs
+  update_switch(
+    "asymptomatic_transmissibility_different",
+    value = FALSE,
+    session = session
+  )
+  updateSelectInput(
+    session,
+    "asymptomatic_offspring_distribution",
+    selected = defaults$asymptomatic_offspring_distribution
+  )
+  updateNumericInput(
+    session,
+    "asymptomatic_r0",
+    value = defaults$asymptomatic_r0
+  )
+  updateNumericInput(
+    session,
+    "asymptomatic_disp",
+    value = defaults$asymptomatic_disp
   )
   # basic transmissibility UI: R0s mirror the advanced defaults, variability
   # resets to homogeneous (the basic UI default)
