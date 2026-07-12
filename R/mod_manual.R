@@ -801,22 +801,63 @@ manual_ui <- function(id) {
 
       "Help & Support",
       nav_panel("Info",
-                h2("Information about ", propose_name()),
+                h2("Info"),
+                h3("Information about ", propose_name(), style = "margin-top: 2.5rem;"),
                 p("See ", actionLink(ns("go_about"), "the About page"), " for general information on ", propose_name(".")),
-                h2("Frequently Asked Questions", style = "margin-top: 2.5rem;"),
+                h3("Docs & Case Studies", style = "margin-top: 2.5rem;"),
+                p("Alongside this manual, more detailed documentation and worked
+                  examples are available from the ", tags$b("Docs"), " menu in the
+                  navigation bar:"),
+                h4(ringbp_name(), " documentation", style = "margin-top: 1.5rem;"),
+                p("Technical documentation for the ", ringbp_name(), " model that
+                  powers ", propose_name("."), " These pages go into more depth
+                  than this manual, and are aimed at users who want to understand
+                  or use the model directly:"),
+                tags$ul(
+                  tags$li(tags$b("Getting Started with ", ringbp_name()),
+                          " — an introduction to the ", ringbp_name(), " R package
+                          and how to run outbreak simulations with it."),
+                  tags$li(tags$b(ringbp_name(), " Model Description"),
+                          " — a detailed description of the branching process
+                          model, including its assumptions and parameters."),
+                  tags$li(tags$b("Parameter Sweep with ", ringbp_name()),
+                          " — a worked example of running the model across a range
+                          of parameter values, much like the sweeps on the ",
+                          tags$em("Analyses"), " pages.")
+                ),
+                p("These vignettes are embedded within ", propose_name(","), " so
+                  if one does not render correctly it can also be read on the ",
+                  ringbp_name(), " package website: ",
+                  HTML('<a href="https://epiforecasts.io/ringbp/articles/" target="_blank" rel="noopener noreferrer">epiforecasts.io/ringbp/articles</a>.')),
+                h4("Case studies", style = "margin-top: 1.5rem;"),
+                p("Worked examples of how targeted interventions were used in
+                  response to real infectious disease outbreaks. Each case study
+                  covers the setting's contact tracing strategy, its notification
+                  and quarantine mechanism, and the key data and evidence behind
+                  it:"),
+                tags$ul(
+                  tags$li(tags$b("COVID-19 Singapore"), " — Singapore's contact
+                          tracing and quarantine response."),
+                  tags$li(tags$b("COVID-19 England"), " — England's contact tracing
+                          and quarantine response.")
+                ),
+                p("For now, only responses to the COVID-19 epidemic are included,
+                  but the plan is to expand to other outbreaks and a globally
+                  diverse set of response strategies."),
+                h3("Frequently Asked Questions", style = "margin-top: 2.5rem;"),
                 p("See ", actionLink(ns("go_faq"), "the FAQ page"), " for answers to common questions."),
-                h2("Citing ", propose_name(), style = "margin-top: 2.5rem;"),
+                h3("Citing ", propose_name(), style = "margin-top: 2.5rem;"),
                 p(
                   "To cite ", propose_name(","), " or the underlying epidemiological model, ", ringbp_name(","), " or see
                   a list of papers that use the ", ringbp_name(), " model, see",
                   actionLink(ns("go_citation"), "the Citation page.")
                 ),
-                h2("Funding", style = "margin-top: 2.5rem;"),
+                h3("Funding", style = "margin-top: 2.5rem;"),
                 p("See ", actionLink(ns("go_funding"), "the funding page"), " for information on the project funders."),
-                h2("Report an issue or contribute to the project", style = "margin-top: 2.5rem;"),
+                h3("Report an issue or contribute to the project", style = "margin-top: 2.5rem;"),
                 p("If you experience an issue that you'd like to report, or
                   would like to contribute to the development of ", propose_name(","), "
-                  see the ", actionLink(ns("go_contact"), "the contact page.")),
+                  see the ", actionLink(ns("go_contact"), "the contact page."))
       )
     )
   )
