@@ -74,19 +74,47 @@ explore_ui <- function(id) {
               id = ns("dist_tabs"),
               nav_panel(
                 "Offspring distribution",
-                plotOutput(ns("offspring_dist_plot"))
+                plotOutput(ns("offspring_dist_plot")),
+                tags$p(
+                  class = "small text-muted mt-2",
+                  "The probability distribution of the number of secondary cases
+                  produced by a single infectious case, shown for community and
+                  isolated cases (and asymptomatic cases when enabled). This is
+                  the offspring distribution the branching-process model samples
+                  to generate onward transmission."
+                )
               ),
               nav_panel(
                 "Incubation period",
-                plotOutput(ns("incubation_dist_plot"))
+                plotOutput(ns("incubation_dist_plot")),
+                tags$p(
+                  class = "small text-muted mt-2",
+                  "The probability density of the incubation period — the delay
+                  from infection to symptom onset — under the selected
+                  distribution. Each simulated case draws its symptom onset time
+                  from this distribution."
+                )
               ),
               nav_panel(
                 "Onset-to-isolation",
-                plotOutput(ns("onset_to_isolation_dist_plot"))
+                plotOutput(ns("onset_to_isolation_dist_plot")),
+                tags$p(
+                  class = "small text-muted mt-2",
+                  "The probability density of the delay from symptom onset to
+                  isolation under the selected distribution. Shorter delays
+                  isolate cases sooner and prevent more onward transmission."
+                )
               ),
               nav_panel(
                 "Presymptomatic transmission",
-                plotOutput(ns("presymptomatic_dist_plot"))
+                plotOutput(ns("presymptomatic_dist_plot")),
+                tags$p(
+                  class = "small text-muted mt-2",
+                  "The probability density of when transmission occurs relative
+                  to the infector's own symptom onset. Probability mass before
+                  day zero represents transmission that happens before symptoms
+                  appear (presymptomatic transmission)."
+                )
               )
             )
           )
@@ -114,8 +142,40 @@ explore_ui <- function(id) {
             )
           ),
           navset_card_underline(
-            nav_panel("Cumulative cases", plotOutput(ns("cumulative_cases"))),
-            nav_panel("Weekly cases", plotOutput(ns("weekly_cases")))
+            nav_panel(
+              "Cumulative cases",
+              plotOutput(ns("cumulative_cases")),
+              tags$p(
+                class = "small text-muted mt-2",
+                "The cumulative number of cases (by date of symptom onset) over
+                the course of each outbreak. The Trajectories view shows one line
+                per simulated outbreak; the Mean & CI view shows the mean across
+                replicates with a 95% interval. Dashed lines mark the maximum
+                case and time caps at which the simulation stops."
+              )
+            ),
+            nav_panel(
+              "Weekly cases",
+              plotOutput(ns("weekly_cases")),
+              tags$p(
+                class = "small text-muted mt-2",
+                "The number of new cases each week, counted by date of symptom
+                onset. The Trajectories view shows one line per simulated
+                outbreak; the Mean & CI view shows the mean across replicates
+                with a 95% interval."
+              ),
+              div(
+                class = "alert alert-warning small mt-2",
+                role = "alert",
+                bs_icon("exclamation-triangle-fill"),
+                "A decline in weekly cases toward the end of an outbreak may
+                reflect genuine control, but can also be an artefact of the
+                maximum case cap: once an outbreak reaches the cap the simulation
+                stops generating new infections, yet cases infected shortly
+                beforehand are still counted as their symptoms appear over
+                subsequent weeks (delayed by the incubation period)."
+              )
+            )
           )
         )
       )
