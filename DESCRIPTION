@@ -30,10 +30,12 @@ Imports:
     bslib,
     data.table,
     epiparameter,
+    grDevices,
     shiny,
     shinyFeedback,
     ringbp (>= 1.0.0),
     sn,
+    stats,
     tinyplot,
     waiter
 Encoding: UTF-8
