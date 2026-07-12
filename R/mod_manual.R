@@ -401,6 +401,141 @@ manual_ui <- function(id) {
                   is set to run for 100 days, but this can be changed in the 'Simulation
                   Control parameters'.")
       ),
+
+      "Analyses",
+      nav_panel("Tracing Effectiveness",
+                h2("Tracing Effectiveness"),
+                h5("How effective is contact tracing at controlling an outbreak?"),
+                p("The ", tags$em("Tracing Effectiveness"), " page asks a single
+                  question: how does the chance of controlling an outbreak change
+                  as contact tracing improves? Rather than simulating one scenario
+                  like the ", tags$em("Explore"), " page, it sweeps across a range
+                  of contact tracing levels, simulates many outbreaks at each
+                  level, and plots how the outcomes change."),
+
+                h3("Where this analysis comes from", style = "margin-top: 2.5rem;"),
+                p("This analysis reproduces the approach of the study ",
+                  tags$a(
+                    href = "https://www.thelancet.com/article/S2214-109X(20)30074-7/fulltext",
+                    target = "_blank",
+                    rel = "noopener noreferrer",
+                    "Hellewell et al. (2020)"
+                  ),
+                  " that the ", ringbp_name(), " model was originally built to
+                  implement. In their 2020 study in ",
+                  tags$em("The Lancet Global Health"), " — ",
+                  tags$em("Feasibility of controlling COVID-19 outbreaks by
+                  isolation of cases and contacts"), " — the authors used the same
+                  stochastic branching process model to ask whether isolating cases
+                  and tracing their contacts could control emerging COVID-19
+                  outbreaks."),
+                p("That study swept the percentage of contacts traced from 0% to
+                  100% across a range of scenarios — varying the reproduction
+                  number, the delay from symptom onset to isolation, the amount of
+                  transmission occurring before symptom onset, and the proportion
+                  of subclinical (asymptomatic) cases — and measured the
+                  probability that an outbreak was brought under control. An
+                  outbreak was counted as controlled if transmission ended within
+                  12 weeks or before reaching a large cumulative case count, which
+                  corresponds to the time and case caps used here."),
+                p("The headline finding was that feasibility depends strongly on
+                  how much transmission happens before symptoms appear: for a
+                  reproduction number around 2.5, roughly 80% of contacts needed to
+                  be traced to give a high chance of control, and higher
+                  transmissibility or more presymptomatic transmission made control
+                  substantially harder. These results helped inform the role of
+                  contact tracing in the COVID-19 pandemic response. The plots on
+                  this page let you explore the same relationships for the
+                  parameters you choose."),
+
+                h3("Setting up the sweep", style = "margin-top: 2.5rem;"),
+                p("The sidebar uses the same pathogen, intervention and simulation
+                  control parameters as the ", tags$em("Explore"), " page, with one
+                  key difference: instead of a single contact tracing value you
+                  specify a ", tags$em("range"), " of values to sweep over."),
+                tags$ul(
+                  tags$li(tags$b("Contact tracing sweep."),
+                          HTML(" The <em>From</em>, <em>To</em> and <em>By</em>
+                          inputs define the range of contact tracing coverage to
+                          test, as percentages of contacts traced (0–100). For
+                          example, from 0 to 100 in steps of 20 simulates outbreaks
+                          at 0%, 20%, 40%, 60%, 80% and 100% tracing.")),
+                  tags$li(tags$b("Replicates and initial cases."),
+                          " As on the ", tags$em("Explore"), " page, these set how
+                          many independent outbreaks are simulated at ",
+                          tags$em("each"), " tracing level, and how many infectious
+                          individuals seed each outbreak.")
+                ),
+                p("All the other pathogen and intervention parameters — pathogen
+                  transmissibility, incubation period, symptom event probabilities,
+                  onset-to-isolation delay, quarantine, test sensitivity and NPI
+                  activation day — work as they do on the ",
+                  tags$em("Explore"), " page, and are held fixed across the sweep.
+                  The single contact tracing input is the only one replaced by the
+                  sweep. Note that, unlike the ", tags$em("Explore"), " page, there
+                  is no ", tags$em("Isolate cases"), " switch here: case isolation
+                  and the interventions built on it are always active, because the
+                  purpose of this page is to measure how their effectiveness changes
+                  as contact tracing improves."),
+                p("As on the ", tags$em("Explore"), " page, the ",
+                  tags$em("Show simulation parameter distributions"), " panel lets
+                  you preview the offspring, incubation, onset-to-isolation and
+                  presymptomatic distributions before you run the sweep."),
+
+                h3("Running the sweep", style = "margin-top: 2.5rem;"),
+                p("Click ", tags$b("'Simulate outbreak(s)'"), " to run the sweep. A
+                  loading screen appears while it runs. Because a full set of
+                  replicates is simulated at every tracing level, the sweep takes
+                  longer than a single ", tags$em("Explore"), " run — increasing
+                  the number of replicates or the number of tracing levels will
+                  increase the run time. Click ", tags$b("'Reset Defaults'"), " to
+                  restore all parameters to their default values."),
+
+                h3("Reading the results", style = "margin-top: 2.5rem;"),
+                p("The sweep produces three plots, each with contact tracing
+                  coverage (%) on the horizontal axis. Outbreak control is the
+                  primary feasibility metric from the Hellewell et al. study, while
+                  the effective reproduction number and maximum weekly cases add
+                  supporting context on how much transmission is still occurring
+                  and how large the controlled outbreaks become:"),
+                tags$ul(
+                  tags$li(tags$b("Outbreak control."),
+                          " The percentage of simulated outbreaks that were brought
+                          under control (became extinct before reaching the case or
+                          time caps) at each tracing level. A higher percentage,
+                          rising with tracing, means tracing is helping to control
+                          the outbreak."),
+                  tags$li(tags$b("Effective reproduction number."),
+                          " The median effective reproduction number across
+                          replicates at each tracing level. The shaded bands show
+                          the interquartile range (darker) and 95% interval
+                          (lighter) across replicates, and a dashed line marks ",
+                          HTML("<em>R</em> = 1 (the threshold below which an
+                          outbreak is expected to decline).")),
+                  tags$li(tags$b("Maximum weekly cases in controlled outbreaks."),
+                          " A box plot of the largest number of cases seen in any
+                          single week, across only the outbreaks that were
+                          controlled, at each tracing level. Uncontrolled outbreaks
+                          are excluded because they simply grow until they reach the
+                          case cap, so their weekly peak reflects the cap rather
+                          than being informative. Each box is shaded in
+                          proportion to the percentage of outbreaks controlled at
+                          that level (also labelled above the box), so you can see
+                          both the size of the controlled outbreaks and how often
+                          control was achieved.")
+                ),
+
+                h3("References", style = "margin-top: 2.5rem;"),
+                HTML(
+                  format(
+                    bibtex::read.bib(
+                      file.path("www", "references.bib")
+                    )["Hellewell2020"],
+                    style = "html"
+                  )
+                )
+      ),
+
       "Help & Support",
       nav_panel("Info",
                 h2("Information about ", propose_name()),
