@@ -663,6 +663,142 @@ manual_ui <- function(id) {
                 )
       ),
 
+      nav_panel("Outbreak Size & Length",
+                h2("Outbreak Size & Length"),
+                h5("How big and how long are outbreaks at different levels of transmissibility?"),
+                p("The ", tags$em("Outbreak Size & Length"), " page looks at how
+                  the size and duration of outbreaks change with transmissibility.
+                  Like the ", tags$em("Tracing Effectiveness"), " page it runs a
+                  sweep, but here it sweeps the community reproduction number (R0)
+                  rather than contact tracing, and summarises the distribution of
+                  outbreak outcomes at each level."),
+
+                h3("Setting up the sweep", style = "margin-top: 2.5rem;"),
+                p("The key input is the ",
+                  tags$em("Pathogen transmissibility (R0 sweep)"), " panel, which
+                  sweeps the community reproduction number:"),
+                tags$ul(
+                  tags$li(HTML(
+                    "<b>Community R0 From, To and By.</b> The range of community R0
+                    values to test. For example, from 0.1 to 1.1 in steps of 0.1
+                    simulates outbreaks at R0 = 0.1, 0.2, …, 1.1."
+                  )),
+                  tags$li(tags$b("Offspring distribution, dispersions and isolated R0."),
+                          " The offspring distribution (Negative Binomial, Poisson
+                          or Geometric), the community and isolated dispersions, and
+                          the isolated R0 are held fixed across the sweep — only the
+                          community R0 changes.")
+                ),
+                p("The remaining parameters work as on the ", tags$em("Explore"),
+                  " page: incubation period, symptom event probabilities, the
+                  interventions (behind the ", tags$em("Isolate cases"), " switch,
+                  with onset-to-isolation delay, contact tracing, quarantine, test
+                  sensitivity and NPI activation day), and the simulation control
+                  parameters. You also set the number of replicates and initial
+                  cases simulated at each R0 value."),
+                p("As on the other pages, the ",
+                  tags$em("Show simulation parameter distributions"), " panel lets
+                  you preview the incubation, onset-to-isolation and presymptomatic
+                  distributions. There is no offspring tab here, because the
+                  offspring distribution changes across the sweep, and the
+                  onset-to-isolation tab is hidden when the ",
+                  tags$em("Isolate cases"), " switch is off."),
+
+                h3("Running the sweep", style = "margin-top: 2.5rem;"),
+                p("Click ", tags$b("'Simulate outbreaks'"), " to run the sweep.
+                  Because a full set of replicates is simulated at every R0 value,
+                  the total number of simulations is the number of replicates
+                  multiplied by the number of R0 values. If this exceeds 500 a
+                  warning lets you confirm or cancel before running. Click ",
+                  tags$b("'Reset Defaults'"), " to restore all parameters to their
+                  default values."),
+
+                h3("Reading the results", style = "margin-top: 2.5rem;"),
+                p("The results are shown as stacked bar charts, one bar per
+                  community R0 value. Each bar is split into coloured segments, and
+                  the height of a segment is the fraction of outbreaks that fell
+                  into that size (or length) band — so taller segments are the more
+                  common outcomes."),
+                tags$ul(
+                  tags$li(tags$b("Outbreak size by R0."),
+                          " Outbreak size is the total number of cases across all
+                          generations of transmission. For each community R0 the
+                          simulated outbreaks are binned into size categories and
+                          shown as the proportion of outbreaks in each category
+                          (the bars stack to 1). Outbreaks that reach the case or
+                          time caps are truncated at the cap."),
+                  tags$li(tags$b("Outbreak length by R0."),
+                          " The same stacked-proportion view for how long outbreaks
+                          last. Use the tabs to switch between ",
+                          tags$em("Generations"), " (the number of
+                          branching-process generations until the outbreak ends)
+                          and ", tags$em("Time (weeks)"), " (the outbreak duration
+                          in weeks).")
+                ),
+                p("Because interventions can be active, the effective reproduction
+                  number actually realised in each outbreak may be lower than the
+                  basic community R0 shown on the horizontal axis — so outbreaks
+                  may stay small even at a community R0 above 1."),
+
+                h3("Related work", style = "margin-top: 2.5rem;"),
+                p("Outbreak size and length distributions have long been used to
+                  characterise transmissibility, particularly where a disease is
+                  not sustaining transmission (an effective reproduction number
+                  below 1). ",
+                  tags$a(
+                    href = "https://doi.org/10.1093/oxfordjournals.aje.a010145",
+                    target = "_blank",
+                    rel = "noopener noreferrer",
+                    "De Serres et al. (2000)"
+                  ),
+                  " showed that, once a disease has been eliminated, imported cases
+                  cause self-limited outbreaks whose size and duration follow a
+                  characteristic distribution that depends on the effective
+                  reproduction number, and that the reproduction number can be
+                  estimated from the observed distribution of outbreak sizes (using
+                  measles as an example). The distributions this page simulates are
+                  the model counterpart of those empirical distributions."),
+                p("A recent application of this kind of analysis is ",
+                  tags$a(
+                    href = "https://doi.org/10.1186/s12879-025-11933-z",
+                    target = "_blank",
+                    rel = "noopener noreferrer",
+                    "Ward et al. (2025)"
+                  ),
+                  " — a rapid review of epidemiological parameters for H5N1
+                  influenza in humans. That study used a branching process model
+                  (which did not include any interventions) to simulate the size
+                  and length of outbreaks across a range of reproduction numbers
+                  (0 to 1.1) and dispersion values, and compared the simulated
+                  distributions with empirical H5N1 outbreak data from the
+                  2024–2025 outbreak in the United States. The simulated
+                  distributions matched the observed pattern of mostly small
+                  clusters with no sustained transmission, supporting a low
+                  estimate of the reproduction number (around 0.05) and limited
+                  potential for large outbreaks."),
+                p("The ", tags$em("Outbreak Size & Length"), " page lets you run
+                  the same kind of analysis interactively. It also goes a step
+                  further: unlike the study above, you can switch on interventions
+                  — such as isolating cases and tracing their contacts — and set
+                  them to values of your choosing, then see how they change the
+                  size and length of outbreaks. This makes it easy to explore not
+                  only how an outbreak might spread on its own, but how a public
+                  health response could help bring it under control."),
+
+                h3("References", style = "margin-top: 2.5rem;"),
+                HTML(
+                  paste(
+                    format(
+                      bibtex::read.bib(
+                        file.path("www", "references.bib")
+                      )[c("DeSerres2000", "Ward2025")],
+                      style = "html"
+                    ),
+                    collapse = ""
+                  )
+                )
+      ),
+
       "Help & Support",
       nav_panel("Info",
                 h2("Information about ", propose_name()),
