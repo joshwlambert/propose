@@ -41,6 +41,6 @@ citation_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     output$propose_citation <- renderPrint(citation(package = "propose"))
     output$ringbp_citation <- renderPrint(citation(package = "ringbp"))
-    output$paper_citations <- renderPrint(bibtex::read.bib(file.path("www", "references.bib")))
+    output$paper_citations <- renderPrint(bibtex::read.bib(file.path("www", "references.bib"))["Hellewell2020"])
   })
 }
