@@ -202,12 +202,6 @@ manual_ui <- function(id) {
                   is set to run for 100 days, but this can be changed in the 'Simulation
                   Control parameters'.")
       ),
-      nav_panel("Compare",
-                h2("Comparing outbreak scenarios"),
-                p("The Compare page is still a ", tags$em("work-in-progress."),
-                  " This page will contain information on how to use the Compare
-                  page once it is finished.")
-      ),
       "Help & Support",
       nav_panel("Info",
                 h2("Information about ", propose_name()),
