@@ -64,12 +64,7 @@ manual_ui <- function(id) {
                   tags$figcaption(
                     "Powered by the ", ringbp_name(), " epidemic model,
                     implemented as an ",
-                    tags$a(
-                      href = "https://epiforecasts.io/ringbp/",
-                      target = "_blank",
-                      rel = "noopener noreferrer",
-                      "R package"
-                    ), ".",
+                    HTML('<a href="https://epiforecasts.io/ringbp/" target="_blank" rel="noopener noreferrer">R package</a>.'),
                     style = "font-size: 0.875rem; color: #6c757d; margin-top: 0.5rem;"
                   )
                 ),
@@ -158,7 +153,7 @@ manual_ui <- function(id) {
                   menus."),
 
                 h3("Where to go next", style = "margin-top: 2.5rem;"),
-                p("If you are new to ", propose_name(), ", a good place to start
+                p("If you are new to ", propose_name(","), " a good place to start
                   is the ", tags$em("Explore"), " page, described in the next
                   section of this manual. Once you are comfortable setting up and
                   simulating outbreaks there, the pre-packaged ",
@@ -222,9 +217,10 @@ manual_ui <- function(id) {
                   aspect of the epidemic model. The top of the sidebar has two
                   always-visible sliders (number of replicates and initial cases),
                   and the rest of the sidebar is organised into three collapsible
-                  groups: ", tags$em("Pathogen Parameters"), ", ",
-                  tags$em("Intervention Parameters"), ", and ",
-                  tags$em("Simulation Control Parameters"), ". Each panel within
+                  groups: ",
+                  HTML("<em>Pathogen Parameters</em>, <em>Intervention
+                  Parameters</em>, and <em>Simulation Control Parameters</em>."),
+                  " Each panel within
                   a group expands when clicked and minimises when clicked again,
                   so you can focus on the parameters you're actively editing."),
                 p(tags$b("A note on inline validation."), " Some inputs (for example
