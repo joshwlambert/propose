@@ -183,22 +183,35 @@ manual_ui <- function(id) {
                   )
                 ),
                 h3("Select Pathogen", style = "margin-top: 2.5rem;"),
-                p("A good way to start using the Explore page is to select a
-                  Pathogen from the 'Select Pathogen Parameters'. This populates
-                  the pathogen parameters with values representative of the
-                  chosen pathogen. Currently, ", propose_name(), " contains parameters for:"),
+                p("A good way to start using the Explore page is to choose a
+                  preset from the ", tags$em("Select Pathogen Parameters"),
+                  " menu. This populates the pathogen parameters with values
+                  representative of the chosen pathogen, drawn from estimates
+                  published in the literature. ", propose_name(), " currently
+                  includes presets for:"),
                 tags$ul(
-                  tags$li("COVID-19"),
-                  tags$li("Ebola")
+                  tags$li(tags$b("Disease X"), " — a generic pathogen used as the
+                          default starting point."),
+                  tags$li(tags$b("COVID-19"), " — Wild-type, Alpha, Delta and
+                          Omicron variants."),
+                  tags$li(HTML("<b>SARS</b>.")),
+                  tags$li(HTML("<b>MERS</b>.")),
+                  tags$li(tags$b("Ebola"), " — Zaire and Sudan species."),
+                  tags$li(HTML("<b>Marburg</b>.")),
+                  tags$li(tags$b("Influenza"), " — H5N1, H1N1pdm and H7N9
+                          subtypes."),
+                  tags$li(HTML("<b>Meningitis B</b>.")),
+                  tags$li(HTML("<b>Andes (Hanta)virus</b>."))
                 ),
-                p("By default, the chosen pathogen is Disease X, and the default
-                  pathogen parameters are sensible initial values that act as a
-                  starting point from which to modify and simulate outbreaks."),
+                p("By default, the chosen pathogen is ",
+                  HTML("<em>Disease X</em>,"), " whose parameters are sensible
+                  initial values that act as a starting point from which to
+                  modify and simulate outbreaks."),
                 p("The pathogen and intervention parameters are grouped. By
-                  clicking on, for example, 'Offspring distributions parameters'
-                  it will expand and allow you to change the offspring distribution
-                  type and distribution parameters. All groups of parameters expand
-                  once clicked, and will minimise if clicked again."),
+                  clicking on, for example, 'Pathogen transmissibility'
+                  it will expand and allow you to change those parameters. All
+                  groups of parameters expand once clicked, and will minimise if
+                  clicked again."),
                 p("If you want to reset the parameters in the Explore page back
                   to their default values you can click the 'Reset Defaults' button.
                   This resets the chosen pathogen to 'Disease X' and resets the
@@ -215,11 +228,37 @@ manual_ui <- function(id) {
                   a group expands when clicked and minimises when clicked again,
                   so you can focus on the parameters you're actively editing."),
                 p(tags$b("A note on inline validation."), " Some inputs (for example
-                  R0 values, probabilities, and simulation caps) are checked as
+                  R0 values, percentages, and simulation caps) are checked as
                   you type. If you enter a value that isn't allowed (e.g. a
-                  negative R0, or a probability outside [0, 1]) the field is
+                  negative R0, or a percentage outside [0, 100]) the field is
                   highlighted and a short error message appears beneath it. Fix
                   the value before clicking 'Simulate outbreak'."),
+
+                h4("Basic and Advanced modes", style = "margin-top: 1.5rem;"),
+                p("Some parameter panels — pathogen transmissibility and the delay
+                  distributions (incubation period and onset-to-isolation) — offer
+                  a ", tags$em("User mode"), " toggle with ", tags$b("Basic"),
+                  " and ", tags$b("Advanced"), " options."),
+                tags$ul(
+                  tags$li(tags$b("Basic"), " mode asks for a small number of
+                          intuitive quantities. For transmissibility you set an
+                          average number of secondary infections (R0), an R0 for
+                          isolated cases, and a transmission-variability level
+                          (homogeneous, moderate or high) that controls how much
+                          superspreading occurs. For a delay you set an average
+                          number of days and a variability level (low, moderate or
+                          high)."),
+                  tags$li(tags$b("Advanced"), " mode exposes the full underlying
+                          distributions. For transmissibility you choose an
+                          offspring distribution (Negative Binomial, Poisson or
+                          Geometric) and its parameters separately for community
+                          and isolated cases, and can optionally give asymptomatic
+                          cases a different transmissibility. For a delay you choose
+                          a distribution family (Lognormal, Gamma or Weibull) and
+                          set its parameters.")
+                ),
+                p("Basic mode is a good starting point; switch to Advanced when you
+                  need finer control over the shape of a distribution."),
 
                 h4("Top of sidebar: replicates and initial cases", style = "margin-top: 1.5rem;"),
                 p(tags$em("Number of simulation replicates"), " controls how many
@@ -233,46 +272,62 @@ manual_ui <- function(id) {
                 p("These describe the disease being modelled. They're what change
                   when you pick a preset from 'Select Pathogen Parameters'."),
                 tags$ul(
-                  tags$li(tags$b("Offspring distribution parameters."),
+                  tags$li(tags$b("Pathogen transmissibility."),
                           " Controls how many secondary cases each infectious
-                          individual produces. You set this separately for people
-                          in the ", tags$em("community"), " and for people who
-                          are ", tags$em("isolated"), ". For each, choose a
-                          distribution (Negative Binomial, Poisson, or Geometric)
-                          and set R0. Negative Binomial also exposes a dispersion
-                          parameter (often written as ", tags$em("k"),
-                          " in the literature) — smaller values mean more
-                          superspreading."),
-                  tags$li(tags$b("Incubation period distribution parameters."),
-                          " The delay between infection and symptom onset.
-                          Choose a distribution (Lognormal, Gamma, or Weibull)
-                          and set its parameters (meanlog/sdlog for Lognormal;
-                          shape/scale for Gamma and Weibull)."),
+                          individual produces, set separately for cases in the ",
+                          tags$em("community"), " and cases that are ",
+                          HTML("<em>isolated</em>."), " In Basic mode you set an R0
+                          and a transmission-variability level; in Advanced mode
+                          you choose an offspring distribution (Negative Binomial,
+                          Poisson or Geometric) and, for the Negative Binomial, a
+                          dispersion parameter ", HTML("(<em>k</em>)"), " where
+                          smaller values mean more superspreading."),
+                  tags$li(tags$b("Incubation period."),
+                          " The delay between infection and symptom onset. In Basic
+                          mode you set an average and a variability level; in
+                          Advanced mode you choose a distribution (Lognormal, Gamma
+                          or Weibull) and set its parameters."),
                   tags$li(tags$b("Symptom event probabilities."),
-                          " The probability that a case is asymptomatic, and the
-                          probability that transmission happens before symptom
-                          onset. Both values must be between 0 and 1.")
+                          " The percentage of cases that are asymptomatic, and the
+                          percentage of transmission that happens before symptom
+                          onset (presymptomatic transmission). Both are entered as
+                          percentages between 0 and 100.")
                 ),
 
                 h4("Intervention Parameters", style = "margin-top: 1.5rem;"),
                 p("These describe how the public health response tries to control
-                  transmission."),
+                  transmission. They sit behind an ", tags$em("Isolate cases"),
+                  " switch: when it is off no cases are isolated and no
+                  intervention is active; turn it on to reveal the controls
+                  below."),
                 tags$ul(
-                  tags$li(tags$b("Onset-to-isolation distribution parameters."),
+                  tags$li(tags$b("Onset-to-isolation delay."),
                           " The delay between a person developing symptoms and
-                          being isolated. As with the incubation period, you pick
-                          a distribution family (Lognormal, Gamma, or Weibull)
-                          and set its parameters. Shorter delays mean faster
+                          being isolated. As with the incubation period, Basic mode
+                          takes an average and a variability level, while Advanced
+                          mode takes a distribution family (Lognormal, Gamma or
+                          Weibull) and its parameters. Shorter delays mean faster
                           isolation and typically better control."),
                   tags$li(tags$b("Contact tracing."),
-                          " The probability that a contact of a symptomatic case
-                          is successfully traced. Values closer to 1 represent
-                          highly effective contact tracing systems."),
-                  tags$li(tags$b("Interventions."),
-                          " Tick the 'Quarantine' box to quarantine traced
-                          contacts (preventing onward transmission before symptom
-                          onset). Leave it unticked to model isolation of
-                          symptomatic cases only.")
+                          " The percentage of a symptomatic case's contacts that
+                          are successfully traced (0–100). Higher values represent
+                          more effective contact tracing systems."),
+                  tags$li(tags$b("Quarantine."),
+                          " Tick this box to quarantine traced contacts, preventing
+                          onward transmission before symptom onset. Leave it
+                          unticked to model isolation of symptomatic cases only."),
+                  tags$li(tags$b("Test sensitivity."),
+                          " The proportion of symptomatic cases that test positive
+                          and therefore isolate (0–1). At the default of 1 every
+                          symptomatic case that is tested isolates; lower values
+                          mean some cases return a false negative and are not
+                          isolated through testing."),
+                  tags$li(tags$b("NPI activation day."),
+                          " The day of the outbreak on which interventions become
+                          active. Before this day no cases are isolated through
+                          testing and no contacts are traced, representing the
+                          delay before a response can be mounted. A value of 0
+                          means interventions are active immediately.")
                 ),
 
                 h4("Simulation Control Parameters", style = "margin-top: 1.5rem;"),
@@ -293,6 +348,17 @@ manual_ui <- function(id) {
                           the same parameters with the same seed will produce
                           the same outbreaks.")
                 ),
+                h3("Preview parameter distributions", style = "margin-top: 2.5rem;"),
+                p("Above the results, the ", tags$em("Show simulation parameter
+                  distributions"), " panel lets you preview the distributions
+                  implied by your current parameter choices before you simulate.
+                  It has tabs for the offspring distribution, the incubation
+                  period, the onset-to-isolation delay and presymptomatic
+                  transmission, so you can check that each looks sensible."),
+                p("These distribution previews update in real time as you change
+                  the parameters, so you do not need to click 'Simulate outbreak'
+                  to refresh them. The 'Simulate outbreak' button is only needed to
+                  update the outbreak plots and metrics."),
                 h3("Simulate Outbreak", style = "margin-top: 2.5rem;"),
                 p("The simulation is not automatically run when the parameter
                   values are changed. Once all the parameter values are set to
@@ -328,7 +394,10 @@ manual_ui <- function(id) {
                 p("The probability of outbreak control (extinction) is also calculated, and
                   shown in the value box above the figure. This tells you what proportion
                   of the simulated outbreak replicates did not sustain human-to-human
-                  transmission until the end of the simulation. By default the simulation
+                  transmission until the end of the simulation. A 95% confidence interval
+                  is shown beneath the value, reflecting the uncertainty in this estimate
+                  from the finite number of replicates — running more replicates gives a
+                  narrower interval. By default the simulation
                   is set to run for 100 days, but this can be changed in the 'Simulation
                   Control parameters'.")
       ),
