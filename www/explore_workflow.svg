@@ -27,11 +27,11 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.55960515"
-     inkscape:cx="326.1228"
-     inkscape:cy="428.87382"
+     inkscape:zoom="1.1192103"
+     inkscape:cx="428.87382"
+     inkscape:cy="310.04003"
      inkscape:window-width="1512"
-     inkscape:window-height="844"
+     inkscape:window-height="848"
      inkscape:window-x="0"
      inkscape:window-y="33"
      inkscape:window-maximized="1"
@@ -160,7 +160,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.244052"
+       style="fill:#333b76;fill-opacity:1;stroke:none;stroke-width:0.244052"
        id="rect1514"
        width="49.755947"
        height="29.755947"
@@ -168,7 +168,7 @@
        y="20.122026"
        ry="7.2751074" />
     <rect
-       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.25"
+       style="fill:#333b76;fill-opacity:1;stroke:none;stroke-width:0.25"
        id="rect1514-4"
        width="51.152203"
        height="30.371618"
@@ -176,7 +176,7 @@
        y="70.125"
        ry="7.4256339" />
     <rect
-       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.244052"
+       style="fill:#333b76;fill-opacity:1;stroke:none;stroke-width:0.244052"
        id="rect1514-0"
        width="49.755947"
        height="29.755947"
@@ -184,7 +184,7 @@
        y="120.12202"
        ry="7.2751074" />
     <rect
-       style="fill:#64b4be;fill-opacity:1;stroke:#000000;stroke-width:0.25"
+       style="fill:#333b76;fill-opacity:1;stroke:none;stroke-width:0.25"
        id="rect1514-9"
        width="51.152203"
        height="30.371618"
@@ -204,67 +204,67 @@
          y="88.083382" /></text>
     <text
        xml:space="preserve"
-       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       style="font-size:5.64444px;font-family:Arial;-inkscape-font-specification:Arial;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
        x="125.46759"
-       y="37.736889"
+       y="36.065277"
        id="text1682"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="125.46759"
-         y="37.736889"
+         y="36.065277"
          id="tspan2514">Select pathogen</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       style="font-size:5.64444px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
        x="65.301712"
        y="83.236893"
        id="text1682-3"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="65.301712"
          y="83.236893"
          id="tspan2514-04">Explore results</tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="65.301712"
-         y="91.271461"
+         y="90.363541"
          id="tspan7922">(plots &amp; metrics)</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       style="font-size:5.64444px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
        x="124.52016"
        y="133.73689"
        id="text1682-5"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="124.52016"
          y="133.73689"
          id="tspan2514-5">Simulate</tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="124.52016"
-         y="141.77145"
+         y="140.86354"
          id="tspan7145">outbreak</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:6.35px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
+       style="font-size:5.64444px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke:none;stroke-width:0.25"
        x="186.82094"
-       y="79.236893"
+       y="79.90554"
        id="text1682-8"><tspan
          sodipodi:role="line"
          id="tspan1680-2"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="186.82094"
-         y="79.236893">Toggle pathogen </tspan><tspan
+         y="79.90554">Toggle pathogen </tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="186.82094"
-         y="87.271461"
+         y="87.032188"
          id="tspan5628">&amp; intervention</tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:0.25"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.64444px;font-family:'Host Grotesk';-inkscape-font-specification:'Host Grotesk Semi-Bold';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25"
          x="186.82094"
-         y="95.30603"
+         y="94.158844"
          id="tspan2514-0">parameters</tspan></text>
     <path
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.75;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2)"
