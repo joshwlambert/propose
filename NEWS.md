@@ -1,3 +1,5 @@
+# propose (development version)
+
 # propose v0.3.0
 
 The third minor release of `{propose}`. This release adds several new pre-packaged analysis pages, expands the range of configurable epidemiological and intervention parameters, and extends the `{propose}` manual.
