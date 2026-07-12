@@ -60,7 +60,7 @@ funding_ui <- function(id) {
         style = "width: 250px;"
       ),
       tags$img(
-        src = "NIHR_hpru_ham_logo.webp",
+        src = "hpru_ham_logo.webp",
         style = "width: 250px;"
       )
     ),
