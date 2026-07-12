@@ -21,6 +21,11 @@ ui <- page_navbar(
   theme = bs_theme(brand = TRUE),
   id = "navbarid",
   fillable = FALSE,
+  header = tags$script(HTML(
+    "Shiny.addCustomMessageHandler('scrollToTop', function(x) {
+       window.scrollTo(0, 0);
+     });"
+  )),
   nav_panel(
     title = "Home",
     icon = bs_icon("house"),
@@ -296,34 +301,41 @@ server <- function(input, output, session) {
   # logic to switch tabs when the Hero button is clicked
   observeEvent(input$go_explore, {
     updateTabsetPanel(session, "navbarid", selected = "Explore")
+    session$sendCustomMessage("scrollToTop", TRUE)
   })
 
   # logic to jump to the manual from the Home page docs banner
   observeEvent(input$go_manual, {
     updateTabsetPanel(session, "navbarid", selected = "manual")
+    session$sendCustomMessage("scrollToTop", TRUE)
   })
 
   # logic to jump to the contact tracing effectiveness page from the Home page
   observeEvent(input$go_tracing_effectiveness, {
     updateTabsetPanel(session, "navbarid", selected = "Tracing Effectiveness")
+    session$sendCustomMessage("scrollToTop", TRUE)
   })
 
   # logic to jump to the contact tracing strategies page from the Home page
   observeEvent(input$go_tracing_strategies, {
     updateTabsetPanel(session, "navbarid", selected = "Tracing Strategies")
+    session$sendCustomMessage("scrollToTop", TRUE)
   })
 
   # logic to jump to the outbreak size & length page from the Home page
   observeEvent(input$go_outbreak_size, {
     updateTabsetPanel(session, "navbarid", selected = "Outbreak Size & Length")
+    session$sendCustomMessage("scrollToTop", TRUE)
   })
 
   # logic to jump to the case study pages from the Home page
   observeEvent(input$go_case_singapore, {
     updateTabsetPanel(session, "navbarid", selected = "COVID-19 Singapore")
+    session$sendCustomMessage("scrollToTop", TRUE)
   })
   observeEvent(input$go_case_england, {
     updateTabsetPanel(session, "navbarid", selected = "COVID-19 England")
+    session$sendCustomMessage("scrollToTop", TRUE)
   })
 
   # file path for {ringbp} vignettes rendered in docs UI
