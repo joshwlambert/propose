@@ -117,15 +117,52 @@ manual_ui <- function(id) {
 
       "Getting Started",
       nav_panel("Quick Start",
-                h2("Getting Started"),
-                p("When you first open ", propose_name(), " you land on the home page.
-                  From here you can jump straight to the ", tags$em("Explore"),
-                  " page by clicking on the 'Start Exploring' button, or you
-                  can navigate the app using the tabs at the top of the page.
-                  If these tabs are not shown, you can click the navbar toggler
-                  (☰) to show the other pages.")
+                h2("Quick Start"),
+                p("When you first open ", propose_name(), " you land on the ",
+                  tags$em("Home"), " page. From here you can jump straight into
+                  the ", tags$em("Explore"), " page by clicking the ",
+                  tags$b("'Start Exploring'"), " button, or use the navigation
+                  bar at the top of the page to move around the app."),
 
+                h3("Finding your way around", style = "margin-top: 2.5rem;"),
+                p("The navigation bar at the top of the page groups the app into
+                  a few areas:"),
+                tags$ul(
+                  tags$li(tags$b("Home"), " — the landing page, with the
+                          'Start Exploring' button and shortcut tiles into the
+                          rest of the app."),
+                  tags$li(tags$b("Explore"), " — the main page for setting up,
+                          simulating and visualising a single outbreak scenario."),
+                  tags$li(tags$b("Analyses"), " — a drop-down menu of pre-packaged
+                          analyses that each tackle a specific outbreak-response
+                          question: ",
+                          HTML("<em>Tracing Effectiveness</em>, <em>Tracing
+                          Strategies</em>, and <em>Outbreak Size &amp;
+                          Length</em>.")),
+                  tags$li(tags$b("Docs"), " — a drop-down menu containing this
+                          manual, the ", ringbp_name(), " documentation, and
+                          real-world COVID-19 case studies."),
+                  tags$li(tags$b("About, FAQs, Citation, Funding"), " and ",
+                          tags$b("Contact Us"), " — background on the project,
+                          answers to common questions, how to cite the tool,
+                          details of the funders, and how to get in touch.")
+                ),
+                p("If the navigation bar items are not shown (for example on a
+                  narrow screen), click the navbar toggler (☰) to reveal them."),
 
+                h3("Shortcuts from the Home page", style = "margin-top: 2.5rem;"),
+                p("The ", tags$em("Home"), " page also has shortcuts into the rest
+                  of the app: tiles that launch each of the pre-packaged analyses,
+                  links to the COVID-19 case studies, and a banner linking to this
+                  manual. These lead to the same pages as the navigation-bar
+                  menus."),
+
+                h3("Where to go next", style = "margin-top: 2.5rem;"),
+                p("If you are new to ", propose_name(), ", a good place to start
+                  is the ", tags$em("Explore"), " page, described in the next
+                  section of this manual. Once you are comfortable setting up and
+                  simulating outbreaks there, the pre-packaged ",
+                  tags$em("Analyses"), " are a natural next step.")
       ),
       nav_panel("Explore outbreak scenarios",
                 h2("Using the Explore page"),
