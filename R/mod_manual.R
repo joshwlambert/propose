@@ -536,6 +536,133 @@ manual_ui <- function(id) {
                 )
       ),
 
+      nav_panel("Tracing Strategies",
+                h2("Tracing Strategies"),
+                div(
+                  class = "alert alert-warning d-flex align-items-center",
+                  role = "alert",
+                  bs_icon("exclamation-triangle-fill"),
+                  tags$span(
+                    class = "ms-2",
+                    "The ", tags$em("Tracing Strategies"), " analysis is still a
+                    work-in-progress. It currently provides only basic comparisons
+                    of the simulated outbreaks, and will be expanded in future
+                    releases."
+                  )
+                ),
+                h5("How do different contact tracing strategies compare for outbreak control?"),
+                p("The ", tags$em("Tracing Strategies"), " page compares different
+                  ways of doing contact tracing. Where the ",
+                  tags$em("Tracing Effectiveness"), " page sweeps a single tracing
+                  coverage, this page models three distinct real-world tracing
+                  strategies — digital, manual and informal — and lets you run them
+                  side by side to compare their effect on outbreak control."),
+
+                h3("The three strategies", style = "margin-top: 2.5rem;"),
+                p("Each strategy has its own panel in the main area. Tick a
+                  strategy's checkbox to include it in the comparison, then set its
+                  parameters. Each strategy turns a few intuitive, real-world
+                  quantities into the probability that a symptomatic case's contact
+                  is successfully traced."),
+                tags$ul(
+                  tags$li(tags$b("Digital contact tracing."),
+                          " Tracing via a smartphone app (for example using
+                          Bluetooth proximity). You set the percentage of the
+                          population using the app and the app's sensitivity to
+                          detect a genuine contact. Because both the infected person
+                          and their contact must have the app installed for an
+                          encounter to be logged, the chance of tracing a contact
+                          scales with the square of app uptake, multiplied by the
+                          app's sensitivity."),
+                  tags$li(tags$b("Manual contact tracing."),
+                          " Traditional tracing by trained public health staff who
+                          interview cases to identify contacts. You set the
+                          percentage of contacts that are known to the infected
+                          person, the percentage that can be accurately recalled and
+                          shared, and the percentage of reported contacts the system
+                          successfully reaches. The chance of tracing a contact is
+                          the product of these three percentages."),
+                  tags$li(tags$b("Informal contact tracing."),
+                          " Cases informally alerting their own contacts. You set
+                          the percentage of contacts known to the infected person
+                          and the percentage of those the person contacts directly.
+                          The chance of tracing a contact is the product of these
+                          two percentages.")
+                ),
+                p("Each strategy combines its inputs into a single probability
+                  that a contact is traced. Writing each input as a proportion
+                  (its percentage divided by 100), that probability is:"),
+                tags$ul(
+                  tags$li(HTML(
+                    "<b>Digital:</b> uptake<sup>2</sup> &times; sensitivity"
+                  )),
+                  tags$li(HTML(
+                    "<b>Manual:</b> contacts&nbsp;known &times; recall &times;
+                    system&nbsp;coverage"
+                  )),
+                  tags$li(HTML(
+                    "<b>Informal:</b> contacts&nbsp;known &times; informed"
+                  ))
+                ),
+                p("The square in the digital formula reflects that both the
+                  infected person and their contact must be using the app for an
+                  encounter to be logged, so digital tracing is especially weak
+                  when app uptake is low."),
+                p("Each strategy also has its own ",
+                  tags$em("onset-to-isolation delay"), " and ",
+                  tags$em("quarantine"), " option, so you can reflect that, say,
+                  digital tracing isolates contacts faster than manual tracing."),
+
+                h3("Setting up the comparison", style = "margin-top: 2.5rem;"),
+                p("The pathogen parameters in the sidebar — pathogen
+                  transmissibility, incubation period and symptom event
+                  probabilities — are shared across all three strategies, so every
+                  strategy is tested against the same outbreak. As on the ",
+                  tags$em("Explore"), " page, you also set the number of simulation
+                  replicates and initial cases, and the simulation control
+                  parameters (caps and seed)."),
+                p("Unlike the ", tags$em("Explore"), " and ",
+                  tags$em("Tracing Effectiveness"), " pages, non-pharmaceutical
+                  interventions are assumed to be active from the start of the
+                  outbreak — there is no NPI activation delay on this page."),
+                p("As on the other pages, the ",
+                  tags$em("Show simulation parameter distributions"), " panel lets
+                  you preview the offspring, incubation and presymptomatic
+                  distributions. The onset-to-isolation delay is set per strategy,
+                  and each strategy's panel shows its own delay distribution
+                  alongside the inputs."),
+
+                h3("Running the comparison", style = "margin-top: 2.5rem;"),
+                p("Tick at least one strategy, then click ",
+                  tags$b("'Simulate outbreak(s)'"), " to run the comparison. If no
+                  strategy is selected a reminder appears; if the number of
+                  replicates is above 50 a warning lets you confirm or cancel before
+                  running, since more replicates take longer. Click ",
+                  tags$b("'Reset Defaults'"), " to restore all parameters to their
+                  default values."),
+
+                h3("Reading the results", style = "margin-top: 2.5rem;"),
+                p("The comparison is shown in the ",
+                  tags$em("Compare Contact Tracing Strategies"), " panel:"),
+                tags$ul(
+                  tags$li(tags$b("Onset-to-isolation delay by strategy."),
+                          " The delay distributions of the selected strategies
+                          overlaid on one plot, so you can see how quickly each
+                          isolates cases."),
+                  tags$li(tags$b("Probability of outbreak control."),
+                          " A value box for each strategy showing the proportion of
+                          simulated outbreaks that were controlled (went extinct
+                          before reaching the case or time caps), with a 95%
+                          confidence interval. Strategies that were not selected
+                          show no value."),
+                  tags$li(tags$b("Cumulative outbreak size."),
+                          " The median cumulative outbreak size for each strategy,
+                          with a 95% interval across replicates, so you can compare
+                          not just whether outbreaks were controlled but how large
+                          they grew.")
+                )
+      ),
+
       "Help & Support",
       nav_panel("Info",
                 h2("Information about ", propose_name()),
