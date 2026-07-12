@@ -16,10 +16,103 @@ manual_ui <- function(id) {
       "Overview",
       nav_panel("Overview",
                 h2("Overview"),
+                div(
+                  class = "alert alert-info d-flex align-items-center",
+                  role = "alert",
+                  bs_icon("info-circle-fill"),
+                  tags$span(
+                    class = "ms-2",
+                    propose_name(), " is currently in development. New features
+                    and improvements are being implemented continuously, so some
+                    pages and options may change between releases."
+                  )
+                ),
                 p(propose_name(), " is a public health decision support tool for
-                  early infectious disease outbreak response."),
-                p("It runs an epidemic model where individuals are either in
-                  the ", tags$em("community"), " or ", tags$em("isolated"), ".")
+                  early infectious disease outbreak response. It lets you explore
+                  how the characteristics of a pathogen and the public health
+                  response together determine whether an emerging outbreak can be
+                  brought under control."),
+                p("The rest of this manual walks through each page in turn."),
+                tags$hr(style = "margin-top: 2.5rem;"),
+                h3("The epidemic model"),
+                p("Under the hood, ", propose_name(), " runs the ", ringbp_name(),
+                  " branching process model, which simulates outbreaks as chains
+                  of transmission between individuals. Each infectious individual
+                  is either in the ", HTML("<em>community</em>,"), " where they
+                  transmit freely, or ", HTML("<em>isolated</em>,"), " where
+                  onward transmission
+                  is reduced. Interventions such as case isolation, contact tracing
+                  and quarantine act to move individuals into isolation, and
+                  thereby interrupt transmission."),
+                tags$figure(
+                  style = "text-align: center; margin: 1.5rem 0;",
+                  div(
+                    style = "display: flex; align-items: center;
+                      justify-content: center; gap: 1.5rem; flex-wrap: wrap;",
+                    img(
+                      src = "hex_logo.svg",
+                      alt = "propose hex logo",
+                      style = "width: 130px; height: auto;"
+                    ),
+                    bs_icon("link", style = "font-size: 3.5rem; color: #6c757d;"),
+                    img(
+                      src = "ringbp_hex_logo.svg",
+                      alt = "ringbp hex logo",
+                      style = "width: 130px; height: auto;"
+                    )
+                  ),
+                  tags$figcaption(
+                    "Powered by the ", ringbp_name(), " epidemic model,
+                    implemented as an ",
+                    tags$a(
+                      href = "https://epiforecasts.io/ringbp/",
+                      target = "_blank",
+                      rel = "noopener noreferrer",
+                      "R package"
+                    ), ".",
+                    style = "font-size: 0.875rem; color: #6c757d; margin-top: 0.5rem;"
+                  )
+                ),
+                p("The parameterisation of the epidemic model in ", propose_name(),
+                  " is deliberately simple. Alongside the pathogen's
+                  transmissibility and the delays in the response, you can control
+                  the proportion of cases that are asymptomatic and how much they
+                  transmit, and the proportion of transmission that happens before
+                  symptom onset (presymptomatic transmission). These matter
+                  because asymptomatic and presymptomatic transmission can make an
+                  outbreak difficult to control with targeted interventions such
+                  as case isolation and contact tracing, which rely on identifying
+                  cases through their symptoms."),
+                tags$hr(style = "margin-top: 2.5rem;"),
+                h3("What you can do with ", propose_name()),
+                p("There are currently two main features:"),
+                tags$ul(
+                  tags$li(tags$b("Explore"), " a single outbreak scenario in
+                          detail — setting pathogen and intervention parameters,
+                          simulating outbreaks and visualising the results (the ",
+                          tags$em("Explore"), " page)."),
+                  tags$li(tags$b("Analyse"), " how outbreak outcomes change across
+                          a range of conditions — the effectiveness of contact
+                          tracing, different contact tracing strategies, and the
+                          distribution of outbreak size and length (the ",
+                          tags$em("Analyses"), " menu).")
+                ),
+                tags$hr(style = "margin-top: 2.5rem;"),
+                h3("Open source and collaborative"),
+                p("Both ", propose_name(), " and ", ringbp_name(), " are
+                  open-source projects, developed collaboratively with academics
+                  and public health professionals. Being open-source means the
+                  underlying code and epidemic model are freely available to
+                  inspect, use and build on, which makes the results transparent
+                  and reproducible and allows the methods to be independently
+                  scrutinised. Developing the projects collaboratively keeps them
+                  grounded in the real needs of outbreak response: input from
+                  public health professionals helps ensure the tools answer
+                  practically useful questions, while academic collaboration keeps
+                  the science rigorous and up to date. Together this builds trust
+                  in the tools and lets the wider community contribute
+                  improvements. Both projects are hosted on GitHub, where you can
+                  browse the source code, report issues and contribute.")
       ),
 
       "Getting Started",
