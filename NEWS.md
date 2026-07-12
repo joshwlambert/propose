@@ -72,7 +72,7 @@ This release is for beta testing at the [Proposing solutions: Shaping a new pand
 
 * Extended `PROPOSE_DEFAULTS` with additional pathogen parameters, including asymptomatic transmissibility, test sensitivity and NPI activation defaults (#50, #52, #53).
 
-* Added `{sn}` and `{epiparameter}` to `Imports` (#44).
+* Added `{sn}`, `{epiparameter}`, `{grDevices}` and `{stats}` to `Imports` (#44).
 
 * Redocumented the package with `{roxygen2}` v8.0.0.
 
