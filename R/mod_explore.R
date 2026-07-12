@@ -376,6 +376,16 @@ explore_server <- function(id) {
         sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
       )
     })
+
+    # capped outbreak to prevent overshooting the cumulative cases cap for
+    # plotting, extinct and uncapped replicates are unchanged
+    scenario_capped <- reactive({
+      dt <- data.table::copy(scenario())
+      cap <- input$cap_cases
+      dt[, cumulative := pmin(cumulative, cap), by = sim]
+      dt[, weekly_cases := cumulative - data.table::shift(cumulative, fill = 0), by = sim]
+      dt[]
+    })
     # probability of outbreak control (proportion of replicates controlled) with
     # a Clopper-Pearson exact 95% CI
     control_stats <- reactive({
@@ -399,7 +409,7 @@ explore_server <- function(id) {
     })
     output$cumulative_cases <- renderPlot({
       if (input$plot_style == "indiv") {
-        outbreak <- scenario()
+        outbreak <- scenario_capped()
         outbreak <- outbreak[, head(.SD, which.max(cumulative)), by = sim]
         outbreak_end <- outbreak[, .SD[.N], by = sim]
         tinyplot(
@@ -421,7 +431,7 @@ explore_server <- function(id) {
         )
       } else {
         # aggregate data: calculate mean, lower CI (2.5%), and upper CI (97.5%)
-        summ <- aggregate(cumulative ~ week, data = scenario(), FUN = function(x) {
+        summ <- aggregate(cumulative ~ week, data = scenario_capped(), FUN = function(x) {
           c(avg = mean(x), lwr = quantile(x, 0.025), upr = quantile(x, 0.975))
         })
         # convert matrix output to columns
@@ -449,7 +459,7 @@ explore_server <- function(id) {
     )
     output$weekly_cases <- renderPlot({
       if (input$plot_style == "indiv") {
-        outbreak <- scenario()
+        outbreak <- scenario_capped()
         outbreak <- outbreak[, head(.SD, which.max(cumulative)), by = sim]
         outbreak_end <- outbreak[, .SD[.N], by = sim]
         tinyplot(
@@ -472,7 +482,7 @@ explore_server <- function(id) {
 
       } else {
         # mean & CI
-        summ_w <- aggregate(weekly_cases ~ week, data = scenario(), FUN = function(x) {
+        summ_w <- aggregate(weekly_cases ~ week, data = scenario_capped(), FUN = function(x) {
           c(mean = mean(x), lwr = quantile(x, 0.025), upr = quantile(x, 0.975))
         })
         summ_w <- do.call(data.frame, summ_w)
