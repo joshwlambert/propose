@@ -49,18 +49,7 @@ tracing_effectiveness_ui <- function(id) {
         ),
         tags$b("Contact Tracing Sweep"),
         contact_tracing_seq_input(ns = ns, from = 0, to = 100, by = 20),
-        numericInput(
-          ns("replicates"),
-          label = tagList(
-            "Number of simulation replicates",
-            tooltip(
-              bsicons::bs_icon("info-circle"),
-              "This controls the number of independent outbreaks to simulate."
-            )
-          ),
-          value = 100,
-          min = 1
-        ),
+        replicates_input(ns = ns, page = "tracing_effectiveness", numeric = TRUE),
         numericInput(
           ns("initial_cases"),
           label = tagList(
