@@ -45,11 +45,33 @@ ui <- page_navbar(
       ),
       hr(class = "my-4"),
       br(),
-      actionButton(
-        "go_explore",
-        "Start Exploring",
-        class = "btn-lg",
-        style = "background-color: #000080; color: white; border: none; padding: 10px 30px;"
+      # two entry points to Explore and Compage pages
+      tags$head(tags$style(HTML("
+        .home-cta {
+          background-color: transparent;
+          color: #000080;
+          border: 2px solid #000080;
+          padding: 8px 28px;
+          transition: background-color .15s ease-in-out, color .15s ease-in-out;
+        }
+        .home-cta:hover,
+        .home-cta:focus {
+          background-color: #000080;
+          color: #fff;
+        }
+      "))),
+      div(
+        class = "d-flex justify-content-center align-items-center flex-wrap gap-3",
+        actionButton(
+          "go_explore",
+          "Start Exploring",
+          class = "btn-lg home-cta"
+        ),
+        actionButton(
+          "go_compare",
+          "Start Comparing",
+          class = "btn-lg home-cta"
+        )
       )
     ),
     # Feature Cards
@@ -201,6 +223,11 @@ ui <- page_navbar(
     icon = bs_icon("sliders"),
     explore_ui("explore")
   ),
+  nav_panel(
+    title = "Compare",
+    icon = bs_icon("layers"),
+    compare_ui("compare")
+  ),
   nav_menu(
     title = "Analyses",
     icon = bs_icon("graph-up-arrow"),
@@ -304,6 +331,11 @@ server <- function(input, output, session) {
     session$sendCustomMessage("scrollToTop", TRUE)
   })
 
+  observeEvent(input$go_compare, {
+    updateTabsetPanel(session, "navbarid", selected = "Compare")
+    session$sendCustomMessage("scrollToTop", TRUE)
+  })
+
   # logic to jump to the manual from the Home page docs banner
   observeEvent(input$go_manual, {
     updateTabsetPanel(session, "navbarid", selected = "manual")
@@ -345,6 +377,7 @@ server <- function(input, output, session) {
   )
 
   explore_server("explore")
+  compare_server("compare")
   tracing_effectiveness_server("tracing_effectiveness")
   tracing_strategies_server("tracing_strategies")
   outbreak_size_server("outbreak_size")
