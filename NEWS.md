@@ -1,5 +1,51 @@
 # propose (development version)
 
+## Features
+
+* Added a redesigned **Compare** page (rewritten `compare_ui()` and `compare_server()` module), and restored to the app navbar (#64, #26, #54). This feature is in response to feedback at the _Proposing Solutions_ workshop. The original Compare page was removed in v0.3.0:
+
+  **Building a comparison**
+
+  - Up to six scenarios can be layered in one comparison (rather than exactly two in the previous Compare page). The sidebar is the Explore page's sidebar, so both pages read the same way; pressing **Add scenario** records the parameters currently set in it, and scenarios are built up by changing one parameter at a time. Scenarios can be removed individually, cleared all at once, or loaded back into the sidebar for editing.
+  - The number of replicates, number of initial cases, simulation caps and seed are shared across all scenarios. Nothing is simulated until **Run comparison** is pressed, so every scenario in a comparison is necessarily run under the same settings — which is what makes their probabilities of outbreak control comparable. One seed is drawn per comparison and reused for every scenario, which makes a comparison reproducible: the same settings give the same answer every time.
+  - Scenarios whose parameters duplicate one already in the comparison are refused, as are scenarios with a parameter the simulation cannot accept. Duplicate detection compares the resolved parameters, so a scenario entered in Basic mode that is numerically identical to one entered in Advanced mode is caught.
+  - When the scenarios or the shared settings change after a run, a full-width banner appears above the results and a badge appears in each results card header, until the comparison is run again.
+
+  **Reading a comparison**
+
+  - The probability of outbreak control is kept for every scenario, as one value box each with its own 95% confidence interval, plus a figure comparing those intervals side by side.
+  - The cumulative and weekly case figures from the Explore page are layered with one colour per scenario. **Mean & CI** is the default view here, because trajectories become hard to read past two scenarios; the **Trajectories** view remains available.
+  - A **Total outbreak size** card below the outbreak projections gives one value box per scenario, reporting the median number of cases reached by the end of the simulation (that is, after the shared maximum number of days) with a 95% interval. Where outbreaks reached the maximum-case cap and were still growing when counting stopped, the box says so rather than presenting the cap as a result.
+  - A **What differs between the scenarios** table lists the parameters that differ, one row per parameter and one column per scenario, collapsing the rest into an expandable section. A parameter that cannot affect a given scenario — the contact tracing settings of a scenario where cases are never isolated, for example — is shown as `n/a` and left out of the comparison, so switching isolation off reports one difference rather than five.
+  - Scenarios are named by a single schema that does not depend on when they were added: the pathogen they were built from, the contact tracing regime in play (`CT`, `CT 30%`, `no CT`, `no isolation`), then how they depart from that pathogen as the app supplies it — `SARS, CT`, `Disease X, CT 30%, R0 4`. Names describe the epidemiology, with delays as an average in days and transmission as `homogeneous`/`variable`/`superspreading` rather than distribution parameters, so a scenario is named the same way whether it was entered through the Basic or the Advanced controls. Adding or removing a scenario never renames the others, and numeric suffixes appear only where a name would otherwise become unreadable.
+  - The number of replicates is a numeric input defaulting to 100, matching the Tracing Effectiveness page, because a comparison is read through the confidence intervals on each scenario and a handful of replicates leaves them too wide to separate anything. A confirmation is asked for above 500 simulations in total.
+
+* Added a "Start Comparing" button to the Home page hero, beside "Start Exploring".
+
+* Added a **Compare outbreak scenarios** section to the manual, replacing the placeholder removed in v0.3.0 (#54), and added the Compare page to the manual's Overview and Quick Start sections.
+
+## Bug fixes
+
+* "Reset Defaults" on the **Tracing Strategies** page set the number of simulation replicates to 5 rather than the 20 the page starts with. Every page now restores its own default.
+
+## Internal
+
+* Added `R/scenario.R`, which translates the sidebar inputs into `{ringbp}` option objects and runs a simulation (`canonical_params()`, `collect_params()`, `scenario_opts()`, `run_scenario()`), together with helpers for comparing and naming scenarios (`param_diff()`, `scenario_summary()`, `scenario_names()`, `format_param()`). The Explore page now uses this shared layer, removing the duplicated parameter-translation code from `explore_server()`.
+
+* Moved `control_stats()`, `control_ci_caption()`, `cap_scenario()` and `reset_intervention_params()` into `R/utils.R`, where they are shared by the Explore and Compare pages rather than duplicated in each module.
+
+* `PROPOSE_DEFAULTS$replicates` is now a list with an entry per page, replacing the single value and the separate `COMPARE_REPLICATES` constant. `replicates_input()` takes a `page` argument and looks the default up by name, and the Tracing Effectiveness, Tracing Strategies and Outbreak Size & Length pages now use that shared builder instead of hand-writing the same control.
+
+* Added `R/constants.R`, collecting every load-time constant in the app — the simulation sentinel `NO_ISOLATION_DELAY`, the `PROPOSE_DEFAULTS` pathogen presets, the Basic-mode `BASIC_K` and `BASIC_DELAY_SHAPE` lookups, the offspring tooltip text, and the Compare page's palettes, thresholds and display labels — in one place rather than beside whichever function happened to use them first. Every other file in `R/` now contains only functions. Their documentation is grouped into six topics rather than one help page per constant.
+
+* Added `PATHOGEN_LABELS` as the single source of the pathogen display names, which `patho_param_input()` now builds its dropdown from, so the selector and the Compare page's scenario names cannot drift apart.
+
+* Added `utils` to `Imports` in `DESCRIPTION`, now used by `R/scenario.R`.
+
+* Documented `manual_server()`, which had no roxygen block.
+
+* Removed `R/event_prob_input.R`. `event_prob_input()` was superseded by `symptom_event_prob_input()` (#37) and the pages migrated away from it one by one; the two-scenario Compare page was its last remaining caller, so rewriting that page left it unreachable.
+
 # propose v0.3.0
 
 The third minor release of `{propose}`. This release adds several new pre-packaged analysis pages, expands the range of configurable epidemiological and intervention parameters, and extends the `{propose}` manual.
