@@ -48,19 +48,13 @@ outbreak_size_ui <- function(id) {
             style = "min-width: 0;"
           )
         ),
-        numericInput(
-          ns("replicates"),
-          label = tagList(
-            "Number of simulation replicates",
-            tooltip(
-              bsicons::bs_icon("info-circle"),
-              "This controls the number of independent outbreaks to simulate.
+        replicates_input(
+          ns = ns,
+          page = "outbreak_size",
+          numeric = TRUE,
+          tip = "This controls the number of independent outbreaks to simulate.
               More replicates produce smoother outbreak size and length
               distributions but take longer to run."
-            )
-          ),
-          value = 100,
-          min = 1
         ),
         initial_cases_input(ns = ns, value = 1),
         tags$b("Pathogen Parameters"),
@@ -540,7 +534,7 @@ outbreak_size_server <- function(id) {
       updateNumericInput(session, "npi_activation_day", value = PROPOSE_DEFAULTS$npi_activation_day)
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
-      updateNumericInput(session, "replicates", value = 100)
+      updateNumericInput(session, "replicates", value = PROPOSE_DEFAULTS$replicates$outbreak_size)
       updateSliderInput(session, "initial_cases", value = 1)
     })
   })
