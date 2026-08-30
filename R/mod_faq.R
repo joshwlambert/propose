@@ -118,7 +118,7 @@ faq_ui <- function(id) {
                   secondary cases per infected individual). Whereas, when the
                   offspring distribution is set to Negative Binomial,
                   it is parameterised by two values: R0  and the dispersion
-                  parameter, commonly written as ", tags$em("k"), "."
+                  parameter, commonly written as ", HTML("<em>k</em>.")
                 ),
                 tags$p(
                   tags$em("k"), " controls how much transmission varies between
