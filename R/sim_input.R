@@ -97,27 +97,70 @@ sim_feedback_server <- function(input) {
   invisible(NULL)
 }
 
-#' Generate [bslib::card()] with input for number of simulation replicates
+#' Generate an input for the number of simulation replicates
+#'
+#' @description
+#' Two variants of the same input, so that pages needing more replicates than a
+#' slider can comfortably offer are not forced to hand-write their own control:
+#'
+#' * a [shiny::sliderInput()] in a [bslib::card()], capped at 100, which suits
+#'   pages that simulate a single scenario and default to a handful of
+#'   replicates; and
+#' * a bare [shiny::numericInput()] with no upper bound, for pages that simulate
+#'   many scenarios at once and need enough replicates for the confidence
+#'   intervals to separate them.
+#'
+#' The starting value is looked up by page rather than passed in, so a page's
+#' default lives with the others in `PROPOSE_DEFAULTS$replicates` instead of
+#' being written into the page that uses it. A page's "Reset Defaults" reads the
+#' same entry, so the two cannot disagree.
 #'
 #' @param ns A namespace created with [shiny::NS()].
+#' @param page A `character` string naming the page, used to look its default
+#'   number of replicates up in `PROPOSE_DEFAULTS$replicates`. One of
+#'   `"explore"`, `"compare"`, `"tracing_effectiveness"`, `"tracing_strategies"`
+#'   or `"outbreak_size"`. A name with no entry yields an input with no starting
+#'   value, which is visible the moment the page is opened.
+#' @param numeric A `logical` scalar. When `TRUE` the numeric variant is
+#'   returned, with no card wrapper and no upper bound. Defaults to `FALSE`.
+#' @param tip A `character` string of tooltip text, for pages that need to say
+#'   something more than the default about what replicates buy them. Defaults to
+#'   `NULL`, which uses the shared wording.
 #' @param ... [dots] Not used, will throw a warning if arguments are supplied.
 #'
-#' @return A [bslib::card()] object.
+#' @return A [bslib::card()] object, or a [shiny::numericInput()] when
+#'   `numeric = TRUE`.
 #' @keywords internal
-replicates_input <- function(ns, ...) {
+replicates_input <- function(ns, page, numeric = FALSE, tip = NULL, ...) {
+  chkDots(...)
+  value <- PROPOSE_DEFAULTS$replicates[[page]]
+  if (is.null(tip)) {
+    tip <- "This controls the number of independent outbreaks to simulate."
+  }
+
+  if (numeric) {
+    return(
+      numericInput(
+        ns("replicates"),
+        label = tagList(
+          "Number of simulation replicates",
+          tooltip(bsicons::bs_icon("info-circle"), tip)
+        ),
+        value = value,
+        min = 1
+      )
+    )
+  }
+
   card(
     card_header(
       "Number of simulation replicates",
-      tooltip(
-        bsicons::bs_icon("info-circle"),
-        "This controls the number of independent outbreaks to simulate.",
-        id = "tooltip"
-      )
+      tooltip(bsicons::bs_icon("info-circle"), tip, id = "tooltip")
     ),
     sliderInput(
       ns("replicates"),
       label = "",
-      value = PROPOSE_DEFAULTS$replicates, min = 1, max = 100
+      value = value, min = 1, max = 100
     )
   )
 }
