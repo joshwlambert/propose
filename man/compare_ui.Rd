@@ -14,6 +14,20 @@ UI function.}
 Output from \code{\link[shiny:tagList]{shiny::tagList()}}.
 }
 \description{
-Shiny UI for \emph{\strong{Compare}} page
+The sidebar is deliberately the \emph{\strong{Explore}} page's sidebar, built from the
+same input functions in the same order, so the two pages read the same way.
+It is split into two parts:
+\itemize{
+\item a \strong{shared settings} card holding the simulation settings that are held
+constant across scenarios (\code{\link[=replicates_input]{replicates_input()}}, \code{\link[=initial_cases_input]{initial_cases_input()}}
+and \code{\link[=sim_input]{sim_input()}}), and
+\item everything below it, which describes the \strong{scenario currently being
+built} and is snapshotted by the "Add scenario" button.
+}
+
+Scenarios are added one at a time and simulated together by a single "Run
+comparison". Because nothing is simulated until then, every scenario in a
+comparison is necessarily run under the same shared settings, which is what
+makes the probabilities of outbreak control comparable between them.
 }
 \keyword{internal}

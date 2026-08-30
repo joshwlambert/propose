@@ -2,19 +2,47 @@
 % Please edit documentation in R/sim_input.R
 \name{replicates_input}
 \alias{replicates_input}
-\title{Generate \code{\link[bslib:card]{bslib::card()}} with input for number of simulation replicates}
+\title{Generate an input for the number of simulation replicates}
 \usage{
-replicates_input(ns, ...)
+replicates_input(ns, page, numeric = FALSE, tip = NULL, ...)
 }
 \arguments{
 \item{ns}{A namespace created with \code{\link[shiny:NS]{shiny::NS()}}.}
 
+\item{page}{A \code{character} string naming the page, used to look its default
+number of replicates up in \code{PROPOSE_DEFAULTS$replicates}. One of
+\code{"explore"}, \code{"compare"}, \code{"tracing_effectiveness"}, \code{"tracing_strategies"}
+or \code{"outbreak_size"}. A name with no entry yields an input with no starting
+value, which is visible the moment the page is opened.}
+
+\item{numeric}{A \code{logical} scalar. When \code{TRUE} the numeric variant is
+returned, with no card wrapper and no upper bound. Defaults to \code{FALSE}.}
+
+\item{tip}{A \code{character} string of tooltip text, for pages that need to say
+something more than the default about what replicates buy them. Defaults to
+\code{NULL}, which uses the shared wording.}
+
 \item{...}{\link{dots} Not used, will throw a warning if arguments are supplied.}
 }
 \value{
-A \code{\link[bslib:card]{bslib::card()}} object.
+A \code{\link[bslib:card]{bslib::card()}} object, or a \code{\link[shiny:numericInput]{shiny::numericInput()}} when
+\code{numeric = TRUE}.
 }
 \description{
-Generate \code{\link[bslib:card]{bslib::card()}} with input for number of simulation replicates
+Two variants of the same input, so that pages needing more replicates than a
+slider can comfortably offer are not forced to hand-write their own control:
+\itemize{
+\item a \code{\link[shiny:sliderInput]{shiny::sliderInput()}} in a \code{\link[bslib:card]{bslib::card()}}, capped at 100, which suits
+pages that simulate a single scenario and default to a handful of
+replicates; and
+\item a bare \code{\link[shiny:numericInput]{shiny::numericInput()}} with no upper bound, for pages that simulate
+many scenarios at once and need enough replicates for the confidence
+intervals to separate them.
+}
+
+The starting value is looked up by page rather than passed in, so a page's
+default lives with the others in \code{PROPOSE_DEFAULTS$replicates} instead of
+being written into the page that uses it. A page's "Reset Defaults" reads the
+same entry, so the two cannot disagree.
 }
 \keyword{internal}
