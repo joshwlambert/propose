@@ -1,334 +1,3 @@
-#' Sentinel onset-to-isolation delay used to switch isolation off
-#'
-#' @description
-#' A very large finite onset-to-isolation delay, in days, used when the
-#' intervention (isolation) is switched off. \pkg{ringbp} rejects an infinite
-#' delay (see `ringbp:::check_dist_func()`), so isolation is
-#' instead pushed far beyond any simulation horizon (`cap_max_days`), which makes
-#' cases effectively never isolated while keeping `isolated_time` finite.
-#'
-#' @keywords internal
-NO_ISOLATION_DELAY <- 1e10
-
-#' \pkg{ringbp} simulation defaults used in \pkg{propose}
-#'
-#' @name defaults
-#'
-#' @description
-#' `PROPOSE_DEFAULTS` is a list of lists and values. Each inner list contains
-#' default pathogen parameters for the outbreak simulation for a specific
-#' pathogen. The non-list values in the `PROPOSE_DEFAULTS` are the non-pathogen
-#' parameters for the outbreak simulation.
-
-#' @rdname defaults
-PROPOSE_DEFAULTS <- list(
-  # pathogen parameters
-  disease_x = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 2,
-    community_disp = 1,
-    isolated_offspring_distribution = "nbinom",
-    isolated_r0 = 0,
-    isolated_disp = 1,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 2,
-    asymptomatic_disp = 1,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 1.5,
-    incubation_sdlog = 0.4,
-    # symptom event probs (%)
-    asymptomatic = 10,
-    presymptomatic_transmission = 10
-  ),
-  covid_19_wt = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 2.66,
-    community_disp = 0.1,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.5,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 2.66,
-    asymptomatic_disp = 0.1,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 1.525,
-    incubation_sdlog = 0.629,
-    # symptom event probs (%)
-    asymptomatic = 35,
-    presymptomatic_transmission = 40
-  ),
-  covid_19_alpha = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 4.5,
-    community_disp = 0.32,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.5,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 4.5,
-    asymptomatic_disp = 0.32,
-    # incubation period
-    incubation_distribution = "gamma",
-    incubation_shape = 3.08,
-    incubation_scale = 1.58,
-    # symptom event probs (%)
-    asymptomatic = 35,
-    presymptomatic_transmission = 40
-  ),
-  covid_19_delta = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 6.5,
-    community_disp = 0.23,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.5,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 6.5,
-    asymptomatic_disp = 0.23,
-    # incubation period
-    incubation_distribution = "gamma",
-    incubation_shape = 4.43,
-    incubation_scale = 1.01,
-    # symptom event probs (%)
-    asymptomatic = 8.4,
-    presymptomatic_transmission = 40
-  ),
-  covid_19_omicron = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 9.5,
-    community_disp = 0.5,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.5,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 9.5,
-    asymptomatic_disp = 0.5,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 1.19,
-    incubation_sdlog = 0.36,
-    # symptom event probs (%)
-    asymptomatic = 29,
-    presymptomatic_transmission = 40
-  ),
-  sars = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 2.7,
-    community_disp = 0.16,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.05,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 2.7,
-    asymptomatic_disp = 0.16,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 1.39,
-    incubation_sdlog = 0.59,
-    # symptom event probs (%)
-    asymptomatic = 7.5,
-    presymptomatic_transmission = 5.5
-  ),
-  mers = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 0.93,
-    community_disp = 0.26,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.05,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 0.93,
-    asymptomatic_disp = 0.26,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 1.65,
-    incubation_sdlog = 0.53,
-    # symptom event probs (%)
-    asymptomatic = 19,
-    presymptomatic_transmission = 0.01
-  ),
-  ebola_zaire = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 1.75,
-    community_disp = 0.5,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.1,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 1.75,
-    asymptomatic_disp = 0.5,
-    # incubation period
-    incubation_distribution = "gamma",
-    incubation_shape = 1.58,
-    incubation_scale = 6.53,
-    # symptom event probs (%)
-    asymptomatic = 0,
-    presymptomatic_transmission = 0
-  ),
-  ebola_sudan = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 2.5,
-    community_disp = 0.3,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.1,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 2.5,
-    asymptomatic_disp = 0.3,
-    # incubation period
-    incubation_distribution = "gamma",
-    incubation_shape = 3.0,
-    incubation_scale = 2.33,
-    # symptom event probs (%)
-    asymptomatic = 0,
-    presymptomatic_transmission = 0
-  ),
-  marburg = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 0.8,
-    community_disp = 0.6,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.1,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 0.8,
-    asymptomatic_disp = 0.6,
-    # incubation period
-    incubation_distribution = "gamma",
-    incubation_shape = 4.7,
-    incubation_scale = 1.6,
-    # symptom event probs (%)
-    asymptomatic = 1,
-    presymptomatic_transmission = 0
-  ),
-  influenza_h5n1 = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 0.15,
-    community_disp = 0.2,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.05,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 0.15,
-    asymptomatic_disp = 0.2,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 1.30,
-    incubation_sdlog = 0.41,
-    # symptom event probs (%)
-    asymptomatic = 3,
-    presymptomatic_transmission = 5
-  ),
-  influenza_h1n1pdm = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 1.44,
-    community_disp = 0.8,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.05,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 1.44,
-    asymptomatic_disp = 0.8,
-    # incubation period
-    incubation_distribution = "gamma",
-    incubation_shape = 3.36,
-    incubation_scale = 0.50,
-    # symptom event probs (%)
-    asymptomatic = 36,
-    presymptomatic_transmission = 20
-  ),
-  influenza_h7n9 = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 0.08,
-    community_disp = 0.2,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.05,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 0.08,
-    asymptomatic_disp = 0.2,
-    # incubation period
-    incubation_distribution = "weibull",
-    incubation_shape = 2.1,
-    incubation_scale = 3.8,
-    # symptom event probs (%)
-    asymptomatic = 10,
-    presymptomatic_transmission = 5
-  ),
-  meningitis_b = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 1.36,
-    community_disp = 1,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.05,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 1.36,
-    asymptomatic_disp = 1,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 1.30,
-    incubation_sdlog = 0.41,
-    # symptom event probs (%)
-    asymptomatic = 98, # carriage-model interpretation
-    presymptomatic_transmission = 0
-  ),
-  andes_hantavirus = list(
-    # offspring
-    community_offspring_distribution = "nbinom",
-    community_r0 = 2.12,
-    community_disp = 0.15,
-    isolated_offspring_distribution = "pois",
-    isolated_r0 = 0.2,
-    # asymptomatic offspring (defaults mirror community)
-    asymptomatic_offspring_distribution = "nbinom",
-    asymptomatic_r0 = 2.12,
-    asymptomatic_disp = 0.15,
-    # incubation period
-    incubation_distribution = "lnorm",
-    incubation_meanlog = 3.13,
-    incubation_sdlog = 0.38,
-    # symptom event probs (%)
-    asymptomatic = 0,
-    presymptomatic_transmission = 0.05
-  ),
-  # intervention parameters
-  # delays
-  onset_to_isolation_distribution = "lnorm",
-  onset_to_isolation_meanlog = 2,
-  onset_to_isolation_sdlog = 0.5,
-  # contact tracing
-  symptomatic_traced = 80,
-  # intervention
-  isolation_on = TRUE,
-  quarantine = FALSE,
-  test_sensitivity = 1,
-  # day of the outbreak on which NPIs activate (0 = active immediately)
-  npi_activation_day = 0,
-  # sim controls
-  cap_max_days = 100,
-  cap_cases = 5000,
-  replicates = 5,
-  initial_cases = 5
-)
-
 #' Wrap an intervention value in a time-varying NPI-activation function
 #'
 #' @description
@@ -508,6 +177,211 @@ reset_pathogen_params <- function(session, defaults) {
     "presymptomatic_transmission",
     value = defaults$presymptomatic_transmission
   )
+}
+
+#' The display name of one pathogen preset
+#'
+#' @param key A `character` string naming a pathogen preset, such as `"sars"`.
+#'
+#' @return A `character` string. Falls back to `"Scenario"` when the key is
+#' missing or unrecognised, so a scenario is always named something.
+#' @keywords internal
+pathogen_label <- function(key) {
+  if (is.null(key) || length(key) != 1L || is.na(key) ||
+      !key %in% names(PATHOGEN_LABELS)) {
+    return("Scenario")
+  }
+  unname(PATHOGEN_LABELS[[key]])
+}
+
+#' Reset the intervention parameters to default values
+#'
+#' @description
+#' The counterpart to [reset_pathogen_params()] for the parameters that describe
+#' the response rather than the pathogen: the onset-to-isolation delay, contact
+#' tracing, isolation, quarantine, test sensitivity and the NPI activation day.
+#' Shared by the ***Explore*** and ***Compare*** pages, which offer the same
+#' "Reset Defaults" action over the same sidebar.
+#'
+#' The simulation controls (`cap_max_days`, `cap_cases`, `replicates` and
+#' `initial_cases`) are left to the caller, because pages differ in which of
+#' them they expose and at what defaults.
+#'
+#' @inheritParams shiny::updateSelectInput
+#'
+#' @return Nothing, called for side-effects from `shiny::update*()` functions.
+#' @keywords internal
+reset_intervention_params <- function(session) {
+  updateSelectInput(
+    session,
+    "onset_to_isolation_distribution",
+    selected = PROPOSE_DEFAULTS$onset_to_isolation_distribution
+  )
+  updateNumericInput(
+    session,
+    "onset_to_isolation_meanlog",
+    value = PROPOSE_DEFAULTS$onset_to_isolation_meanlog
+  )
+  updateNumericInput(
+    session,
+    "onset_to_isolation_sdlog",
+    value = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+  )
+  # basic onset-to-isolation UI: mean derived from the advanced (lnorm)
+  # default, variability resets to moderate
+  updateNumericInput(
+    session,
+    "basic_onset_to_isolation_mean",
+    value = round(
+      epiparameter::convert_params_to_summary_stats(
+        "lnorm",
+        meanlog = PROPOSE_DEFAULTS$onset_to_isolation_meanlog,
+        sdlog = PROPOSE_DEFAULTS$onset_to_isolation_sdlog
+      )$mean,
+      1
+    )
+  )
+  updateRadioButtons(
+    session,
+    "basic_onset_to_isolation_variability",
+    selected = "moderate"
+  )
+  updateNumericInput(
+    session,
+    "symptomatic_traced",
+    value = PROPOSE_DEFAULTS$symptomatic_traced
+  )
+  update_switch("isolation_on", value = PROPOSE_DEFAULTS$isolation_on, session = session)
+  updateCheckboxInput(session, "quarantine", value = PROPOSE_DEFAULTS$quarantine)
+  updateNumericInput(session, "test_sensitivity", value = PROPOSE_DEFAULTS$test_sensitivity)
+  updateNumericInput(session, "npi_activation_day", value = PROPOSE_DEFAULTS$npi_activation_day)
+  invisible(NULL)
+}
+
+#' Probability that an outbreak is controlled, with a 95% confidence interval
+#'
+#' @description
+#' The proportion of replicates in which the outbreak went extinct, with a
+#' Clopper-Pearson exact 95% confidence interval.
+#'
+#' Must be called on the `scenario` exactly as [ringbp::scenario_sim()] returned
+#' it. [ringbp::detect_extinct()] reads the `extinct` attribute the simulation
+#' attaches, and that attribute is dropped by subsetting or row-binding — so on
+#' the ***Compare*** page this is computed per scenario *before* scenarios are
+#' combined for plotting.
+#'
+#' @param scenario A [data.table::data.table] returned by
+#' [ringbp::scenario_sim()], or `NULL`.
+#'
+#' @return A `list` with elements `p`, `lower` and `upper`, or `NULL` if
+#' `scenario` is `NULL`.
+#' @keywords internal
+control_stats <- function(scenario) {
+  if (is.null(scenario)) {
+    return(NULL)
+  }
+  n <- max(scenario$sim)
+  k <- sum(detect_extinct(scenario)$extinct)
+  ci <- stats::binom.test(k, n)$conf.int
+  list(p = k / n, lower = ci[1], upper = ci[2])
+}
+
+#' Caption reporting the confidence interval from [control_stats()]
+#'
+#' @param stats A `list` as returned by [control_stats()], or `NULL`.
+#' @param class A `character` string of CSS classes for the caption. Defaults to
+#' `"text-white-50"`, which suits the dark value box on the ***Explore*** page.
+#' The ***Compare*** page's value boxes have a light background, where white
+#' text would be unreadable, and pass `"text-muted"` instead.
+#'
+#' @return A [shiny::tags] `small` element, or `NULL`.
+#' @keywords internal
+control_ci_caption <- function(stats, class = "text-white-50") {
+  if (is.null(stats)) {
+    return(NULL)
+  }
+  tags$small(
+    class = class,
+    sprintf(
+      "95%% CI: %s – %s",
+      signif(stats$lower, digits = 2),
+      signif(stats$upper, digits = 2)
+    )
+  )
+}
+
+#' Total outbreak size across replicates, with the spread around it
+#'
+#' @description
+#' The number of cases each replicate reached by the end of the simulation,
+#' which is to say after `cap_max_days` days. Reported as a median with a 95%
+#' interval rather than a mean: the distribution mixes outbreaks that were
+#' controlled early with outbreaks that grew unchecked, so the mean sits between
+#' the two and describes neither.
+#'
+#' Sizes are taken **uncapped**. A replicate can finish above `cap_cases`,
+#' because the whole of the week in which it crosses the cap is generated before
+#' the simulation stops, and clamping it would report the cap as though it were
+#' a result. `capped` instead reports what proportion of replicates reached the
+#' cap, so a caller can say that those outbreaks were still growing when
+#' counting stopped rather than presenting a number the cap chose.
+#'
+#' @param scenario A [data.table::data.table] returned by
+#' [ringbp::scenario_sim()], or `NULL`.
+#' @param cap_cases A `numeric` scalar, the maximum cumulative cases the
+#' simulation was run with.
+#'
+#' @return A `list` with elements `median`, `lower`, `upper` and `capped`, or
+#' `NULL` if `scenario` is `NULL`.
+#' @keywords internal
+outbreak_size_stats <- function(scenario, cap_cases) {
+  if (is.null(scenario)) {
+    return(NULL)
+  }
+  sizes <- scenario[, max(cumulative), by = sim]$V1
+  list(
+    median = stats::median(sizes),
+    lower = stats::quantile(sizes, 0.025, names = FALSE),
+    upper = stats::quantile(sizes, 0.975, names = FALSE),
+    capped = mean(sizes >= cap_cases)
+  )
+}
+
+#' Format a case count for display
+#'
+#' @param x A `numeric` scalar.
+#'
+#' @return A `character` string, rounded to a whole case and thousands-separated.
+#' @keywords internal
+format_cases <- function(x) {
+  format(round(x), big.mark = ",", scientific = FALSE, trim = TRUE)
+}
+
+#' Clamp a simulated outbreak at the maximum-cases cap for plotting
+#'
+#' @description
+#' A replicate can overshoot `cap_cases` in the week it reaches the cap, because
+#' the whole of that week's transmission is generated before the simulation
+#' stops. Plotting the raw values would show trajectories rising above a cap the
+#' plot also draws as a guide line. Extinct and uncapped replicates are
+#' unchanged.
+#'
+#' Copies before mutating: `scenario` is normally a cached reactive value, and
+#' \pkg{data.table} would otherwise modify it in place.
+#'
+#' @param scenario A [data.table::data.table] returned by
+#' [ringbp::scenario_sim()].
+#' @param cap_cases A `numeric` scalar, the maximum cumulative cases the
+#' simulation was run with.
+#'
+#' @return A [data.table::data.table] with `cumulative` clamped and
+#' `weekly_cases` recomputed to match.
+#' @keywords internal
+cap_scenario <- function(scenario, cap_cases) {
+  dt <- data.table::copy(scenario)
+  dt[, cumulative := pmin(cumulative, cap_cases), by = sim]
+  dt[, weekly_cases := cumulative - data.table::shift(cumulative, fill = 0), by = sim]
+  dt[]
 }
 
 #' The styled app name, *propose*, for use in UI text
