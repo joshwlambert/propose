@@ -80,12 +80,17 @@ manual_ui <- function(id) {
                   cases through their symptoms."),
                 tags$hr(style = "margin-top: 2.5rem;"),
                 h3("What you can do with ", propose_name()),
-                p("There are currently two main features:"),
+                p("There are currently three main features:"),
                 tags$ul(
                   tags$li(tags$b("Explore"), " a single outbreak scenario in
                           detail — setting pathogen and intervention parameters,
                           simulating outbreaks and visualising the results (the ",
                           tags$em("Explore"), " page)."),
+                  tags$li(tags$b("Compare"), " several scenarios against each
+                          other — layering scenarios that differ in the pathogen,
+                          in the response, or in both, and reading off how their
+                          epidemic dynamics and their chances of control differ
+                          (the ", tags$em("Compare"), " page)."),
                   tags$li(tags$b("Analyse"), " how outbreak outcomes change across
                           a range of conditions — the effectiveness of contact
                           tracing, different contact tracing strategies, and the
@@ -124,10 +129,15 @@ manual_ui <- function(id) {
                   a few areas:"),
                 tags$ul(
                   tags$li(tags$b("Home"), " — the landing page, with the
-                          'Start Exploring' button and shortcut tiles into the
-                          rest of the app."),
+                          'Start Exploring' and 'Start Comparing' buttons and
+                          shortcut tiles into the rest of the app."),
                   tags$li(tags$b("Explore"), " — the main page for setting up,
                           simulating and visualising a single outbreak scenario."),
+                  tags$li(tags$b("Compare"), " — the same controls as ",
+                          HTML("<em>Explore</em>,"), " but for building up several
+                          scenarios and simulating them together, so their
+                          epidemic dynamics and chances of control can be read
+                          side by side."),
                   tags$li(tags$b("Analyses"), " — a drop-down menu of pre-packaged
                           analyses that each tackle a specific outbreak-response
                           question: ",
@@ -147,17 +157,20 @@ manual_ui <- function(id) {
 
                 h3("Shortcuts from the Home page", style = "margin-top: 2.5rem;"),
                 p("The ", tags$em("Home"), " page also has shortcuts into the rest
-                  of the app: tiles that launch each of the pre-packaged analyses,
-                  links to the COVID-19 case studies, and a banner linking to this
-                  manual. These lead to the same pages as the navigation-bar
-                  menus."),
+                  of the app: buttons opening the ", tags$em("Explore"), " and ",
+                  tags$em("Compare"), " pages, tiles that launch each of the
+                  pre-packaged analyses, links to the COVID-19 case studies, and
+                  a banner linking to this manual. These lead to the same pages as
+                  the navigation-bar menus."),
 
                 h3("Where to go next", style = "margin-top: 2.5rem;"),
                 p("If you are new to ", propose_name(","), " a good place to start
                   is the ", tags$em("Explore"), " page, described in the next
                   section of this manual. Once you are comfortable setting up and
-                  simulating outbreaks there, the pre-packaged ",
-                  tags$em("Analyses"), " are a natural next step.")
+                  simulating outbreaks there, the ", tags$em("Compare"), " page
+                  lets you weigh several of them against each other, and the
+                  pre-packaged ", tags$em("Analyses"), " are a natural next
+                  step.")
       ),
       nav_panel("Explore outbreak scenarios",
                 h2("Using the Explore page"),
@@ -396,6 +409,192 @@ manual_ui <- function(id) {
                   narrower interval. By default the simulation
                   is set to run for 100 days, but this can be changed in the 'Simulation
                   Control parameters'.")
+      ),
+      nav_panel("Compare outbreak scenarios",
+                h2("Comparing outbreak scenarios"),
+                h5("How do several intervention scenarios stack up against each
+                   other?"),
+                p("The ", tags$em("Explore"), " page simulates one scenario at a
+                  time. The ", tags$em("Compare"), " page layers any number of
+                  scenarios (up to six) on the same figures, so the effect of
+                  changing a parameter can be read directly rather than
+                  remembered between runs."),
+                h3("Building a comparison"),
+                p("The sidebar is the same as the ", tags$em("Explore"), " page's,
+                  with one difference: the settings at the top are ",
+                  HTML("<b>shared across every scenario</b>,"), " while everything
+                  below them describes the scenario you are currently building."),
+                tags$ol(
+                  tags$li("Set the parameters for your first scenario and press
+                          'Add scenario'. Nothing is simulated yet — the
+                          parameters are simply recorded."),
+                  tags$li("Change one parameter, for example the community R0 or
+                          the percentage of contacts traced, and press 'Add
+                          scenario' again."),
+                  tags$li("Repeat for as many scenarios as you want to compare."),
+                  tags$li("Press 'Run comparison' to simulate all of them
+                          together.")
+                ),
+                h3("How scenarios are named"),
+                p("Every scenario is named by the same rule: the pathogen it
+                  was built from, the contact tracing regime it is running,
+                  and then the ways it departs from the pathogen default
+                  parameters in the app."),
+                p("The tracing regime is always stated, because it is what this
+                  page exists to compare. Contact tracing is abbreviated to
+                  'CT', and the percentage appears only when it is not the
+                  default (80%):"),
+                tags$ul(
+                  tags$li(tags$b("'SARS, CT'"), " — cases are isolated and
+                          contacts traced at the default percentage (80%)."),
+                  tags$li(tags$b("'SARS, CT 30%'"), " — as above, but with the
+                          percentage of contacts traced changed to 30%."),
+                  tags$li(tags$b("'SARS, CT, quarantine'"), " — as the first,
+                          with quarantine of traced contacts switched on."),
+                  tags$li(tags$b("'SARS, no CT'"), " — cases are isolated, but
+                          no contacts are traced."),
+                  tags$li(tags$b("'SARS, no isolation'"), " — no case is
+                          isolated, so nothing is traced or quarantined either.")
+                ),
+                p("Anything else appears only when it departs from the pathogen
+                  preset: raising the community R0 to 4 on a Disease X scenario
+                  gives 'Disease X, CT, R0 4'."),
+                p("Because a scenario is described against its own pathogen and
+                  never against another scenario, names do not depend on the
+                  order you added things in, and adding or removing a scenario
+                  never renames the others. No scenario is singled out as a
+                  baseline either: comparing SARS with MERS has no baseline, just
+                  two scenarios."),
+                p("Names describe the epidemiology rather than the model's
+                  internals. A delay appears as an average in days and
+                  transmission as a word — 'homogeneous', 'variable',
+                  'superspreading' — rather than as distribution parameters. This
+                  is what lets the same scenario be named the same way whether
+                  you entered it through the Basic or the Advanced controls; it
+                  also means that using a pathogen's published dispersion instead
+                  of the Basic control's homogeneous simplification shows up in
+                  the name, because it genuinely changes the outbreak."),
+                p("Where a scenario departs from its pathogen in more ways than
+                  will fit, the name is shortened and ends in an ellipsis; the
+                  scenario list below always shows the full name, and hovering
+                  over a column header or a value box title shows it too. If two
+                  shortened names would read the same, the app says more about
+                  them rather than numbering them, and only numbers a scenario
+                  when saying more would make the name unreadable."),
+                p("The colour beside a scenario's name is the colour of its
+                  series in every figure and of its value box. 'Load into
+                  sidebar' brings a scenario's parameters back into the sidebar
+                  so you can edit it, and 'Remove' drops it from the
+                  comparison."),
+                h3("What is shared, and why"),
+                p("The number of replicates, the number of initial cases, the
+                  two simulation caps and the seed apply to every scenario. They
+                  are shared rather than set per scenario because a comparison
+                  between scenarios that did not share them would not be a fair
+                  one:"),
+                tags$ul(
+                  tags$li(tags$b("Maximum number of cases"), " defines when an
+                          outbreak counts as controlled, so probabilities of
+                          outbreak control are only comparable between scenarios
+                          that use the same cap."),
+                  tags$li(tags$b("Maximum number of days"), " decides how far
+                          each outbreak is followed."),
+                  tags$li(tags$b("Number of initial cases"), " changes how each
+                          outbreak is seeded, which would confound any other
+                          difference."),
+                  tags$li(tags$b("Number of replicates"), " sets how wide the
+                          confidence intervals are. It starts at 100 here, rather
+                          than the handful the Explore page uses, because a
+                          comparison is read through those intervals and too few
+                          replicates leaves them too wide to separate anything.
+                          A comparison runs this many simulations for every
+                          scenario, so the total grows quickly; above 500
+                          simulations in total the app asks you to confirm before
+                          it starts."),
+                  tags$li(tags$b("Seed"), " is drawn once per comparison and
+                          reused for every scenario, which makes a comparison
+                          reproducible: run it again with the same settings and
+                          you get the same answer. It does not cancel out
+                          simulation noise between scenarios, so small
+                          differences between them may still be chance — widen
+                          your confidence in a difference by raising the number
+                          of replicates, not by fixing the seed. Leaving the seed
+                          blank gives a different comparison each time you press
+                          'Run comparison'.")
+                ),
+                p("Because scenarios are only simulated when you press 'Run
+                  comparison', every scenario in a comparison is always run under
+                  the current shared settings. If you change a shared setting, or
+                  add or remove a scenario, after running, a 'Results are out of
+                  date' badge appears on every card until you run the comparison
+                  again. The scenario list and the parameter table always show
+                  what you have set now; it is the figures and the probabilities
+                  of outbreak control that lag behind until you re-run."),
+                h3("Reading the results"),
+                p("The ", tags$b("'What differs between the scenarios'"), " table
+                  lists only the parameters that are not the same in every
+                  scenario, one row per parameter and one column per scenario.
+                  Parameters that do not differ are collapsed into an expandable
+                  section beneath it, so the table answers the question 'what is
+                  actually different here?' at a glance."),
+                p(tags$b("'n/a'"), " marks a parameter that cannot affect that
+                  particular scenario: the onset-to-isolation delay and the
+                  contact tracing settings of a scenario where cases are never
+                  isolated, for example. It is a statement about that scenario
+                  alone and does ", tags$em("not"), " mean the value is the same
+                  as another scenario's."),
+                p("Those 'n/a' entries are left out when deciding whether a
+                  parameter differs, so a parameter counts as differing only if
+                  it takes two or more different values among the scenarios it
+                  actually applies to. Without this, switching isolation off in
+                  one scenario would report the onset-to-isolation delay, its two
+                  distribution parameters, the test sensitivity and the NPI
+                  activation day as five separate differences, when the one real
+                  difference is that isolation is off."),
+                p("The ", tags$b("probability of outbreak control"), " is kept
+                  separately for every scenario rather than reduced to a
+                  difference: one value box per scenario, each with its own 95%
+                  confidence interval, above a figure showing those intervals
+                  side by side. Where the intervals overlap, the scenarios cannot
+                  be clearly separated at that number of replicates; running more
+                  replicates narrows them."),
+                p("The ", tags$b("Outbreak Projections"), " figures are the ones
+                  from the ", tags$em("Explore"), " page with one colour per
+                  scenario. 'Mean & CI' is the default here because it stays
+                  readable with several scenarios; 'Trajectories' shows every
+                  simulated outbreak individually, coloured by its scenario."),
+                p("The ", tags$b("Total outbreak size"), " card at the bottom
+                  reports how many cases each scenario reached by the end of the
+                  simulation — that is, after the maximum number of days set in
+                  the shared settings. The headline figure is the middle
+                  outbreak of those simulated, with a 95% interval around it:
+                  half of simulated outbreaks fall below the headline and half
+                  above, and the upper end of the interval is the reasonable
+                  worst case to plan against. A median is used rather than an
+                  average because the simulated outbreaks divide into those
+                  brought under control early and those that grew unchecked, and
+                  an average of the two describes neither."),
+                p("Some outbreaks reach the maximum number of cases before the
+                  horizon and stop being counted. Where that happens the box says
+                  what proportion of outbreaks it applies to, because their true
+                  size is larger than the figure shown — they were still growing
+                  when counting stopped. If you see that warning and want a
+                  genuine projection rather than a floor, raise the maximum
+                  number of cases in the shared settings and run the comparison
+                  again."),
+                h3("Comparisons the page will not let you make"),
+                tags$ul(
+                  tags$li("Adding a scenario whose parameters match one already
+                          in the comparison is refused, naming the scenario it
+                          duplicates. This includes a scenario entered in Basic
+                          mode that is numerically the same as one entered in
+                          Advanced mode."),
+                  tags$li("A scenario with a parameter the simulation cannot
+                          accept, such as a negative R0, is refused with an
+                          explanation rather than added."),
+                  tags$li("At most six scenarios can be compared at once, beyond
+                          which the figures stop being readable.")
+                )
       ),
 
       "Analyses",
@@ -859,6 +1058,21 @@ manual_ui <- function(id) {
   )
 }
 
+#' Shiny server for the ***propose*** manual page
+#'
+#' @description
+#' The manual is otherwise static. This exists only so that the links in its
+#' "Help & Support" section can move the user to another top-level page, which
+#' means updating the navbar in the *parent* session rather than the module's
+#' own.
+#'
+#' @inheritParams shiny::moduleServer
+#' @param parent_session The Shiny `session` of the calling application, needed
+#' because [shiny::updateTabsetPanel()] must act on the navbar defined outside
+#' this module.
+#'
+#' @return Output from [shiny::moduleServer()].
+#' @keywords internal
 manual_server <- function(id, parent_session) {
   moduleServer(id, function(input, output, session) {
     observeEvent(input$go_about, {
