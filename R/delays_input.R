@@ -1,20 +1,3 @@
-#' Gamma dispersion (`shape`) for the basic delay-distribution UI
-#'
-#' @description
-#' Maps the basic delay "variability" radio choices in [delays_input()] to the
-#' shape parameter of a Gamma distribution (`shape` in [stats::rgamma()]). With
-#' the mean held fixed (`scale = mean / shape`), `shape` controls the skewness
-#' of the tail (skewness = 2 / sqrt(shape)): `"low"` (`shape = 20`) is
-#' near-symmetric, `"moderate"` (`shape = 5`) is a classic right skew, and
-#' `"high"` (`shape = 2`) has a long, heavy tail.
-#'
-#' @keywords internal
-BASIC_DELAY_SHAPE <- c(
-  low = 20,
-  moderate = 5,
-  high = 2
-)
-
 #' Generate [bslib::accordion()] with inputs for parameterising the
 #' `incubation_period` or `onset_to_isolation` argument in
 #' [ringbp::delay_opts()]

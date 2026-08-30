@@ -1,39 +1,3 @@
-#' Negative Binomial dispersion (`k`) for the basic pathogen transmissibility
-#' UI
-#'
-#' @description
-#' Maps the `basic_transmission_variability` radio choices in
-#' [offspring_input()] to the Negative Binomial dispersion parameter (`size`
-#' in [stats::rnbinom()]). `"homogeneous"` (`k = Inf`) is equivalent to a
-#' Poisson offspring distribution, `"moderate"` (`k = 1`) to a Geometric,
-#' and `"high"` (`k = 0.1`) gives strong superspreading.
-#'
-#' @keywords internal
-BASIC_K <- c(
-  homogeneous = Inf,
-  moderate = 1,
-  high = 0.1
-)
-
-# tooltip messages for offspring distribution parameters
-offspring_tip <- shiny::HTML(
-  "The probability distribution governing the number of
-              secondary cases produced by each infected individual. Negative
-              Binomial allows for heterogeneity in transmission (superspreading)
-              via the dispersion parameter <em>k</em>; Poisson assumes
-              homogeneous transmission; Geometric has more heterogeneity in
-              transmission than Poisson, and is a special case of the Negative
-              Binomial with <em>k</em> = 1."
-)
-
-disp_tip <- shiny::HTML(
-  "The dispersion parameter (<em>k</em>) of the Negative Binomial offspring
-    distribution. Lower values indicate greater heterogeneity in
-    transmission (i.e. more superspreading), while <em>k</em> = 1 is
-    equivalent to the Geometric and large values of <em>k</em>
-  approximate a Poisson distribution."
-)
-
 #' Generate [bslib::accordion()] with inputs for parameterising the `community`,
 #' `isolated` and `asymptomatic` arguments in [ringbp::offspring_opts()]
 #'
@@ -131,7 +95,7 @@ offspring_input <- function(ns, ...) {
           inputId = ns("community_offspring_distribution"),
           label = tagList(
             "Community Offspring Distribution",
-            tooltip(bs_icon("info-circle"), offspring_tip)
+            tooltip(bs_icon("info-circle"), OFFSPRING_TIP)
           ),
           choices = list(
             "Negative Binomial" = "nbinom",
@@ -153,7 +117,7 @@ offspring_input <- function(ns, ...) {
             ns("community_disp"),
             label = tagList(
               HTML("Community Dispersion (<em>k</em>)"),
-              tooltip(bs_icon("info-circle"), disp_tip)
+              tooltip(bs_icon("info-circle"), DISP_TIP)
             ),
             value = PROPOSE_DEFAULTS$disease_x$community_disp
           ),
@@ -163,7 +127,7 @@ offspring_input <- function(ns, ...) {
           inputId = ns("isolated_offspring_distribution"),
           label = tagList(
             "Isolated Offspring Distribution",
-            tooltip(bs_icon("info-circle"), offspring_tip)
+            tooltip(bs_icon("info-circle"), OFFSPRING_TIP)
           ),
           choices = list(
             "Negative Binomial" = "nbinom",
@@ -185,7 +149,7 @@ offspring_input <- function(ns, ...) {
             ns("isolated_disp"),
             label = tagList(
               HTML("Isolated Dispersion (<em>k</em>)"),
-              tooltip(bs_icon("info-circle"), disp_tip)
+              tooltip(bs_icon("info-circle"), DISP_TIP)
             ),
             value = PROPOSE_DEFAULTS$disease_x$isolated_disp
           ),
@@ -216,7 +180,7 @@ offspring_input <- function(ns, ...) {
             inputId = ns("asymptomatic_offspring_distribution"),
             label = tagList(
               "Asymptomatic Offspring Distribution",
-              tooltip(bs_icon("info-circle"), offspring_tip)
+              tooltip(bs_icon("info-circle"), OFFSPRING_TIP)
             ),
             choices = list(
               "Negative Binomial" = "nbinom",
@@ -238,7 +202,7 @@ offspring_input <- function(ns, ...) {
               ns("asymptomatic_disp"),
               label = tagList(
                 HTML("Asymptomatic Dispersion (<em>k</em>)"),
-                tooltip(bs_icon("info-circle"), disp_tip)
+                tooltip(bs_icon("info-circle"), DISP_TIP)
               ),
               value = PROPOSE_DEFAULTS$disease_x$asymptomatic_disp
             ),
@@ -287,7 +251,7 @@ r0_seq_input <- function(ns, from, to, by, ...) {
         ns("community_offspring_distribution"),
         label = tagList(
           "Community offspring distribution",
-          tooltip(bs_icon("info-circle"), offspring_tip)
+          tooltip(bs_icon("info-circle"), OFFSPRING_TIP)
         ),
         choices = list(
           "Negative Binomial" = "nbinom",
@@ -325,7 +289,7 @@ r0_seq_input <- function(ns, from, to, by, ...) {
           ns("community_disp"),
           label = tagList(
             HTML("Community dispersion (<em>k</em>)"),
-            tooltip(bs_icon("info-circle"), disp_tip)
+            tooltip(bs_icon("info-circle"), DISP_TIP)
           ),
           value = 0.5,
           min = 0
@@ -351,7 +315,7 @@ r0_seq_input <- function(ns, from, to, by, ...) {
           ns("isolated_disp"),
           label = tagList(
             HTML("Isolated dispersion (<em>k</em>)"),
-            tooltip(bs_icon("info-circle"), disp_tip)
+            tooltip(bs_icon("info-circle"), DISP_TIP)
           ),
           value = 0.5,
           min = 0
