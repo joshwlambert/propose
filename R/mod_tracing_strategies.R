@@ -47,18 +47,7 @@ tracing_strategies_ui <- function(id) {
             style = "min-width: 0;"
           )
         ),
-        numericInput(
-          ns("replicates"),
-          label = tagList(
-            "Number of simulation replicates",
-            tooltip(
-              bsicons::bs_icon("info-circle"),
-              "This controls the number of independent outbreaks to simulate."
-            )
-          ),
-          value = 20,
-          min = 1
-        ),
+        replicates_input(ns = ns, page = "tracing_strategies", numeric = TRUE),
         numericInput(
           ns("initial_cases"),
           label = tagList(
@@ -1033,7 +1022,7 @@ tracing_strategies_server <- function(id) {
       updateNumericInput(session, "contact_informed", value = 50)
       updateNumericInput(session, "cap_max_days", value = PROPOSE_DEFAULTS$cap_max_days)
       updateNumericInput(session, "cap_cases", value = PROPOSE_DEFAULTS$cap_cases)
-      updateNumericInput(session, "replicates", value = PROPOSE_DEFAULTS$replicates)
+      updateNumericInput(session, "replicates", value = PROPOSE_DEFAULTS$replicates$tracing_strategies)
       updateNumericInput(session, "initial_cases", value = PROPOSE_DEFAULTS$initial_cases)
     })
   })
