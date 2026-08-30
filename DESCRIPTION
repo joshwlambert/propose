@@ -37,6 +37,7 @@ Imports:
     sn,
     stats,
     tinyplot,
+    utils,
     waiter
 Encoding: UTF-8
 Type: Shiny
