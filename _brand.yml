@@ -23,9 +23,9 @@ color:
 typography:
   fonts:
     - family: Host Grotesk
-      source: google
+      source: bunny
     - family: Google Sans Code
-      source: google
+      source: bunny
   base: Host Grotesk
   monospace: Google Sans Code
   link:
