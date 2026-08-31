@@ -1,0 +1,112 @@
+# Workflow derived from https://github.com/posit-dev/r-shinylive/tree/actions-v1/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+#
+# Basic example of a GitHub Actions workflow that builds a Shiny app and deploys
+# it to GitHub Pages.
+#
+# The agreed upon contract is:
+#
+# - Inspect the root directory for package dependencies
+# - Install R and the found packages
+# - Export the Shiny app directory to `./_site`
+# - On push events, deploy the exported app to GitHub Pages
+#
+# If this contract is not met or could be easily improved for others,
+# please open a new Issue https://github.com/posit-dev/r-shinylive/
+#
+# The _magic_ of this workflow is in the `shinylive::export()` function, which
+# creates a static version of the Shiny app into the folder `./_site`.
+# The exported app folder is then uploaded and deployed to GitHub Pages.
+#
+# When deploying to GitHub Pages, be sure to have the appropriate write
+# permissions for your token (`pages` and `id-token`).
+
+name: Deploy app to gh-pages
+
+on:
+  # Manually trigger the workflow
+  workflow_dispatch:
+  # Trigger on push to `main` branch
+  push:
+    branches: ["main"]
+  # Trigger on pull request to all branches (but do not deploy to gh-pages)
+  pull_request:
+
+# Least privilege by default; the deploy job widens this for itself below.
+permissions:
+  contents: read
+
+# One Pages deployment at a time. Queue rather than cancel, so a deployment
+# already in flight is never killed part-way through.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with: { use-public-rspm: true }
+
+      # installs propose's Imports from DESCRIPTION, plus shinylive and httpuv
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::shinylive
+            any::httpuv
+
+      - name: Install ringbp from r-universe
+        run: |
+          install.packages("ringbp", repos = "https://epiforecasts.r-universe.dev")
+          stopifnot(grepl("r-universe\\.dev",
+                          packageDescription("ringbp")$Repository))
+        shell: Rscript {0}
+
+      - name: Stage app
+        run: |
+          mkdir -p _stage
+          cp app.R _brand.yml DESCRIPTION _stage/
+          cp -R R www _stage/
+
+      - name: Build site
+        run: shinylive::export("_stage", "_site")
+        shell: Rscript {0}
+
+      # Match filenames, not contents: `_brand.yml` legitimately holds the
+      # shinyapps.io URL, and the app itself calls `read.dcf()`.
+      - name: Hygiene scan
+        run: |
+          if find _site \( -name '*.dcf' -o -name '.Rhistory' -o -path '*rsconnect*' \) | grep -q .; then
+            echo "::error::local-only artefact leaked into bundle"; exit 1
+          fi
+
+      - name: Upload site artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
