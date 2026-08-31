@@ -153,7 +153,12 @@ about_ui <- function(id) {
 #' @keywords internal
 about_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    output$propose_version <- renderText(paste0("v", packageVersion("propose")))
+    # propose is never installed as a package alongside the app, so
+    # packageVersion() has nothing to find. DESCRIPTION ships with the app in
+    # every deployment, so read the version straight off it.
+    output$propose_version <- renderText(
+      paste0("v", as.list(read.dcf("DESCRIPTION")[1, ])$Version)
+    )
     output$ringbp_version <- renderText(paste0("v", packageVersion("ringbp")))
   })
 }
