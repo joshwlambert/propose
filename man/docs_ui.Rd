@@ -4,19 +4,24 @@
 \alias{docs_ui}
 \title{Shiny UI for \emph{\strong{Docs}} page}
 \usage{
-docs_ui(id, vignette_file_name)
+docs_ui(id)
 }
 \arguments{
 \item{id}{An ID string that corresponds with the ID used to call the module's
 UI function.}
-
-\item{vignette_file_name}{A \code{character} string with the file name of the
-\pkg{ringbp} vignette, including the \code{.html} file extension.}
 }
 \value{
 Output from \code{\link[shiny:tagList]{shiny::tagList()}}.
 }
 \description{
 Shiny UI for \emph{\strong{Docs}} page
+}
+\details{
+Links to the \pkg{ringbp} vignettes. Links open in a new tab, so that a
+simulation in progress is not lost.
+
+\pkg{ringbp} vignettes used to be embedded in \emph{\strong{propose}} using \code{iframe}s,
+however there were issues with rendering these across the multiple
+\emph{\strong{propose}} deployments.
 }
 \keyword{internal}
