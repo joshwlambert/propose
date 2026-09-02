@@ -543,20 +543,16 @@ compare_server <- function(id) {
         )
         return()
       }
-      total <- input$replicates * length(scenarios())
-      if (total > COMPARE_SIM_WARNING) {
-        showModal(modalDialog(
-          title = "Warning: Running lots of simulations!",
-          sprintf(
-            "This will run %d simulations (%d replicates for each of %d
-             scenarios) and may take a considerable amount of time.",
-            total, input$replicates, length(scenarios())
-          ),
-          footer = tagList(
-            actionButton(ns("cancel"), "Cancel"),
-            actionButton(ns("ok"), "Run", class = "btn btn-danger")
-          )
-        ))
+      # one simulation per replicate for each scenario in the comparison
+      n_sims <- input$replicates * length(scenarios())
+      # every scenario in a comparison runs under the same shared settings
+      seconds <- estimate_runtime(n_sims, probe = function(n) {
+        settings <- shared()
+        settings$replicates <- n
+        run_scenario(scenarios()[[1]]$params, settings)
+      })
+      if (seconds > RUNTIME_WARN_SECONDS) {
+        showModal(runtime_modal(ns, n_sims, seconds))
       } else {
         run(run() + 1L)
       }
