@@ -482,18 +482,6 @@ MAX_SCENARIOS <- length(COMPARE_PALETTE)
 
 #' @rdname compare_constants
 #' @details
-#' **`COMPARE_SIM_WARNING`** is the number of simulations above which the page
-#' asks for confirmation before running. A comparison runs `replicates`
-#' simulations for each scenario, so the total grows quickly. This threshold
-#' matches the ***Outbreak Size & Length*** page, and is set so that ordinary
-#' comparisons at the page's default replicates
-#' (`PROPOSE_DEFAULTS$replicates$compare`) run without interruption while the
-#' slowest ones still warn: a confirmation that appears every time is one users
-#' learn to dismiss without reading.
-COMPARE_SIM_WARNING <- 500L
-
-#' @rdname compare_constants
-#' @details
 #' **`RUN_PROMPT`** is shown in place of the page's results before a comparison
 #' has been run, in every card that would otherwise be empty.
 RUN_PROMPT <- paste(
@@ -735,3 +723,21 @@ RESTORE_NUMERIC_IDS <- c(
   "test_sensitivity",
   "npi_activation_day"
 )
+
+#' Constants controlling the run-time estimate shown before a long analysis
+#'
+#' @name runtime_constants
+#' @details
+#' **`RUNTIME_SECONDS_PER_SIM`** is the assumed cost of a single outbreak
+#' simulation, in seconds (empirically estimated using \pkg{ringbp}).
+#' The estimate is conservative because a browser (WebAssembly) deployment is
+#' slower.
+#' @keywords internal
+RUNTIME_SECONDS_PER_SIM <- 0.06
+
+#' @rdname runtime_constants
+#' @details
+#' **`RUNTIME_WARN_SECONDS`** is the estimated duration, in seconds, above which
+#' an analysis page asks for confirmation before running. Every page uses this
+#' threshold.
+RUNTIME_WARN_SECONDS <- 30

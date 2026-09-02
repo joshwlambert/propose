@@ -4,15 +4,12 @@
 \alias{compare_constants}
 \alias{COMPARE_PALETTE}
 \alias{MAX_SCENARIOS}
-\alias{COMPARE_SIM_WARNING}
 \alias{RUN_PROMPT}
 \title{Constants for the \emph{\strong{Compare}} page}
 \usage{
 COMPARE_PALETTE
 
 MAX_SCENARIOS
-
-COMPARE_SIM_WARNING
 
 RUN_PROMPT
 }
@@ -32,15 +29,6 @@ deficiency.
 at once. It is the length of \code{COMPARE_PALETTE}, because beyond this many
 series the layered plots stop being readable whatever the colours. Being
 derived at load time, it must stay after \code{COMPARE_PALETTE} in this file.
-
-\strong{\code{COMPARE_SIM_WARNING}} is the number of simulations above which the page
-asks for confirmation before running. A comparison runs \code{replicates}
-simulations for each scenario, so the total grows quickly. This threshold
-matches the \emph{\strong{Outbreak Size & Length}} page, and is set so that ordinary
-comparisons at the page's default replicates
-(\code{PROPOSE_DEFAULTS$replicates$compare}) run without interruption while the
-slowest ones still warn: a confirmation that appears every time is one users
-learn to dismiss without reading.
 
 \strong{\code{RUN_PROMPT}} is shown in place of the page's results before a comparison
 has been run, in every card that would otherwise be empty.
