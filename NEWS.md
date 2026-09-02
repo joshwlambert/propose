@@ -24,7 +24,23 @@
 
 * Added a **Compare outbreak scenarios** section to the manual, replacing the placeholder removed in v0.3.0 (#54), and added the Compare page to the manual's Overview and Quick Start sections.
 
+## Deployment
+
+* Added a serverless deployment of the app at <https://joshwlambert.github.io/propose/>, alongside the existing hosted deployment on [shinyapps.io](https://t3zjq0-joshua0lambert.shinyapps.io/propose/) (#66). The app is compiled to WebAssembly with [`{shinylive}`](https://posit-dev.github.io/r-shinylive/) and served as a static site from GitHub Pages, so it runs entirely in the visitor's browser rather than on a server:
+
+  - Every visitor runs the outbreak simulations on their own machine, so any number of people can use the app at the same time without waiting for one another. This responds to the _Proposing Solutions_ workshop, where 15-20 concurrent users made the hosted app unresponsive: on a hosted deployment all users share a small number of R processes, and because R is single-threaded a long-running simulation blocks every other user until it finishes.
+  - The trade-off is speed rather than availability. The first visit downloads the R runtime and the app's package dependencies before the app starts, after which they are served from the browser cache, and simulations then run in WebAssembly rather than natively.
+  - Every dependency is available as a WebAssembly binary. `{ringbp}` is installed from the [epiforecasts R-universe](https://epiforecasts.r-universe.dev), currently the only repository that builds one for it.
+
+* Added `.github/workflows/deploy-app.yaml`, which builds the WebAssembly bundle and publishes it to GitHub Pages on every push to `main`. Pull requests build the app without deploying it, so a broken build is caught before it reaches the live site.
+
+* Fonts are now sourced from [Bunny Fonts](https://fonts.bunny.net) rather than Google Fonts in `_brand.yml`. Google Fonts are downloaded by R while the theme is built, which requires `curl` and is not possible in WebAssembly; Bunny Fonts are linked from the page and fetched by the browser instead. The typefaces themselves are unchanged.
+
+* `README.md` now describes all three ways to use the app -- in the browser, hosted, or locally -- and adds a **Known issues** section covering the concurrency limits of the hosted deployment and what to do if the browser version fails to start. `_brand.yml` records both deployment URLs.
+
 ## Bug fixes
+
+* The **Citation** and **About** pages resolved the app's own citation and version number from an *installed* `propose` package, using `citation(package = "propose")` and `packageVersion("propose")`. ***propose*** is served as a plain `app.R` and is never installed alongside itself, so these reported whatever stale copy happened to be in the library, or failed outright where none was installed, as in the serverless deployment. Both now read `DESCRIPTION`, which ships with the app, so the version reported is always the version running.
 
 * "Reset Defaults" on the **Tracing Strategies** page set the number of simulation replicates to 5 rather than the 20 the page starts with. Every page now restores its own default.
 
