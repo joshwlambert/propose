@@ -144,6 +144,8 @@ tracing_effectiveness_ui <- function(id) {
 tracing_effectiveness_server <- function(id) {
   moduleServer(id, function(input, output, session) {
 
+    ns <- session$ns
+
     # User-input checking with feedback ---------------------------------------
     offspring_feedback_server(input)
     symptom_event_prob_feedback_server(input)
@@ -266,11 +268,69 @@ tracing_effectiveness_server <- function(id) {
       h3("Running contact tracing sweep.", style = "color: #000080; margin-top: 40px;")
     )
 
-    sweep_results <- eventReactive(input$simulate, {
+    # UI collects percentages; convert the swept values to proportions (0-1)
+    # for the model. Held as a reactive because the confirmation modal needs the
+    # number of tracing levels to size the job before the sweep is run.
+    tracing_seq <- reactive({
       req(!is.na(input$symptomatic_traced_from), !is.na(input$symptomatic_traced_to), !is.na(input$symptomatic_traced_by))
       req(input$symptomatic_traced_from >= 0, input$symptomatic_traced_to <= 100)
       req(input$symptomatic_traced_from <= input$symptomatic_traced_to)
       req(input$symptomatic_traced_by > 0)
+      seq(
+        from = input$symptomatic_traced_from,
+        to = input$symptomatic_traced_to,
+        by = input$symptomatic_traced_by
+      ) / 100
+    })
+
+    simulate <- reactiveVal(0L)
+
+    observeEvent(input$simulate, {
+      req(!is.na(input$replicates), input$replicates >= 1)
+      # the whole sweep is re-run at every tracing level, so this page runs far
+      # more simulations than its replicate count alone suggests
+      n_sims <- input$replicates * length(tracing_seq())
+      seconds <- estimate_runtime(n_sims, probe = function(n) {
+        scenario_sim(
+          n = n,
+          initial_cases = input$initial_cases,
+          offspring = offspring(),
+          delays = delays(),
+          event_probs = event_prob_opts(
+            asymptomatic = input$asymptomatic / 100,
+            presymptomatic_transmission = input$presymptomatic_transmission / 100,
+            # the sweep's total cost is the sum over its levels, so price it at
+            # their mean rather than at either end
+            symptomatic_traced = npi_activation(
+              mean(tracing_seq()), input$npi_activation_day
+            )
+          ),
+          interventions = intervention_opts(
+            quarantine = input$quarantine,
+            test_sensitivity = npi_activation(
+              input$test_sensitivity, input$npi_activation_day
+            )
+          ),
+          sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
+        )
+      })
+      if (seconds > RUNTIME_WARN_SECONDS) {
+        showModal(runtime_modal(ns, n_sims, seconds))
+      } else {
+        simulate(simulate() + 1L)
+      }
+    })
+
+    observeEvent(input$ok, {
+      simulate(simulate() + 1L)
+      removeModal()
+    })
+    observeEvent(input$cancel, {
+      removeModal()
+    })
+
+    sweep_results <- eventReactive(simulate(), {
+      req(simulate() > 0)
       req(input$replicates >= 1, input$initial_cases >= 1)
       req(input$cap_max_days >= 1, input$cap_cases >= 1)
       req(input$asymptomatic >= 0, input$asymptomatic <= 100)
@@ -278,18 +338,10 @@ tracing_effectiveness_server <- function(id) {
       req(input$test_sensitivity >= 0, input$test_sensitivity <= 1)
       req(!is.na(input$npi_activation_day), input$npi_activation_day >= 0)
 
-      # UI collects percentages; convert the swept values to proportions (0-1)
-      # for the model.
-      tracing_seq <- seq(
-        from = input$symptomatic_traced_from,
-        to = input$symptomatic_traced_to,
-        by = input$symptomatic_traced_by
-      ) / 100
-
       waiter_show(html = loading, color = transparent(0.75))
       on.exit(waiter_hide())
 
-      per_scenario <- lapply(tracing_seq, function(p) {
+      per_scenario <- lapply(tracing_seq(), function(p) {
         sim <- scenario_sim(
           n = input$replicates,
           initial_cases = input$initial_cases,
@@ -333,7 +385,7 @@ tracing_effectiveness_server <- function(id) {
 
       df <- data.frame(
         # plot tracing_pct and control_pct as %
-        tracing_pct = tracing_seq * 100,
+        tracing_pct = tracing_seq() * 100,
         control_pct = vapply(per_scenario, `[[`, numeric(1), "pcontrol") * 100,
         median_reff = vapply(per_scenario, `[[`, numeric(1), "median_reff"),
         lwr_reff = vapply(per_scenario, `[[`, numeric(1), "lwr_reff"),
