@@ -294,22 +294,41 @@ outbreak_size_server <- function(id) {
     simulate <- reactiveVal(0L)
 
     observeEvent(input$simulate, {
-      req(!is.na(input$replicates))
+      req(!is.na(input$replicates), input$replicates >= 1)
       # one simulation run per replicate per swept R0 value
-      total_sims <- input$replicates * length(r0_seq())
-      if (total_sims > 500) {
-        showModal(modalDialog(
-          title = "Warning: Running lots of simulations!",
-          paste0(
-            "This will run ", total_sims, " outbreak simulations (",
-            input$replicates, " replicates × ", length(r0_seq()),
-            " R0 values) and may take a considerable amount of time."
+      n_sims <- input$replicates * length(r0_seq())
+      seconds <- estimate_runtime(n_sims, probe = function(n) {
+        scenario_sim(
+          n = n,
+          initial_cases = input$initial_cases,
+          # cost rises steadily with R0 across this sweep, so price it at the
+          # mean of the swept values rather than at either end
+          offspring = offspring(
+            mean(r0_seq()),
+            input$community_offspring_distribution,
+            input$community_disp,
+            input$isolated_r0,
+            input$isolated_disp
           ),
-          footer = tagList(
-            actionButton(ns("cancel"), "Cancel"),
-            actionButton(ns("ok"), "Run", class = "btn btn-danger")
-          )
-        ))
+          delays = delays(),
+          event_probs = event_prob_opts(
+            asymptomatic = input$asymptomatic / 100,
+            presymptomatic_transmission = input$presymptomatic_transmission / 100,
+            symptomatic_traced = npi_activation(
+              input$symptomatic_traced / 100, input$npi_activation_day
+            )
+          ),
+          interventions = intervention_opts(
+            quarantine = input$quarantine,
+            test_sensitivity = npi_activation(
+              input$test_sensitivity, input$npi_activation_day
+            )
+          ),
+          sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
+        )
+      })
+      if (seconds > RUNTIME_WARN_SECONDS) {
+        showModal(runtime_modal(ns, n_sims, seconds))
       } else {
         simulate(simulate() + 1L)
       }
