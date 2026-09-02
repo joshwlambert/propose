@@ -682,24 +682,51 @@ tracing_strategies_server <- function(id) {
     simulate <- reactiveVal(0L)
 
     observeEvent(input$simulate, {
+      req(!is.na(input$replicates), input$replicates >= 1)
+      # every ticked strategy is simulated separately, so the size of the job
+      # scales with how many are being evaluated, not with the replicates alone
+      n_strategies <- sum(
+        isTRUE(input$digital_contact_tracing),
+        isTRUE(input$manual_contact_tracing),
+        isTRUE(input$informal_contact_tracing)
+      )
       # Require at least one contact tracing strategy to be selected
-      if (!isTRUE(input$digital_contact_tracing) &&
-          !isTRUE(input$manual_contact_tracing) &&
-          !isTRUE(input$informal_contact_tracing)) {
+      if (n_strategies == 0L) {
         showModal(modalDialog(
           title = "Warning: No contact tracing strategies have been selected.",
           "Please tick the strategy(s) you'd like to evaluate.",
           footer = actionButton(ns("cancel"), "Cancel")
         ))
-      } else if (input$replicates > 50) {
-        showModal(modalDialog(
-          title = "Warning: Running lots of replicates!",
-          "This may take a considerable amount of time to simulate.",
-          footer = tagList(
-            actionButton(ns("cancel"), "Cancel"),
-            actionButton(ns("ok"), "Run", class = "btn btn-danger")
-          )
-        ))
+        return()
+      }
+      n_sims <- input$replicates * n_strategies
+      # the three strategies differ only in their onset-to-isolation delay and
+      # their derived tracing proportion, so any ticked one prices the rest
+      # closely enough; 0.5 stands in for that proportion, which each strategy
+      # computes from a different pair of sidebar inputs
+      seconds <- estimate_runtime(n_sims, probe = function(n) {
+        scenario_sim(
+          n = n,
+          initial_cases = input$initial_cases,
+          offspring = offspring(),
+          delays = if (isTRUE(input$digital_contact_tracing)) {
+            dct_delays()
+          } else if (isTRUE(input$manual_contact_tracing)) {
+            mct_delays()
+          } else {
+            ict_delays()
+          },
+          event_probs = event_prob_opts(
+            asymptomatic = input$asymptomatic / 100,
+            presymptomatic_transmission = input$presymptomatic_transmission / 100,
+            symptomatic_traced = 0.5
+          ),
+          interventions = intervention_opts(quarantine = FALSE),
+          sim = sim_opts(cap_max_days = input$cap_max_days, cap_cases = input$cap_cases)
+        )
+      })
+      if (seconds > RUNTIME_WARN_SECONDS) {
+        showModal(runtime_modal(ns, n_sims, seconds))
       } else {
         simulate(simulate() + 1L)
       }
