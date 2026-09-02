@@ -18,13 +18,55 @@ R package, allowing users to explore targeted, individual-level interventions
 (such as contact tracing and case isolation) for an emerging epidemic or pandemic
 without writing any code.
 
-You can use ***propose*** in two ways:
+You can use ***propose*** in three ways:
 
-* **Online** — a hosted version is available at
-  <https://t3zjq0-joshua0lambert.shinyapps.io/propose/>, with no installation
-  required.
+* **In your browser** — <https://joshwlambert.github.io/propose/> runs the app
+  entirely in your browser using [Shinylive](https://posit-dev.github.io/r-shinylive/),
+  which compiles R to WebAssembly. Nothing runs on a server, so any number of
+  people can use it simultaneously without waiting for each other. The first
+  visit downloads the R runtime and packages, so allow a little time (~1 minute)
+  for it to load; simulations then run on your own machine and are slower than
+  the version hosted on a Shiny server.
+* **Hosted online** (Shiny server) — <https://t3zjq0-joshua0lambert.shinyapps.io/propose/>
+  runs on a server, with no installation required. Simulations are faster, but
+  only a limited number of people can use it at the same time.
 * **Locally** — install the package (see below), then clone this repository and
   launch the app from the project root with `shiny::runApp()`.
+
+## Known issues
+
+### ***propose*** hosted on the Shiny server (shinyapps.io) can become slow and unresponsive
+
+On the hosted version every user shares a small number of R processes on the
+server, and R runs one calculation at a time. While one person's simulation is
+running, everyone else's clicks wait behind it. Most of the app is quick enough
+that this goes unnoticed, but outbreak simulations are not, especially those
+that take several minutes. When several people use the app at once, requests
+arrive faster than they clear, and the app becomes slow or stops responding
+altogether.
+
+### The browser version can fail to start on the first visit
+
+The browser version downloads the R runtime and the app's packages on the first
+visit. If one of those downloads does not complete, the app stops with an error
+such as `Error starting app!` or
+`Can't download Emscripten filesystem image metadata`.
+
+**Reload the page.** Whatever downloaded successfully is kept in the browser
+cache, so a reload has less to fetch and usually starts the app, occasionally
+after a second attempt. If it still will not load:
+
+* Check your network connection. The first visit transfers a large amount of
+  data, and a slow, intermittent or restricted network (some institutional
+  networks and proxies included) can interrupt it.
+* Try a hard reload — `Ctrl`/`Cmd` + `Shift` + `R` — to discard a partly
+  cached state and start the download again.
+
+If you cannot get the ***propose*** app to work after reloading, use the
+[hosted version](https://t3zjq0-joshua0lambert.shinyapps.io/propose/)
+instead — it runs on a server, so there is nothing to download. Please also
+[open an issue](https://github.com/joshwlambert/propose/issues/new), including
+the error message and the browser you are using.
 
 ## Install ***propose***
 
