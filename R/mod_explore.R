@@ -219,27 +219,10 @@ explore_server <- function(id) {
 
     simulate <- reactiveVal(0L)
 
+    # No runtime modalDialog on the Explore page (replicates capped at 100 and
+    # RUNTIME_SECONDS_PER_SIM * replicates < RUNTIME_WARN_SECONDS)
     observeEvent(input$simulate, {
-      if (input$replicates > 50) {
-        showModal(modalDialog(
-          title = "Warning: Running lots of replicates!",
-          "This may take a considerable amount of time to simulate.",
-          footer = tagList(
-            actionButton(ns("cancel"), "Cancel"),
-            actionButton(ns("ok"), "Run", class = "btn btn-danger")
-          )
-        ))
-      } else {
-        simulate(simulate() + 1L)
-      }
-    })
-
-    observeEvent(input$ok, {
       simulate(simulate() + 1L)
-      removeModal()
-    })
-    observeEvent(input$cancel, {
-      removeModal()
     })
 
     loading <- tagList(
