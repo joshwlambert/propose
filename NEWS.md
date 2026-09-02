@@ -24,6 +24,8 @@
 
 * Added a **Compare outbreak scenarios** section to the manual, replacing the placeholder removed in v0.3.0 (#54), and added the Compare page to the manual's Overview and Quick Start sections.
 
+* The embedded `{ringbp}` vignettes (using `iframe`s), each on a different page, has been replaced with a single page that links to each `{ringbp}` vignette in a card. This was due to the `iframe`s not rendering correctly in the browser with the Shinylive deployment (showing "Not found" instead of rendering the vignette). The links open in a new tab so that a simulation in progress is not lost. The **Docs** menu now contains a single `{ringbp}` documentation item.
+
 ## Deployment
 
 * Added a serverless deployment of the app at <https://joshwlambert.github.io/propose/>, alongside the existing hosted deployment on [shinyapps.io](https://t3zjq0-joshua0lambert.shinyapps.io/propose/) (#66). The app is compiled to WebAssembly with [`{shinylive}`](https://posit-dev.github.io/r-shinylive/) and served as a static site from GitHub Pages, so it runs entirely in the visitor's browser rather than on a server:
