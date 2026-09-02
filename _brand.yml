@@ -1,7 +1,8 @@
 meta:
   name: propose
   link:
-    home: https://t3zjq0-joshua0lambert.shinyapps.io/propose/
+    shinyapps.io: https://t3zjq0-joshua0lambert.shinyapps.io/propose/
+    shinylive: https://joshwlambert.github.io/propose/
     github: https://github.com/joshwlambert/propose
 
 logo:
