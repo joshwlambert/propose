@@ -255,21 +255,6 @@ ui <- page_navbar(
       manual_ui("manual")
     ),
     nav_item(tags$hr(class = "dropdown-divider")),
-    nav_item(tags$h6(tags$b(ringbp_name(), " documentation"), class = "dropdown-header")),
-    nav_item(tags$hr(class = "dropdown-divider")),
-    nav_panel(
-      title = tagList("Getting Started with ", ringbp_name()),
-      docs_ui("docs_main", "ringbp.html")
-    ),
-    nav_panel(
-      title = tagList(ringbp_name(), " Model Description"),
-      docs_ui("docs_model", "ringbp-model.html")
-    ),
-    nav_panel(
-      title = tagList("Parameter Sweep with ", ringbp_name()),
-      docs_ui("docs_sweep", "parameter-sweep.html")
-    ),
-    nav_item(tags$hr(class = "dropdown-divider")),
     nav_item(tags$h6(tags$b("Case studies"), class = "dropdown-header")),
     nav_item(tags$hr(class = "dropdown-divider")),
     nav_panel(
@@ -279,6 +264,13 @@ ui <- page_navbar(
     nav_panel(
       title = "COVID-19 England",
       case_study_ui("case_england", "covid_england.html")
+    ),
+    nav_item(tags$hr(class = "dropdown-divider")),
+    nav_item(tags$h6(tags$b(ringbp_name(), " documentation"), class = "dropdown-header")),
+    nav_item(tags$hr(class = "dropdown-divider")),
+    nav_panel(
+      title = tagList(ringbp_name(), " vignettes"),
+      docs_ui("docs")
     )
   ),
   nav_panel(
@@ -369,12 +361,6 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbarid", selected = "COVID-19 England")
     session$sendCustomMessage("scrollToTop", TRUE)
   })
-
-  # file path for {ringbp} vignettes rendered in docs UI
-  addResourcePath(
-    prefix = 'ringbp_docs',
-    directoryPath = system.file("doc", package = "ringbp")
-  )
 
   explore_server("explore")
   compare_server("compare")
