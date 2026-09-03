@@ -193,13 +193,13 @@ manual_ui <- function(id) {
                 h3("Select Pathogen", style = "margin-top: 2.5rem;"),
                 p("A good way to start using the Explore page is to choose a
                   preset from the ", tags$em("Select Pathogen Parameters"),
-                  " menu. This populates the pathogen parameters with values
-                  representative of the chosen pathogen, drawn from estimates
+                  " menu. Each named pathogen populates the parameters with
+                  values representative of that pathogen, drawn from estimates
                   published in the literature. ", propose_name(), " currently
                   includes presets for:"),
                 tags$ul(
-                  tags$li(tags$b("Disease X"), " — a generic pathogen used as the
-                          default starting point."),
+                  tags$li(tags$b("Disease X"), " — not a specific pathogen;
+                          see below."),
                   tags$li(tags$b("COVID-19"), " — Wild-type, Alpha, Delta and
                           Omicron variants."),
                   tags$li(HTML("<b>SARS</b>.")),
@@ -212,9 +212,13 @@ manual_ui <- function(id) {
                   tags$li(HTML("<b>Andes (Hanta)virus</b>."))
                 ),
                 p("By default, the chosen pathogen is ",
-                  HTML("<em>Disease X</em>,"), " whose parameters are sensible
-                  initial values that act as a starting point from which to
-                  modify and simulate outbreaks."),
+                  HTML("<em>Disease X</em>."), " Unlike the named presets
+                  above, it is not based on a specific pathogen: its
+                  parameters are sensible generic starting values, chosen to
+                  give you a reasonable scenario to start exploring and
+                  modifying. They are not a consensus of expert opinion, and
+                  not a prediction of a future pandemic's characteristics —
+                  see the FAQs page for more."),
                 p("The pathogen and intervention parameters are grouped. By
                   clicking on, for example, 'Pathogen transmissibility'
                   it will expand and allow you to change those parameters. All
