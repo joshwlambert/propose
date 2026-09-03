@@ -14,9 +14,11 @@ patho_param_input <- function(ns, ...) {
       "Select Pathogen Parameters",
       tooltip(
         bsicons::bs_icon("info-circle"),
-        "Pathogen parameters based on estimates published in the literature.
-        The default scenario is 'Disease X' and has generic pathogen
-        parameters.",
+        "Named pathogens (e.g. COVID-19, SARS, Ebola) use parameters based on
+        estimates published in the literature. The default, 'Disease X', is
+        not based on a specific pathogen: its parameters are sensible generic
+        starting values, not a consensus or a prediction of a future
+        pandemic's characteristics. See the FAQs for more.",
         id = "tooltip"
       )
     ),
