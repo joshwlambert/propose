@@ -1,5 +1,9 @@
 # propose 0.4.0
 
+The fourth minor release of `{propose}`. This release adds a new **Compare** page to the app, deploys a serverless version of `{propose}` using [Shinylive](https://posit-dev.github.io/r-shinylive/), warns users before starting a long-running analysis, and makes several other minor improvements and bug fixes.
+
+This release is for further beta testing at the **Co-Developing Pandemic Tooling for Smarter Decision-Making** workshop co-organised with the [World Health Organization (WHO) Collaboratory](https://www.who.int/initiatives/collaboratory). This workshop will demonstrate `{propose}` and be the second interactive stakeholder engagement session for feedback.
+
 ## Features
 
 * Added a redesigned **Compare** page (rewritten `compare_ui()` and `compare_server()` module), and restored to the app navbar (#64, #26, #54). This feature is in response to feedback at the _Proposing Solutions_ workshop. The original Compare page was removed in v0.3.0:
