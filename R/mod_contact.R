@@ -53,7 +53,7 @@ contact_ui <- function(id) {
             "If you have an issue with ***propose*** please file an issue on the
         GitHub repository at the link below:
 
-        [***propose*** Issue tracker](https://github.com/joshwlambert/propose/issues/new).
+        <a href='https://github.com/joshwlambert/propose/issues/new' target='_blank' rel='noopener noreferrer'><strong><em>propose</em></strong> Issue tracker</a>.
 
         You will need a GitHub account to do this."
           )
@@ -68,7 +68,7 @@ contact_ui <- function(id) {
         card_body(
           markdown(
             "If you have any questions about how to contribute to the project
-        please see our [Contributing guidelines](https://github.com/joshwlambert/propose/blob/main/.github/CONTRIBUTING.md).
+        please see our <a href='https://github.com/joshwlambert/propose/blob/main/.github/CONTRIBUTING.md' target='_blank' rel='noopener noreferrer'>Contributing guidelines</a>.
 
         ***propose*** is an open-source project, and contributions to the project
         will be fairly recognised.

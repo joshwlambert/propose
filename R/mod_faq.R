@@ -138,8 +138,8 @@ faq_ui <- function(id) {
                   See ",
                   tags$a(
                     href = "https://doi.org/10.1038/nature04153",
-                    "LLoyd-Smith et al. (2005)",
-                    target = "_blank"
+                    "Lloyd-Smith et al. (2005)",
+                    target = "_blank", rel = "noopener noreferrer"
                   ),
                   " for a detailed explanation of the Negative Binomial offspring
                   distribution."

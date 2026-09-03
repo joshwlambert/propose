@@ -13,11 +13,13 @@ funding_ui <- function(id) {
     tags$div(
       style = "padding-top: 30px; padding-bottom: 30px;",
       markdown(
-        "***propose*** is developed at the [Centre for the Mathematical
-        Modelling of Infectious Diseases](https://www.lshtm.ac.uk/research/centres/centre-mathematical-modelling-infectious-diseases)
-        at the [London School of Hygiene and Tropical Medicine](https://www.lshtm.ac.uk/)
-        and is funded by [ESCAPE](https://www.escapepandemics.com/) and
-        [HPRU-HAM](https://www.lshtm.ac.uk/research/centres-projects-groups/hpru-ham)."
+        "***propose*** is developed at the
+        <a href='https://www.lshtm.ac.uk/research/centres/centre-mathematical-modelling-infectious-diseases' target='_blank' rel='noopener noreferrer'>Centre
+        for the Mathematical Modelling of Infectious Diseases</a> at the
+        <a href='https://www.lshtm.ac.uk/' target='_blank' rel='noopener noreferrer'>London School of Hygiene
+        and Tropical Medicine</a> and is funded by
+        <a href='https://www.escapepandemics.com/' target='_blank' rel='noopener noreferrer'>ESCAPE</a> and
+        <a href='https://www.lshtm.ac.uk/research/centres-projects-groups/hpru-ham' target='_blank' rel='noopener noreferrer'>HPRU-HAM</a>."
       )
     ),
 
