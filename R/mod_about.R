@@ -34,10 +34,35 @@ about_ui <- function(id) {
 
     tags$div(
       markdown(
-        "***propose*** is a web application for running the `{ringbp}` R package.
-        It provides an _Explore_ page to try and model under different epidemic
-        scenarios, and visualise the outbreak dynamics and the probability of
-        extinction."
+        "***propose*** is a decision-support tool for the early stages of an
+        epidemic or pandemic, when the question is whether targeted,
+        individual-level measures — contact tracing, case isolation, quarantine
+        and testing — can contain an outbreak before it becomes established.
+
+        It puts an interactive interface on the branching process model in the
+        <a href='https://github.com/epiforecasts/ringbp' target='_blank' rel='noopener noreferrer'>`{ringbp}`</a>
+        R package, so that scenarios can be built, run and compared without
+        writing any code.
+
+        Five pages ask different questions of the same model:
+
+        * **Explore** simulates a single scenario, reporting the probability that
+          the outbreak is controlled alongside the projected weekly and
+          cumulative cases.
+        * **Compare** runs up to six scenarios under shared settings, sets their
+          results side by side, and reports what differs between them.
+        * **Tracing Effectiveness** sweeps the proportion of contacts traced, to
+          show how the probability of control, the effective reproduction number
+          and the peak weekly case count respond.
+        * **Tracing Strategies** contrasts digital, manual and informal contact
+          tracing, which differ in how quickly and how completely contacts are
+          reached.
+        * **Outbreak Size & Length** sweeps the reproduction number, to show how
+          large outbreaks grow and how long they last.
+
+        Two case studies, COVID-19 in Singapore and in England, work through the
+        model against real outbreaks. The ***propose*** manual explains every
+        control in the sidebar and how to read each figure."
       ),
       tags$hr(),
       tags$h3(
