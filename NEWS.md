@@ -24,6 +24,12 @@
 
 * Added a **Compare outbreak scenarios** section to the manual, replacing the placeholder removed in v0.3.0 (#54), and added the Compare page to the manual's Overview and Quick Start sections.
 
+* Analyses that will take over 30 seconds to run now require confirmation (using a `modalDialog`) before they start (#65). This harmonises the `modalDialog` popup based on analysis runtime (`RUNTIME_WARN_SECONDS`), as opposed to previously when it was based on replicates and was inconsistently implemented across analysis pages. This update is in response to feedback at the _Proposing Solutions_ workshop, to provide the user more information on time duration of analysis and ensure the app has not stopped working:
+
+  - The `modalDialog` popup reports both how many outbreak simulations will run and how long they are expected to take (in minutes). The estimate is measured rather than assumed. On pressing Run, the **Compare**, **Tracing Effectiveness**, **Tracing Strategies** and **Outbreak Size & Length** pages time a handful (5) of simulations at the settings actually chosen and scale up from those. This provides accurate runtime estimates across different outbreak parameterisations and computational hardware and environments.
+  - The runtime measurement leaves the random number stream as it found it, so the seed controls on the **Explore** and **Compare** pages still make a run reproducible.
+  - The **Explore** page no longer shows a confirmation `modalDialog`. Its replicates slider is capped at 100, so all parameterisation are expected to be less than the runtime threshold for confirmation (30 seconds, `RUNTIME_WARN_SECONDS`).
+
 * The embedded `{ringbp}` vignettes (using `iframe`s), each on a different page, has been replaced with a single page that links to each `{ringbp}` vignette in a card. This was due to the `iframe`s not rendering correctly in the browser with the Shinylive deployment (showing "Not found" instead of rendering the vignette). The links open in a new tab so that a simulation in progress is not lost. The **Docs** menu now contains a single `{ringbp}` documentation item.
 
 ## Deployment
