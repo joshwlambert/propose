@@ -79,6 +79,40 @@ faq_ui <- function(id) {
           class = "faq-item",
             tags$details(
               tags$summary(
+                "What is 'Disease X' based on?"
+              ),
+              tags$div(
+                class = "faq-content",
+                tags$p(
+                  "'Disease X' is the default pathogen preset in ", propose_name(),
+                  ". The name follows the World Health Organization's use of
+                  'Disease X' as a placeholder for a pathogen not yet known to
+                  cause human disease, kept on its priority disease list for
+                  preparedness planning rather than as a prediction (see ",
+                  tags$a(
+                    href = "https://www.who.int/activities/prioritizing-diseases-for-research-and-development-in-emergency-contexts",
+                    "WHO: Prioritizing diseases for research and development
+                    in emergency contexts",
+                    target = "_blank", rel = "noopener noreferrer"
+                  ),
+                  ")."
+                ),
+                tags$p(
+                  propose_name("'s"), " Disease X follows that reasoning: it is
+                  not based on a specific pathogen, a consensus of expert opinion,
+                  or a prediction of what a future pandemic's characteristics
+                  would be. Its parameters are sensible generic starting
+                  values, chosen to give you a reasonable scenario to explore
+                  and modify before switching to a named preset (e.g.
+                  COVID-19, SARS) or setting your own values."
+                )
+              )
+            )
+        ),
+        tags$div(
+          class = "faq-item",
+            tags$details(
+              tags$summary(
                 "What is the difference between Community and Isolated transmission?"
               ),
               tags$div(
