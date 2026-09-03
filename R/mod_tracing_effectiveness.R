@@ -372,8 +372,12 @@ tracing_effectiveness_server <- function(id) {
         } else {
           numeric(0)
         }
+        # same Clopper-Pearson CI as the value box in Explore and Compare
+        control <- control_stats(sim)
         list(
-          pcontrol = extinct_prob(sim),
+          pcontrol = control$p,
+          lwr_control = control$lower,
+          upr_control = control$upper,
           median_reff = median(eff, na.rm = TRUE),
           lwr_reff = stats::quantile(eff, 0.025, na.rm = TRUE),
           iqr_lwr_reff = stats::quantile(eff, 0.25, na.rm = TRUE),
@@ -387,6 +391,8 @@ tracing_effectiveness_server <- function(id) {
         # plot tracing_pct and control_pct as %
         tracing_pct = tracing_seq() * 100,
         control_pct = vapply(per_scenario, `[[`, numeric(1), "pcontrol") * 100,
+        lwr_control_pct = vapply(per_scenario, `[[`, numeric(1), "lwr_control") * 100,
+        upr_control_pct = vapply(per_scenario, `[[`, numeric(1), "upr_control") * 100,
         median_reff = vapply(per_scenario, `[[`, numeric(1), "median_reff"),
         lwr_reff = vapply(per_scenario, `[[`, numeric(1), "lwr_reff"),
         iqr_lwr_reff = vapply(per_scenario, `[[`, numeric(1), "iqr_lwr_reff"),
@@ -402,16 +408,25 @@ tracing_effectiveness_server <- function(id) {
       tinyplot(
         control_pct ~ tracing_pct,
         data = df,
-        type = "b",
-        pch = 19,
-        lwd = 3,
-        cex = 1.2,
-        col = "steelblue",
+        type = "ribbon",
+        ymin = df$lwr_control_pct,
+        ymax = df$upr_control_pct,
+        fill = adjustcolor("steelblue", alpha.f = 0.15),
+        col = NA,
         xlab = "Contacts traced (%)",
         ylab = "Simulated outbreaks controlled (%)",
         xlim = c(0, 100),
         ylim = c(0, 100),
         theme = "clean"
+      )
+      tinyplot_add(
+        control_pct ~ tracing_pct,
+        data = df,
+        type = "b",
+        pch = 19,
+        lwd = 3,
+        cex = 1.2,
+        col = "steelblue"
       )
     })
 
