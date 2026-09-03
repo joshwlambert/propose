@@ -30,6 +30,8 @@
   - The runtime measurement leaves the random number stream as it found it, so the seed controls on the **Explore** and **Compare** pages still make a run reproducible.
   - The **Explore** page no longer shows a confirmation `modalDialog`. Its replicates slider is capped at 100, so all parameterisation are expected to be less than the runtime threshold for confirmation (30 seconds, `RUNTIME_WARN_SECONDS`).
 
+* Added 95% confidence intervals (Clopper-Pearson exact) to the **Outbreak Control** plot on the **Tracing Effectiveness** page, shown as a shaded ribbon.
+
 * The embedded `{ringbp}` vignettes (using `iframe`s), each on a different page, has been replaced with a single page that links to each `{ringbp}` vignette in a card. This was due to the `iframe`s not rendering correctly in the browser with the Shinylive deployment (showing "Not found" instead of rendering the vignette). The links open in a new tab so that a simulation in progress is not lost. The **Docs** menu now contains a single `{ringbp}` documentation item.
 
 * Added 'Disease X' explanation to FAQ (#61). Additionally, the ***propose*** manual is updated and the pathogen parameters tooltip (`patho_param_input()`) are updated to clarify what 'Disease X' is. These changes are in response to a question at the _Proposing Solutions_ workshop about whether its default pathogen parameters were based on a consensus of expert opinion or a prediction of a future pandemic's characteristics (#61).
