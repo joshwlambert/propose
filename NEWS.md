@@ -1,4 +1,4 @@
-# propose (development version)
+# propose 0.4.0
 
 ## Features
 
