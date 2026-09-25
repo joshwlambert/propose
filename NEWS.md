@@ -1,3 +1,5 @@
+# propose (development version)
+
 # propose 0.4.0
 
 The fourth minor release of `{propose}`. This release adds a new **Compare** page to the app, deploys a serverless version of `{propose}` using [Shinylive](https://posit-dev.github.io/r-shinylive/), warns users before starting a long-running analysis, and makes several other minor improvements and bug fixes.
